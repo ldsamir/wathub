@@ -1,0 +1,47 @@
+BB8
+
+Project Proposal Draft
+
+Page 1:
+Metadata:
+WATHUB, Mahammad Ismayilzada, Jeyhun Orujlu, Samir Musali, Nurlan Masimli
+mismayil, jorujlu, smusali, nmasimli
+username@uwaterloo.ca
+
+Project: Social app for UW students
+It is interesting because it allows each UW student to see what is happening at UW and they can join other students to study, party or do something else.
+This will be unified hub for waterloo students to do a lot of things together.
+This project makes sense in mobile form, because mobile is easy and quick to use and share activities instantaneously.
+
+Risks:
+
+Page 2-3:
+Functional Properties:
+- create your own profile
+- share what is happening at UW
+- create group studies and have other people join you
+- look for a team member for your next course project
+- sell/buy a book
+- look for carpooling
+- ask a question and get an answer
+- invite people over to a house party etc.
+- follow people and get notifications from them
+- message people
+
+Scenarios:
+
+Non-functional properties:
+1. Study
+2. Socialize
+3. Share
+
+Page 4:
+Major activities:
+- Profile
+- Settings
+- Log out
+- Posts
+
+Notes about app:
+logo: WAThub with WAT bold, black and hub yellow.
+Post types: activity, event, question, group study, team, book exchange, carpool, invitation
