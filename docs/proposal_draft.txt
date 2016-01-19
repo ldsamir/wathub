@@ -25,15 +25,15 @@ Functional Properties:
 - look for carpooling
 - ask a question and get an answer
 - invite people over to a house party etc.
-- follow people and get notifications from them
-- message people
+- follow people and get notifications from them(maybe)
+- message people(maybe)
 
 Scenarios:
 
 Non-functional properties:
-1. Study
-2. Socialize
-3. Share
+1. Study?
+2. Socialize?
+3. Share?
 
 Page 4:
 Major activities:
@@ -41,7 +41,11 @@ Major activities:
 - Settings
 - Log out
 - Posts
+- Message board
+
+Page 5: mockups
 
 Notes about app:
 logo: WAThub with WAT bold, black and hub yellow.
 Post types: activity, event, question, group study, team, book exchange, carpool, invitation
+Backend: parse.com, google app engine
