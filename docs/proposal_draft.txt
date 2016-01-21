@@ -9,39 +9,67 @@ mismayil, jorujlu, smusali, nmasimli
 username@uwaterloo.ca
 
 Project: Social app for UW students
+Why interesting?:
+- see what is happening around UW (events)
+- socialize
+- join group studies, study with other people, make friends
+- ask question, get help
+- unified platform for uw students
+
+Project selection: to combine social activities for UW students
+
+Why moble form: easy, quick to use and share activities whenever, wherever you want. quick access everywhere
+
+What risks: not to be able to finish on time. solve: reduce number of functionalities.
 It is interesting because it allows each UW student to see what is happening at UW and they can join other students to study, party or do something else.
 This will be unified hub for waterloo students to do a lot of things together.
 This project makes sense in mobile form, because mobile is easy and quick to use and share activities instantaneously.
 
-Risks:
-
 Page 2-3:
 Functional Properties:
+- login with you uw email address
 - create your own profile
+posts:
 - share what is happening at UW
 - create group studies and have other people join you
 - look for a team member for your next course project
 - sell/buy a book
 - look for carpooling
 - ask a question and get an answer
-- invite people over to a house party etc.
-- follow people and get notifications from them(maybe)
-- message people(maybe)
+- direct messaging
+- search/filter
+// follow people
 
 Scenarios:
+1. you want to study with other people and create a group study
+2. You want to sell/buy a book
+3. You are looking for a carpool
 
 Non-functional properties:
-1. Study?
-2. Socialize?
-3. Share?
+1. Performance
+2. Scalability
+3. Availability
+4. Maintainability
+5. Recovery
 
 Page 4:
 Major activities:
-- Profile
-- Settings
-- Log out
-- Posts
-- Message board
+- app design (29 Jan - 29 Jan) (3-4 hours, team)
+- Login / Logout (30 Jan - 1 Feb) (10 hours, 1 person)
+- Profile (1 Feb - 4 Feb) (2-3 days, team)
+- event post (4 Feb - 9 Feb) (2-3 days, 1 person)
+- group study post (9 - 14 Feb)
+- team post (14 Feb - 19 Feb)
+- book exchange post (19 Feb - 24 Feb)
+- carpool post (24 Feb - 29 Feb)
+- question post (29 Feb - 3 Mar)
+- messaging (3 Mar - 8 Mar)
+- settings (8 Mar - 11 Mar)
+- database design (9 - 14 Feb)
+- search (11 Mar - 21 Mar)
+- backend api design (14 Feb - 19 Feb)
+
+Resources: slack, asana, parse.com, bitbucket, git
 
 Page 5: mockups
 
