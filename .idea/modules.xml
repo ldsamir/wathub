@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/WAThub.iml" filepath="$PROJECT_DIR$/WAThub.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/wathub.iml" filepath="$PROJECT_DIR$/wathub.iml" />
     </modules>
   </component>
 </project>
