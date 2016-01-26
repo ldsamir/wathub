@@ -5,9 +5,13 @@ Our app will be available for only UW students and their registration will be ve
 
 - In our app a student will be able to create profile with an avatar and other interesting information including bio, interests, contact info, courses they are taking, etc. They will be able to include their social network profiles, if they need;
 
-- In our app students will easily and fast share about events happening around campus and all other users will be able to see the posting in their news feed once they open the application;
+- In our app students will easily share about events happening around campus and all other users will be able to see the posting in their news feed once they open the application;
 
-- One of the most interest features of our app is to create a group study, share it, and make it available for other students to join it. 
+- One of the most interesting features of our app is to create a group study, share it, and make it available for other students to join. In this way, the students will get help easily, have opportunity to study and prepare together, and socialize;
+
+- In our app students will also be able to ask questions related to any course, event, lecture material, or just for general purposes. This is another way for students to get help, if they need.
+
+Now about other features my colleague Nurlan is going to talk.
 
 # Description 2 [Nurlan]
 As we know most of the students at the university buy/sell used books by using a Facebook group, but we think it is not efficient and systematic enough. In Facebook, there is no rule to separate sellers and buyers. Also, when someone posts selling info about one specific course textbook it is almost lost among the other posts ,so the potential buyer suffers a little bit to find the post by searching the whole Facebook group manually. In our application we plan to have a systematic way of doing textbook exchange to make selling/buying easier and faster.  The seller will specify the course name (for example CS), course number for example 446 and the textbook name. As a result, when potential buyers search for CS 446, they will only see selling posts about this course and nothing more. Additionally, since some of the students provide or use carpooling service frequently, we thought that our application should also have a specific section for carpooling service to make this activity easier. Direct messaging is an important part of the application because some of the activities such as textbook exchange might require private conversation to decide where to meet up and proceed further. Our app will also provide ability to vote or join an event and comment on them to be able to communicate with the people easier.
