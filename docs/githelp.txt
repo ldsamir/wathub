@@ -1,0 +1,15 @@
+# git commands
+
+# pull updates from the repo
+git pull
+
+# make some changes
+
+# add untracked files
+git add -A
+
+# commit your changes
+git commit -m '<commit message>'
+
+# push updates to the repo
+git push
