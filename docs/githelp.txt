@@ -13,3 +13,12 @@ git commit -m '<commit message>'
 
 # push updates to the repo
 git push
+
+# if 'git pull' results in conflict and you have made changes, store them temporarily
+git stash
+
+# then pull updates and restore your changes back
+git stash pop
+
+# to go back to specific commit
+git reset <commit SHA id>
