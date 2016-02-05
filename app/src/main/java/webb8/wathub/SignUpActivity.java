@@ -9,7 +9,6 @@ import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Build;
 import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
@@ -25,21 +24,19 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import com.parse.LogInCallback;
 import com.parse.ParseException;
 import com.parse.ParseUser;
+import com.parse.SaveCallback;
 import com.parse.SignUpCallback;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class SignUpActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor> {
+import webb8.wathub.models.Profile;
 
-    /**
-     * Keep track of the login task to ensure we can cancel it if requested.
-     */
-    private UserSignUpTask mAuthTask = null;
+public class SignUpActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor> {
 
     // UI references.
     private AutoCompleteTextView mEmailView;
@@ -82,8 +79,8 @@ public class SignUpActivity extends AppCompatActivity implements LoaderManager.L
             }
         });
 
-        mSignupFormView = findViewById(R.id.login_form);
-        mProgressView = findViewById(R.id.login_progress);
+        mSignupFormView = findViewById(R.id.signup_form);
+        mProgressView = findViewById(R.id.signup_progress);
     }
 
     private void populateAutoComplete() {
@@ -139,9 +136,8 @@ public class SignUpActivity extends AppCompatActivity implements LoaderManager.L
     }
 
     private void signUp() {
-        // Store values at the time of the login attempt.
-        String firstName = mFirstNameView.getText().toString();
-        String lastName = mLastNameView.getText().toString();
+        final String firstName = mFirstNameView.getText().toString();
+        final String lastName = mLastNameView.getText().toString();
         String email = mEmailView.getText().toString();
         String password = mPasswordView.getText().toString();
 
@@ -149,8 +145,39 @@ public class SignUpActivity extends AppCompatActivity implements LoaderManager.L
 
         if (check) {
             showProgress(true);
-            mAuthTask = new UserSignUpTask(this, firstName, lastName, email, password);
-            mAuthTask.execute((Void) null);
+            ParseUser user = new ParseUser();
+            user.setUsername(email.substring(0, email.indexOf("@")));
+            user.setEmail(email);
+            user.setPassword(password);
+
+            user.signUpInBackground(new SignUpCallback() {
+                @Override
+                public void done(ParseException e) {
+                    if (e == null) {
+                        System.out.println("signed up");
+                        Profile profile = new Profile();
+                        profile.setFirstName(firstName);
+                        profile.setLastName(lastName);
+                        profile.setOwner(ParseUser.getCurrentUser());
+                        profile.saveInBackground(new SaveCallback() {
+                            @Override
+                            public void done(ParseException e) {
+                                if (e == null) {
+                                    System.out.println("profile saved");
+                                } else {
+                                    Toast.makeText(getApplicationContext(), R.string.error_creating_profile, Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        });
+                        Intent loginActivity = new Intent(SignUpActivity.this, LoginActivity.class);
+                        startActivity(loginActivity);
+                    } else {
+                        System.out.println("error signing up");
+                        Toast.makeText(getApplicationContext(), R.string.error_signing_up, Toast.LENGTH_SHORT).show();
+                    }
+                    showProgress(false);
+                }
+            });
         }
     }
 
@@ -163,7 +190,7 @@ public class SignUpActivity extends AppCompatActivity implements LoaderManager.L
     }
 
     /**
-     * Shows the progress UI and hides the login form.
+     * Shows the progress UI and hides the signup form.
      */
     @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
     public void showProgress(final boolean show) {
@@ -250,71 +277,5 @@ public class SignUpActivity extends AppCompatActivity implements LoaderManager.L
                         android.R.layout.simple_dropdown_item_1line, emailAddressCollection);
 
         mEmailView.setAdapter(adapter);
-    }
-
-    /**
-     * Represents an asynchronous login/registration task used to authenticate
-     * the user.
-     */
-    public class UserSignUpTask extends AsyncTask<Void, Void, Boolean> {
-
-        private final SignUpActivity mActivity;
-        private final String mFirstName;
-        private final String mLastName;
-        private final String mEmail;
-        private final String mPassword;
-
-        UserSignUpTask(SignUpActivity activity, String firstName, String lastName, String email, String password) {
-            mActivity = activity;
-            mFirstName = firstName;
-            mLastName = lastName;
-            mEmail = email;
-            mPassword = password;
-        }
-
-        @Override
-        protected Boolean doInBackground(Void... params) {
-
-            ParseUser user = new ParseUser();
-            user.setUsername(mEmail.substring(0, mEmail.indexOf("@")));
-            user.setEmail(mEmail);
-            user.setPassword(mPassword);
-
-            user.signUpInBackground(new SignUpCallback() {
-                @Override
-                public void done(ParseException e) {
-                    if (e == null) {
-                        System.out.println("signed up");
-                        Intent postIntent = new Intent(mActivity, PostActivity.class);
-                        startActivity(postIntent);
-                    } else {
-                        System.out.println("error signing up");
-                        System.out.println(e.getMessage());
-                    }
-                }
-            });
-
-
-            return true;
-        }
-
-        @Override
-        protected void onPostExecute(final Boolean success) {
-            mAuthTask = null;
-            showProgress(false);
-
-            if (success) {
-                finish();
-            } else {
-                mPasswordView.setError(getString(R.string.error_incorrect_password));
-                mPasswordView.requestFocus();
-            }
-        }
-
-        @Override
-        protected void onCancelled() {
-            mAuthTask = null;
-            showProgress(false);
-        }
     }
 }

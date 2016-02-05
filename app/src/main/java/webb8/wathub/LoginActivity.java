@@ -5,12 +5,12 @@ import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.LoaderManager.LoaderCallbacks;
+import android.content.Context;
 import android.content.CursorLoader;
 import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
 import android.net.Uri;
-import android.os.AsyncTask;
 
 import android.os.Build;
 import android.os.Bundle;
@@ -25,14 +25,11 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import com.parse.GetCallback;
 import com.parse.LogInCallback;
-import com.parse.Parse;
 import com.parse.ParseException;
-import com.parse.ParseObject;
 import com.parse.ParseUser;
-import com.parse.SignUpCallback;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,11 +38,6 @@ import java.util.List;
  * A login screen that offers login via email/password.
  */
 public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
-
-    /**
-     * Keep track of the login task to ensure we can cancel it if requested.
-     */
-    private UserLoginTask mAuthTask = null;
 
     // UI references.
     private AutoCompleteTextView mEmailView;
@@ -57,7 +49,6 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        final LoginActivity self = this;
 
         // Set up the login form.
         mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
@@ -87,7 +78,7 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
         signUpButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent signupIntent = new Intent(self, SignUpActivity.class);
+                Intent signupIntent = new Intent(LoginActivity.this, SignUpActivity.class);
                 startActivity(signupIntent);
             }
         });
@@ -132,9 +123,6 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
      * errors are presented and no actual login attempt is made.
      */
     public void attemptLogin() {
-        if (mAuthTask != null) {
-            return;
-        }
 
         // Store values at the time of the login attempt.
         String email = mEmailView.getText().toString();
@@ -146,8 +134,25 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
             showProgress(true);
-            mAuthTask = new UserLoginTask(this, email, password);
-            mAuthTask.execute((Void) null);
+            ParseUser.logInInBackground(email.substring(0, email.indexOf("@")), password, new LogInCallback() {
+                @Override
+                public void done(ParseUser user, ParseException e) {
+                    if (user != null) {
+                        if (user.getBoolean("emailVerified")) {
+                            System.out.println("signed in");
+                            Intent postIntent = new Intent(LoginActivity.this, PostActivity.class);
+                            startActivity(postIntent);
+                        } else {
+                            System.out.println("email not yet verified");
+                            Toast.makeText(getApplicationContext(), R.string.error_verify_email, Toast.LENGTH_SHORT).show();
+                        }
+                    } else {
+                        System.out.println("error logging in");
+                        Toast.makeText(getApplicationContext(), R.string.error_incorrect_password_or_email, Toast.LENGTH_SHORT).show();
+                    }
+                    showProgress(false);
+                }
+            });
         }
     }
 
@@ -247,62 +252,6 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
                         android.R.layout.simple_dropdown_item_1line, emailAddressCollection);
 
         mEmailView.setAdapter(adapter);
-    }
-
-    /**
-     * Represents an asynchronous login/registration task used to authenticate
-     * the user.
-     */
-    public class UserLoginTask extends AsyncTask<Void, Void, Boolean> {
-
-        private final LoginActivity mActivity;
-        private final String mEmail;
-        private final String mPassword;
-
-        UserLoginTask(LoginActivity activity, String email, String password) {
-            mActivity = activity;
-            mEmail = email;
-            mPassword = password;
-        }
-
-        @Override
-        protected Boolean doInBackground(Void... params) {
-
-            ParseUser.logInInBackground(mEmail.substring(0, mEmail.indexOf("@")), mPassword, new LogInCallback() {
-                @Override
-                public void done(ParseUser user, ParseException e) {
-                    if (user != null) {
-                        System.out.println("signed in");
-                        Intent postIntent = new Intent(mActivity, SignUpActivity.class);
-                        startActivity(postIntent);
-                    } else {
-                        System.out.println("error logging in");
-                    }
-                }
-            });
-
-
-            return true;
-        }
-
-        @Override
-        protected void onPostExecute(final Boolean success) {
-            mAuthTask = null;
-            showProgress(false);
-
-            if (success) {
-                finish();
-            } else {
-                mPasswordView.setError(getString(R.string.error_incorrect_password));
-                mPasswordView.requestFocus();
-            }
-        }
-
-        @Override
-        protected void onCancelled() {
-            mAuthTask = null;
-            showProgress(false);
-        }
     }
 }
 
