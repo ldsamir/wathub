@@ -36,15 +36,13 @@ import java.util.List;
 
 import webb8.wathub.models.Profile;
 
-public class SignUpActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor> {
+public class SignUpActivity extends AppCompatActivity {
 
     // UI references.
     private AutoCompleteTextView mEmailView;
     private EditText mFirstNameView;
     private EditText mLastNameView;
     private EditText mPasswordView;
-    private View mProgressView;
-    private View mSignupFormView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,7 +52,6 @@ public class SignUpActivity extends AppCompatActivity implements LoaderManager.L
         // Set up the sign up form.
 
         mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
-        populateAutoComplete();
 
         mFirstNameView = (EditText) findViewById(R.id.first_name);
         mLastNameView = (EditText) findViewById(R.id.last_name);
@@ -78,13 +75,6 @@ public class SignUpActivity extends AppCompatActivity implements LoaderManager.L
                 signUp();
             }
         });
-
-        mSignupFormView = findViewById(R.id.signup_form);
-        mProgressView = findViewById(R.id.signup_progress);
-    }
-
-    private void populateAutoComplete() {
-        getLoaderManager().initLoader(0, null, this);
     }
 
     private boolean checkFields(String firstName, String lastName, String email, String password) {
@@ -144,7 +134,6 @@ public class SignUpActivity extends AppCompatActivity implements LoaderManager.L
         boolean check = checkFields(firstName, lastName, email, password);
 
         if (check) {
-            showProgress(true);
             ParseUser user = new ParseUser();
             user.setUsername(email.substring(0, email.indexOf("@")));
             user.setEmail(email);
@@ -175,7 +164,6 @@ public class SignUpActivity extends AppCompatActivity implements LoaderManager.L
                         System.out.println("error signing up");
                         Toast.makeText(getApplicationContext(), R.string.error_signing_up, Toast.LENGTH_SHORT).show();
                     }
-                    showProgress(false);
                 }
             });
         }
@@ -187,95 +175,5 @@ public class SignUpActivity extends AppCompatActivity implements LoaderManager.L
 
     private boolean isPasswordValid(String password) {
         return password.length() > 8;
-    }
-
-    /**
-     * Shows the progress UI and hides the signup form.
-     */
-    @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
-    public void showProgress(final boolean show) {
-        // On Honeycomb MR2 we have the ViewPropertyAnimator APIs, which allow
-        // for very easy animations. If available, use these APIs to fade-in
-        // the progress spinner.
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2) {
-            int shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
-
-            mSignupFormView.setVisibility(show ? View.GONE : View.VISIBLE);
-            mSignupFormView.animate().setDuration(shortAnimTime).alpha(
-                    show ? 0 : 1).setListener(new AnimatorListenerAdapter() {
-                @Override
-                public void onAnimationEnd(Animator animation) {
-                    mSignupFormView.setVisibility(show ? View.GONE : View.VISIBLE);
-                }
-            });
-
-            mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
-            mProgressView.animate().setDuration(shortAnimTime).alpha(
-                    show ? 1 : 0).setListener(new AnimatorListenerAdapter() {
-                @Override
-                public void onAnimationEnd(Animator animation) {
-                    mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
-                }
-            });
-        } else {
-            // The ViewPropertyAnimator APIs are not available, so simply show
-            // and hide the relevant UI components.
-            mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
-            mSignupFormView.setVisibility(show ? View.GONE : View.VISIBLE);
-        }
-    }
-
-    @Override
-    public Loader<Cursor> onCreateLoader(int i, Bundle bundle) {
-        return new CursorLoader(this,
-                // Retrieve data rows for the device user's 'profile' contact.
-                Uri.withAppendedPath(ContactsContract.Profile.CONTENT_URI,
-                        ContactsContract.Contacts.Data.CONTENT_DIRECTORY), ProfileQuery.PROJECTION,
-
-                // Select only email addresses.
-                ContactsContract.Contacts.Data.MIMETYPE +
-                        " = ?", new String[]{ContactsContract.CommonDataKinds.Email
-                .CONTENT_ITEM_TYPE},
-
-                // Show primary email addresses first. Note that there won't be
-                // a primary email address if the user hasn't specified one.
-                ContactsContract.Contacts.Data.IS_PRIMARY + " DESC");
-    }
-
-    @Override
-    public void onLoadFinished(Loader<Cursor> cursorLoader, Cursor cursor) {
-        List<String> emails = new ArrayList<String>();
-        cursor.moveToFirst();
-        while (!cursor.isAfterLast()) {
-            emails.add(cursor.getString(ProfileQuery.ADDRESS));
-            cursor.moveToNext();
-        }
-
-        addEmailsToAutoComplete(emails);
-    }
-
-    @Override
-    public void onLoaderReset(Loader<Cursor> cursorLoader) {
-
-    }
-
-    private interface ProfileQuery {
-        String[] PROJECTION = {
-                ContactsContract.CommonDataKinds.Email.ADDRESS,
-                ContactsContract.CommonDataKinds.Email.IS_PRIMARY,
-        };
-
-        int ADDRESS = 0;
-        int IS_PRIMARY = 1;
-    }
-
-
-    private void addEmailsToAutoComplete(List<String> emailAddressCollection) {
-        //Create adapter to tell the AutoCompleteTextView what to show in its dropdown list.
-        ArrayAdapter<String> adapter =
-                new ArrayAdapter<String>(SignUpActivity.this,
-                        android.R.layout.simple_dropdown_item_1line, emailAddressCollection);
-
-        mEmailView.setAdapter(adapter);
     }
 }
