@@ -1,8 +1,7 @@
 package webb8.wathub;
 
+import android.app.Application;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 
 import com.parse.Parse;
 import com.parse.ParseObject;
@@ -17,11 +16,14 @@ import webb8.wathub.models.Post;
 import webb8.wathub.models.PostType;
 import webb8.wathub.models.Profile;
 
-public class InitActivity extends AppCompatActivity {
+/**
+ * Created by mismayil on 08/02/16.
+ */
+public class App extends Application {
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public void onCreate() {
+        super.onCreate();
 
         // Initialization
         ParseObject.registerSubclass(Profile.class);
@@ -35,8 +37,5 @@ public class InitActivity extends AppCompatActivity {
         ParseObject.registerSubclass(PostType.class);
         Parse.enableLocalDatastore(this);
         Parse.initialize(this);
-
-        Intent mainIntent = new Intent(this, MainActivity.class);
-        startActivity(mainIntent);
     }
 }

@@ -3,10 +3,17 @@
     <string name="title_activity_post">WAThub</string>
 
     <string name="title_profile">Profile</string>
+    <string name="title_messaging">Messages</string>
+    <string name="title_all_posts">All Posts</string>
+    <string name="title_book_exchange_posts">Book Exchange</string>
+    <string name="title_carpool_posts">Carpool</string>
+    <string name="title_group_study_posts">Group Study</string>
+    <string name="title_favorites">Favorites</string>
     <string name="title_log_out">Log out</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <string name="action_example">Example action</string>
+    <string name="content_avatar">AVATAR</string>
 </resources>

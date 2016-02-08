@@ -30,7 +30,13 @@ public class PostActivity extends AppCompatActivity
     private CharSequence mTitle;
 
     private final int PROFILE = 0;
-    private final int LOG_OUT = 1;
+    private final int MESSAGES = 1;
+    private final int ALL_POSTS = 2;
+    private final int BOOK_EXCHANGE_POSTS = 3;
+    private final int CARPOOL_POSTS = 4;
+    private final int GROUP_STUDY_POSTS = 5;
+    private final int FAVORITES = 6;
+    private final int LOG_OUT = 7;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,13 +57,18 @@ public class PostActivity extends AppCompatActivity
     public void onNavigationDrawerItemSelected(int position) {
         // update the main content by replacing fragments
         FragmentManager fragmentManager = getSupportFragmentManager();
-        System.out.println("position=" + position);
 
         switch (position) {
             case PROFILE:
+            case MESSAGES:
+            case ALL_POSTS:
+            case BOOK_EXCHANGE_POSTS:
+            case CARPOOL_POSTS:
+            case GROUP_STUDY_POSTS:
+            case FAVORITES:
                 fragmentManager.beginTransaction()
-                        .replace(R.id.container, PlaceholderFragment.newInstance(position + 1))
-                        .commit();
+                    .replace(R.id.container, PlaceholderFragment.newInstance(position))
+                    .commit();
                 break;
             case LOG_OUT:
                 ParseUser.logOut();
@@ -71,6 +82,24 @@ public class PostActivity extends AppCompatActivity
         switch (number) {
             case PROFILE:
                 mTitle = getString(R.string.title_profile);
+                break;
+            case MESSAGES:
+                mTitle = getString(R.string.title_messaging);
+                break;
+            case ALL_POSTS:
+                mTitle = getString(R.string.title_all_posts);
+                break;
+            case BOOK_EXCHANGE_POSTS:
+                mTitle = getString(R.string.title_book_exchange_posts);
+                break;
+            case CARPOOL_POSTS:
+                mTitle = getString(R.string.title_carpool_posts);
+                break;
+            case GROUP_STUDY_POSTS:
+                mTitle = getString(R.string.title_group_study_posts);
+                break;
+            case FAVORITES:
+                mTitle = getString(R.string.title_favorites);
                 break;
             case LOG_OUT:
                 mTitle = getString(R.string.title_log_out);
