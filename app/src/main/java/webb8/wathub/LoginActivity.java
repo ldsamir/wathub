@@ -20,6 +20,7 @@ import android.widget.Toast;
 import com.parse.LogInCallback;
 import com.parse.ParseException;
 import com.parse.ParseUser;
+import com.parse.RequestPasswordResetCallback;
 
 /**
  * A login screen that offers login via email/password.
@@ -58,6 +59,14 @@ public class LoginActivity extends AppCompatActivity {
                 attemptLogin();
             }
         });
+
+        Button forgotPasswordButton = (Button) findViewById(R.id.forgot_password_button);
+        forgotPasswordButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                resetPassword();
+            }
+        });
     }
 
     @Override
@@ -87,13 +96,6 @@ public class LoginActivity extends AppCompatActivity {
         mEmailView.setError(null);
         mPasswordView.setError(null);
 
-        // Check for a valid password, if the user entered one.
-        if (!isPasswordValid(password)) {
-            mPasswordView.setError(getString(R.string.error_invalid_password));
-            mPasswordView.requestFocus();
-            return false;
-        }
-
         // Check for a valid email address.
         if (TextUtils.isEmpty(email)) {
             mEmailView.setError(getString(R.string.error_field_required));
@@ -102,6 +104,17 @@ public class LoginActivity extends AppCompatActivity {
         } else if (!isEmailValid(email)) {
             mEmailView.setError(getString(R.string.error_invalid_email));
             mEmailView.requestFocus();
+            return false;
+        }
+
+        // Check for a valid password
+        if (TextUtils.isEmpty(password)) {
+            mPasswordView.setError(getString(R.string.error_field_required));
+            mPasswordView.requestFocus();
+            return false;
+        } else if (!isPasswordValid(password)) {
+            mPasswordView.setError(getString(R.string.error_invalid_password));
+            mPasswordView.requestFocus();
             return false;
         }
 
@@ -151,6 +164,25 @@ public class LoginActivity extends AppCompatActivity {
 
     private boolean isPasswordValid(String password) {
         return password.length() > 8;
+    }
+
+    public void resetPassword() {
+        String email = mEmailView.getText().toString();
+        boolean check = checkFields(email, "123456789");
+
+        if (check) {
+            ParseUser.requestPasswordResetInBackground(email, new RequestPasswordResetCallback() {
+                @Override
+                public void done(ParseException e) {
+                    if (e == null) {
+                        Toast.makeText(getApplicationContext(), R.string.info_reset_password_email_sent, Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(getApplicationContext(), R.string.error_reset_password_email, Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
+        }
+
     }
 }
 

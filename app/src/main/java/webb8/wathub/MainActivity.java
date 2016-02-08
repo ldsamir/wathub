@@ -38,17 +38,6 @@ public class MainActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_main);
 
-        Parse.enableLocalDatastore(this);
-        ParseObject.registerSubclass(Profile.class);
-        ParseObject.registerSubclass(Post.class);
-        ParseObject.registerSubclass(Course.class);
-        ParseObject.registerSubclass(BookExchange.class);
-        ParseObject.registerSubclass(Carpool.class);
-        ParseObject.registerSubclass(Favorite.class);
-        ParseObject.registerSubclass(GroupStudy.class);
-        ParseObject.registerSubclass(Message.class);
-        ParseObject.registerSubclass(PostType.class);
-        Parse.initialize(this);
         ParseUser user = ParseUser.getCurrentUser();
 
         if (user != null) {
