@@ -2,6 +2,7 @@ package webb8.wathub.models;
 
 import com.parse.ParseClassName;
 import com.parse.ParseObject;
+import com.parse.ParseQuery;
 
 /**
  * Created by mismayil on 04/02/16.
@@ -9,44 +10,57 @@ import com.parse.ParseObject;
 
 @ParseClassName("BookExchange")
 public class BookExchange extends ParseObject {
+    private ParseObject object;
+
+    public BookExchange(ParseObject object) {
+        this.object = object;
+    }
+
+    public BookExchange() {
+        this.object = this;
+    }
 
     public String getTitle() {
-        return getString("title");
+        return object.getString("title");
     }
 
     public void setTitle(String title) {
-        put("title", title);
+        object.put("title", title);
     }
 
     public ParseObject getCourse() {
-        return getParseObject("course");
+        return object.getParseObject("course");
     }
 
     public void setCourse(ParseObject course) {
-        put("course", course);
+        object.put("course", course);
     }
 
     public ParseObject getPost() {
-        return getParseObject("post");
+        return object.getParseObject("post");
     }
 
     public void setPost(ParseObject post) {
-        put("post", post);
+        object.put("post", post);
     }
 
     public double getPrice() {
-        return getDouble("price");
+        return object.getDouble("price");
     }
 
     public void setPrice(double price) {
-        put("price", price);
+        object.put("price", price);
     }
 
     public int getCondition() {
-        return getInt("condition");
+        return object.getInt("condition");
     }
 
     public void setCondition(int condition) {
-        put("condition", condition);
+        object.put("condition", condition);
+    }
+
+    public static ParseQuery<ParseObject> getQuery() {
+        return ParseQuery.getQuery("BookExchange");
     }
 }

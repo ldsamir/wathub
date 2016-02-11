@@ -2,6 +2,7 @@ package webb8.wathub.models;
 
 import com.parse.ParseClassName;
 import com.parse.ParseObject;
+import com.parse.ParseQuery;
 
 /**
  * Created by mismayil on 04/02/16.
@@ -9,28 +10,41 @@ import com.parse.ParseObject;
 
 @ParseClassName("Course")
 public class Course extends ParseObject {
+    private ParseObject object;
+
+    public Course(ParseObject object) {
+        this.object = object;
+    }
+
+    public Course() {
+        this.object = this;
+    }
 
     public String getSubject() {
-        return getString("subject");
+        return object.getString("subject");
     }
 
     public void setSubject(String subject) {
-        put("subject", subject);
+        object.put("subject", subject);
     }
 
     public int getNumber() {
-        return getInt("number");
+        return object.getInt("number");
     }
 
     public void setNumber(int number) {
-        put("number", number);
+        object.put("number", number);
     }
 
     public String getTitle() {
-        return getString("title");
+        return object.getString("title");
     }
 
     public void setTitle(String title) {
-        put("title", title);
+        object.put("title", title);
+    }
+
+    public static ParseQuery<ParseObject> getQuery() {
+        return ParseQuery.getQuery("Course");
     }
 }

@@ -6,21 +6,19 @@ import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
 /**
- * Created by mismayil on 04/02/16.
+ * Created by mismayil on 10/02/16.
  */
-
-@ParseClassName("Favorite")
-public class Favorite extends ParseObject {
+@ParseClassName("Done")
+public class Done extends ParseObject {
     private ParseObject object;
 
-    public Favorite(ParseObject object) {
+    public Done(ParseObject object) {
         this.object = object;
     }
 
-    public Favorite() {
+    public Done() {
         this.object = this;
     }
-
     public ParseUser getUser() {
         return object.getParseUser("user");
     }
@@ -38,6 +36,6 @@ public class Favorite extends ParseObject {
     }
 
     public static ParseQuery<ParseObject> getQuery() {
-        return ParseQuery.getQuery("Favorite");
+        return ParseQuery.getQuery("Done");
     }
 }

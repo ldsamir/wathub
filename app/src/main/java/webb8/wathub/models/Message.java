@@ -2,6 +2,7 @@ package webb8.wathub.models;
 
 import com.parse.ParseClassName;
 import com.parse.ParseObject;
+import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
 /**
@@ -10,29 +11,42 @@ import com.parse.ParseUser;
 
 @ParseClassName("Message")
 public class Message extends ParseObject {
+    private ParseObject object;
+
+    public Message(ParseObject object) {
+        this.object = object;
+    }
+
+    public Message() {
+        this.object = this;
+    }
 
     public ParseUser getFrom() {
-        return getParseUser("from");
+        return object.getParseUser("from");
     }
 
     public void setFrom(ParseUser from) {
-        put("from", from);
+        object.put("from", from);
     }
 
     public ParseUser getTo() {
-        return getParseUser("to");
+        return object.getParseUser("to");
     }
 
     public void setTo(ParseUser to) {
-        put("to", to);
+        object.put("to", to);
     }
 
     public String getMessage() {
-        return getString("message");
+        return object.getString("message");
     }
 
     public void setMessage(String message) {
-        put("message", message);
+        object.put("message", message);
+    }
+
+    public static ParseQuery<ParseObject> getQuery() {
+        return ParseQuery.getQuery("Message");
     }
 }
 

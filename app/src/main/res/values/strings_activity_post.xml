@@ -16,4 +16,6 @@
 
     <string name="action_example">Example action</string>
     <string name="content_avatar">AVATAR</string>
+
+    <string name="error_loading_posts">Error loading posts</string>
 </resources>

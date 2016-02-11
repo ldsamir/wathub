@@ -2,6 +2,7 @@ package webb8.wathub.models;
 
 import com.parse.ParseClassName;
 import com.parse.ParseObject;
+import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
 import org.json.JSONArray;
@@ -14,61 +15,74 @@ import java.util.Date;
 
 @ParseClassName("Carpool")
 public class Carpool extends ParseObject {
+    private ParseObject object;
+
+    public Carpool(ParseObject object) {
+        this.object = object;
+    }
+
+    public Carpool() {
+        this.object = this;
+    }
 
     public String getFrom() {
-        return getString("from");
+        return object.getString("from");
     }
 
     public void setFrom(String from) {
-        put("from", from);
+        object.put("from", from);
     }
 
     public String getTo() {
-        return getString("to");
+        return object.getString("to");
     }
 
     public void setTo(String to) {
-        put("to", to);
+        object.put("to", to);
     }
 
     public Date getWhen() {
-        return getDate("when");
+        return object.getDate("when");
     }
 
     public void setWhen(Date when) {
-        put("when", when);
+        object.put("when", when);
     }
 
     public int getMaxPassengers() {
-        return getInt("maxPassengers");
+        return object.getInt("maxPassengers");
     }
 
     public void setMaxPassengers(int maxPassengers) {
-        put("maxPassengers", maxPassengers);
+        object.put("maxPassengers", maxPassengers);
     }
 
     public ParseObject getPost() {
-        return getParseObject("post");
+        return object.getParseObject("post");
     }
 
     public void setPost(ParseObject post) {
-        put("post", post);
+        object.put("post", post);
     }
 
     public JSONArray getPassengers() {
-        return getJSONArray("passengers");
+        return object.getJSONArray("passengers");
     }
 
     public void addPassenger(ParseUser passenger) {
-        addUnique("passengers", passenger);
+        object.addUnique("passengers", passenger);
     }
 
     public double getPrice() {
-        return getDouble("price");
+        return object.getDouble("price");
     }
 
     public void setPrice(double price) {
-        put("price", price);
+        object.put("price", price);
+    }
+
+    public static ParseQuery<ParseObject> getQuery() {
+        return ParseQuery.getQuery("Carpool");
     }
 
 }
