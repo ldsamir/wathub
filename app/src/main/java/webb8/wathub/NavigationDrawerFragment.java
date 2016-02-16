@@ -22,10 +22,6 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import java.util.ArrayList;
-
-import webb8.wathub.models.Post;
-
 /**
  * Fragment used for managing interactions for and presentation of a navigation drawer.
  * See the <a href="https://developer.android.com/design/patterns/navigation-drawer.html#Interaction">
@@ -103,11 +99,11 @@ public class NavigationDrawerFragment extends Fragment {
             }
         });
 
-        String[] actionNames = new String[PostActivity.Action.values().length];
+        String[] actionNames = new String[HubActivity.Action.values().length];
         int i = 0;
 
-        for (PostActivity.Action action : PostActivity.Action.values()) {
-            actionNames[i++] = action.getName();
+        for (HubActivity.Action action : HubActivity.Action.values()) {
+            actionNames[i++] = getString(action.getNameId());
         }
 
         mDrawerListView.setAdapter(new ArrayAdapter<String>(

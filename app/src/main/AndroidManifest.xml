@@ -51,7 +51,7 @@
                 android:value="webb8.wathub.MainActivity" />
         </activity>
         <activity
-            android:name=".PostActivity"
+            android:name=".HubActivity"
             android:label="@string/title_activity_post" />
     </application>
 

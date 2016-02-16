@@ -1,30 +1,13 @@
 package webb8.wathub;
 
-import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.Intent;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.os.Handler;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
-import com.parse.Parse;
-import com.parse.ParseObject;
 import com.parse.ParseUser;
-
-import webb8.wathub.models.BookExchange;
-import webb8.wathub.models.Carpool;
-import webb8.wathub.models.Course;
-import webb8.wathub.models.Favorite;
-import webb8.wathub.models.GroupStudy;
-import webb8.wathub.models.Message;
-import webb8.wathub.models.Post;
-import webb8.wathub.models.PostType;
-import webb8.wathub.models.Profile;
 
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
@@ -42,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
 
         if (user != null) {
             if (user.getBoolean("emailVerified")) {
-                Intent postIntent = new Intent(this, PostActivity.class);
+                Intent postIntent = new Intent(this, HubActivity.class);
                 startActivity(postIntent);
             } else {
                 Toast.makeText(getApplicationContext(), R.string.error_verify_email, Toast.LENGTH_LONG).show();

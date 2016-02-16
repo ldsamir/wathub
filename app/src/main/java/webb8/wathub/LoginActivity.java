@@ -142,7 +142,7 @@ public class LoginActivity extends AppCompatActivity {
                     if (user != null) {
                         if (user.getBoolean("emailVerified")) {
                             System.out.println("signed in");
-                            Intent postIntent = new Intent(LoginActivity.this, PostActivity.class);
+                            Intent postIntent = new Intent(LoginActivity.this, HubActivity.class);
                             startActivity(postIntent);
                         } else {
                             System.out.println("email not yet verified");
