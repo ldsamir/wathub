@@ -1,7 +1,6 @@
 package webb8.wathub;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.ActionBar;
@@ -21,7 +20,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.parse.FindCallback;
-import com.parse.Parse;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
@@ -31,7 +29,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import webb8.wathub.models.Post;
-import webb8.wathub.utilities.Utility;
 
 public class PostActivity extends AppCompatActivity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks {
@@ -76,53 +73,60 @@ public class PostActivity extends AppCompatActivity
         // update the main content by replacing fragments
         FragmentManager fragmentManager = getSupportFragmentManager();
 
-        switch (position) {
-            case PROFILE:
-            case MESSAGES:
-            case ALL_POSTS:
-            case BOOK_EXCHANGE_POSTS:
-            case CARPOOL_POSTS:
-            case GROUP_STUDY_POSTS:
-            case FAVORITES:
-                fragmentManager.beginTransaction()
+        if (position == Action.PROFILE.getId()) {
+
+        }
+
+        if (position == Action.MESSAGES.getId()) {
+
+        }
+
+        if (position == Action.ALL_POSTS.getId()) {
+            fragmentManager.beginTransaction()
                     .replace(R.id.container, PostFragment.newInstance(position))
                     .commit();
-                break;
-            case LOG_OUT:
-                ParseUser.logOut();
-                Intent mainIntent = new Intent(this, MainActivity.class);
-                startActivity(mainIntent);
-                break;
+        }
+
+        if (position == Action.BOOK_EXCHANGE_POSTS.getId()) {
+
+        }
+
+        if (position == Action.CARPOOL_POSTS.getId()) {
+
+        }
+
+        if (position == Action.GROUP_STUDY_POSTS.getId()) {
+
+        }
+
+        if (position == Action.FAVORITES.getId()) {
+
+        }
+
+        if (position == Action.LOG_OUT.getId()) {
+            ParseUser.logOut();
+            Intent mainIntent = new Intent(this, MainActivity.class);
+            startActivity(mainIntent);
         }
     }
 
     public void onSectionAttached(int number) {
-        switch (number) {
-            case PROFILE:
-                mTitle = getString(R.string.title_profile);
-                break;
-            case MESSAGES:
-                mTitle = getString(R.string.title_messaging);
-                break;
-            case ALL_POSTS:
-                mTitle = getString(R.string.title_all_posts);
-                break;
-            case BOOK_EXCHANGE_POSTS:
-                mTitle = getString(R.string.title_book_exchange_posts);
-                break;
-            case CARPOOL_POSTS:
-                mTitle = getString(R.string.title_carpool_posts);
-                break;
-            case GROUP_STUDY_POSTS:
-                mTitle = getString(R.string.title_group_study_posts);
-                break;
-            case FAVORITES:
-                mTitle = getString(R.string.title_favorites);
-                break;
-            case LOG_OUT:
-                mTitle = getString(R.string.title_log_out);
-                break;
-        }
+
+        if (number == Action.PROFILE.getId()) { mTitle = Action.PROFILE.getName(); }
+
+        if (number == Action.MESSAGES.getId()) { mTitle = Action.MESSAGES.getName(); }
+
+        if (number == Action.ALL_POSTS.getId()) { mTitle = Action.ALL_POSTS.getName(); }
+
+        if (number == Action.BOOK_EXCHANGE_POSTS.getId()) { mTitle = Action.BOOK_EXCHANGE_POSTS.getName(); }
+
+        if (number == Action.CARPOOL_POSTS.getId()) { mTitle = Action.CARPOOL_POSTS.getName(); }
+
+        if (number == Action.GROUP_STUDY_POSTS.getId()) { mTitle = Action.GROUP_STUDY_POSTS.getName(); }
+
+        if (number == Action.FAVORITES.getId()) { mTitle = Action.FAVORITES.getName(); }
+
+        if (number == Action.LOG_OUT.getId()) { mTitle = Action.LOG_OUT.getName(); }
     }
 
     public void restoreActionBar() {
@@ -193,45 +197,58 @@ public class PostActivity extends AppCompatActivity
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
             int sectionNumber = getArguments().getInt(ARG_SECTION_NUMBER);
-//            ViewGroup postContainer = thisActivity.findViewById(R.id.post_container);
             View rootView = inflater.inflate(R.layout.fragment_post, container, false);
-            final LinearLayout postContainer = (LinearLayout) rootView;
+            final LinearLayout fragmentContainer = (LinearLayout) rootView;
 
-            switch (sectionNumber) {
-                case PROFILE:
-                    break;
-                case MESSAGES:
-                    break;
-                case ALL_POSTS:
-                    ParseQuery<ParseObject> query = Post.getQuery();
-                    query.orderByDescending("updatedAt");
-                    query.findInBackground(new FindCallback<ParseObject>() {
-                        @Override
-                        public void done(List<ParseObject> objects, ParseException e) {
-                            if (e == null) {
-                                ArrayList<Post> posts = new ArrayList<Post>();
+            if (sectionNumber == Action.PROFILE.getId()) {
 
-                                for (ParseObject object : objects) {
-                                    Post post = new Post(object);
-                                    posts.add(post);
-                                    View postView = getPostView(post);
-                                    postContainer.addView(postView);
-                                }
+            }
 
-                            } else {
-                                Toast.makeText(thisActivity.getApplicationContext(), R.string.error_loading_posts, Toast.LENGTH_SHORT).show();
+            if (sectionNumber == Action.MESSAGES.getId()) {
+
+            }
+
+            if (sectionNumber == Action.ALL_POSTS.getId()) {
+                ParseQuery<ParseObject> query = Post.getQuery();
+                query.orderByDescending("updatedAt");
+                query.findInBackground(new FindCallback<ParseObject>() {
+                    @Override
+                    public void done(List<ParseObject> objects, ParseException e) {
+                        if (e == null) {
+                            ArrayList<Post> posts = new ArrayList<Post>();
+
+                            for (ParseObject object : objects) {
+                                Post post = new Post(object);
+                                posts.add(post);
+                                View postView = getPostView(post);
+                                fragmentContainer.addView(postView);
                             }
+
+                        } else {
+                            Toast.makeText(thisActivity.getApplicationContext(), R.string.error_loading_posts, Toast.LENGTH_SHORT).show();
                         }
-                    });
-                    break;
-                case BOOK_EXCHANGE_POSTS:
-                    break;
-                case CARPOOL_POSTS:
-                    break;
-                case GROUP_STUDY_POSTS:
-                    break;
-                case FAVORITES:
-                    break;
+                    }
+                });
+            }
+
+            if (sectionNumber == Action.BOOK_EXCHANGE_POSTS.getId()) {
+
+            }
+
+            if (sectionNumber == Action.CARPOOL_POSTS.getId()) {
+
+            }
+
+            if (sectionNumber == Action.GROUP_STUDY_POSTS.getId()) {
+
+            }
+
+            if (sectionNumber == Action.FAVORITES.getId()) {
+
+            }
+
+            if (sectionNumber == Action.LOG_OUT.getId()) {
+
             }
 
             return rootView;
@@ -257,4 +274,30 @@ public class PostActivity extends AppCompatActivity
         }
     }
 
+    public enum Action {
+        PROFILE(0, "Profile"),
+        MESSAGES(1, "Messages"),
+        ALL_POSTS(2, "All posts"),
+        BOOK_EXCHANGE_POSTS(3, "Book Exchange"),
+        CARPOOL_POSTS(4, "Carpool"),
+        GROUP_STUDY_POSTS(5, "Group Study"),
+        FAVORITES(6, "Favorites"),
+        LOG_OUT(7, "Log out");
+
+        private int id;
+        private String name;
+
+        Action(int id, String name) {
+            this.id = id;
+            this.name = name;
+        }
+
+        public int getId() {
+            return id;
+        }
+
+        public String getName() {
+            return name;
+        }
+    }
 }

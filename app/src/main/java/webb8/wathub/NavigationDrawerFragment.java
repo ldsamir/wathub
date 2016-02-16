@@ -22,6 +22,10 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+
+import webb8.wathub.models.Post;
+
 /**
  * Fragment used for managing interactions for and presentation of a navigation drawer.
  * See the <a href="https://developer.android.com/design/patterns/navigation-drawer.html#Interaction">
@@ -99,20 +103,18 @@ public class NavigationDrawerFragment extends Fragment {
             }
         });
 
+        String[] actionNames = new String[PostActivity.Action.values().length];
+        int i = 0;
+
+        for (PostActivity.Action action : PostActivity.Action.values()) {
+            actionNames[i++] = action.getName();
+        }
+
         mDrawerListView.setAdapter(new ArrayAdapter<String>(
                 getActionBar().getThemedContext(),
                 android.R.layout.simple_list_item_activated_1,
                 android.R.id.text1,
-                new String[]{
-                        getString(R.string.title_profile),
-                        getString(R.string.title_messaging),
-                        getString(R.string.title_all_posts),
-                        getString(R.string.title_book_exchange_posts),
-                        getString(R.string.title_carpool_posts),
-                        getString(R.string.title_group_study_posts),
-                        getString(R.string.title_favorites),
-                        getString(R.string.title_log_out)
-                }));
+                actionNames));
         mDrawerListView.setItemChecked(mCurrentSelectedPosition, true);
         return view;
     }
