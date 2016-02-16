@@ -8,12 +8,16 @@ import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.os.Bundle;
+import android.support.v7.widget.CardView;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.support.v4.widget.DrawerLayout;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.parse.FindCallback;
@@ -23,9 +27,11 @@ import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import webb8.wathub.models.Post;
+import webb8.wathub.utilities.Utility;
 
 public class PostActivity extends AppCompatActivity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks {
@@ -185,10 +191,11 @@ public class PostActivity extends AppCompatActivity
         }
 
         @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_post, container, false);
+        public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
             int sectionNumber = getArguments().getInt(ARG_SECTION_NUMBER);
+//            ViewGroup postContainer = thisActivity.findViewById(R.id.post_container);
+            View rootView = inflater.inflate(R.layout.fragment_post, container, false);
+            final LinearLayout postContainer = (LinearLayout) rootView;
 
             switch (sectionNumber) {
                 case PROFILE:
@@ -197,10 +204,19 @@ public class PostActivity extends AppCompatActivity
                     break;
                 case ALL_POSTS:
                     ParseQuery<ParseObject> query = Post.getQuery();
+                    query.orderByDescending("updatedAt");
                     query.findInBackground(new FindCallback<ParseObject>() {
                         @Override
                         public void done(List<ParseObject> objects, ParseException e) {
                             if (e == null) {
+                                ArrayList<Post> posts = new ArrayList<Post>();
+
+                                for (ParseObject object : objects) {
+                                    Post post = new Post(object);
+                                    posts.add(post);
+                                    View postView = getPostView(post);
+                                    postContainer.addView(postView);
+                                }
 
                             } else {
                                 Toast.makeText(thisActivity.getApplicationContext(), R.string.error_loading_posts, Toast.LENGTH_SHORT).show();
@@ -217,7 +233,20 @@ public class PostActivity extends AppCompatActivity
                 case FAVORITES:
                     break;
             }
+
             return rootView;
+        }
+
+        public static View getPostView(Post post) {
+            CardView cardView = new CardView(thisActivity.getApplicationContext());
+            TextView textView = new TextView(thisActivity.getApplicationContext());
+            textView.setText(post.getContent());
+            textView.setTextColor(thisActivity.getResources().getColor(R.color.black));
+            textView.setGravity(Gravity.CENTER);
+            cardView.addView(textView);
+            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 200);
+            cardView.setLayoutParams(layoutParams);
+            return cardView;
         }
 
         @Override
