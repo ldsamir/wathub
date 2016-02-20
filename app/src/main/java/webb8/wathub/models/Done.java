@@ -20,7 +20,9 @@ public class Done extends ParseObject {
     }
 
     public Post getPost() {
-        return ParseObject.createWithoutData(Post.class, getParseObject("post").getObjectId());
+        ParseObject object = getParseObject("post");
+        if (object != null) return ParseObject.createWithoutData(Post.class, object.getObjectId());
+        return null;
     }
 
     public void setPost(Post post) {
@@ -32,6 +34,7 @@ public class Done extends ParseObject {
     }
 
     public static Done getInstance(ParseObject object) {
-        return ParseObject.createWithoutData(Done.class, object.getObjectId());
+        if (object != null) return ParseObject.createWithoutData(Done.class, object.getObjectId());
+        return null;
     }
 }

@@ -40,6 +40,7 @@ public class Course extends ParseObject {
     }
 
     public static Course getInstance(ParseObject object) {
-        return ParseObject.createWithoutData(Course.class, object.getObjectId());
+        if (object != null) return ParseObject.createWithoutData(Course.class, object.getObjectId());
+        return null;
     }
 }

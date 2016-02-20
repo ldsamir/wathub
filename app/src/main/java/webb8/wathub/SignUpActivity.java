@@ -77,6 +77,7 @@ public class SignUpActivity extends AppCompatActivity {
         });
     }
 
+    // TODO: 20/02/16 split this function
     private boolean checkFields(String firstName, String lastName, String email, String password) {
         // Reset errors.
         mEmailView.setError(null);
@@ -129,6 +130,7 @@ public class SignUpActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    // sign up the user
     private void signUp() {
         final String firstName = mFirstNameView.getText().toString();
         final String lastName = mLastNameView.getText().toString();
@@ -173,10 +175,12 @@ public class SignUpActivity extends AppCompatActivity {
         }
     }
 
+    // TODO: 20/02/16 improve email check and move this to other class
     private boolean isEmailValid(String email) {
         return email.contains("@uwaterloo.ca");
     }
 
+    // TODO: 20/02/16 improve password check and move this to other class
     private boolean isPasswordValid(String password) {
         return password.length() > 8;
     }

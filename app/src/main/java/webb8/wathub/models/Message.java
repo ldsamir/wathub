@@ -41,7 +41,8 @@ public class Message extends ParseObject {
     }
 
     public static Message getInstance(ParseObject object) {
-        return ParseObject.createWithoutData(Message.class, object.getObjectId());
+        if (object != null) return ParseObject.createWithoutData(Message.class, object.getObjectId());
+        return null;
     }
 }
 

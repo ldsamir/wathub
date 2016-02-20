@@ -84,6 +84,7 @@ public class Profile extends ParseObject {
     }
 
     public static Profile getInstance(ParseObject object) {
-        return ParseObject.createWithoutData(Profile.class, object.getObjectId());
+        if (object != null) return ParseObject.createWithoutData(Profile.class, object.getObjectId());
+        return null;
     }
 }

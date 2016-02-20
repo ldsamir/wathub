@@ -20,7 +20,9 @@ public class BookExchange extends ParseObject {
     }
 
     public Course getCourse() {
-        return ParseObject.createWithoutData(Course.class, getParseObject("course").getObjectId());
+        ParseObject object = getParseObject("course");
+        if (object != null) return ParseObject.createWithoutData(Course.class, object.getObjectId());
+        return null;
     }
 
     public void setCourse(Course course) {
@@ -28,7 +30,9 @@ public class BookExchange extends ParseObject {
     }
 
     public Post getPost() {
-        return ParseObject.createWithoutData(Post.class, getParseObject("post").getObjectId());
+        ParseObject object = getParseObject("post");
+        if (object != null) return ParseObject.createWithoutData(Post.class, object.getObjectId());
+        return null;
     }
 
     public void setPost(Post post) {
@@ -56,6 +60,7 @@ public class BookExchange extends ParseObject {
     }
 
     public static BookExchange getInstance(ParseObject object) {
-        return ParseObject.createWithoutData(BookExchange.class, object.getObjectId());
+        if (object != null) return ParseObject.createWithoutData(BookExchange.class, object.getObjectId());
+        return null;
     }
 }

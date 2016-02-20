@@ -90,6 +90,7 @@ public class LoginActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    // TODO: 20/02/16  split this function
     private boolean checkFields(String email, String password) {
         // Reset errors.
         mEmailView.setError(null);
@@ -157,10 +158,12 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
+    // TODO: 20/02/16 improve email check
     private boolean isEmailValid(String email) {
         return email.contains("@uwaterloo.ca");
     }
 
+    // TODO: 20/02/16 improve password check
     private boolean isPasswordValid(String password) {
         return password.length() > 8;
     }

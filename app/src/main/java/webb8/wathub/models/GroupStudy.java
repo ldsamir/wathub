@@ -17,7 +17,9 @@ import java.util.Date;
 public class GroupStudy extends ParseObject {
 
     public Post getPost() {
-        return ParseObject.createWithoutData(Post.class, getParseObject("post").getObjectId());
+        ParseObject object = getParseObject("post");
+        if (object != null) return ParseObject.createWithoutData(Post.class, object.getObjectId());
+        return null;
     }
 
     public void setPost(Post post) {
@@ -57,7 +59,9 @@ public class GroupStudy extends ParseObject {
     }
 
     public Course getCourse() {
-        return ParseObject.createWithoutData(Course.class, getParseObject("course").getObjectId());
+        ParseObject object = getParseObject("course");
+        if (object != null) return ParseObject.createWithoutData(Course.class, object.getObjectId());
+        return null;
     }
 
     public void setCourse(Course course) {
@@ -77,6 +81,7 @@ public class GroupStudy extends ParseObject {
     }
 
     public static GroupStudy getInstance(ParseObject object) {
-        return ParseObject.createWithoutData(GroupStudy.class, object.getObjectId());
+        if (object != null) return ParseObject.createWithoutData(GroupStudy.class, object.getObjectId());
+        return null;
     }
 }

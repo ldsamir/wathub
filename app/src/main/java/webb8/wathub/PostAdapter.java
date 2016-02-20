@@ -73,7 +73,8 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
         Date postDate = post.getUpdatedAt();
         String typeName = GENERIC;
         Profile profile = null;
-        //if (postType != null) typeName = postType.getTypeName();
+
+        if (postType != null) typeName = postType.getTypeName();
 
         ParseQuery<ParseObject> query = Profile.getQuery();
         query.whereEqualTo("owner", user);

@@ -21,7 +21,9 @@ public class Favorite extends ParseObject {
     }
 
     public Post getPost() {
-        return ParseObject.createWithoutData(Post.class, getParseObject("post").getObjectId());
+        ParseObject object = getParseObject("post");
+        if (object != null) return ParseObject.createWithoutData(Post.class, object.getObjectId());
+        return null;
     }
 
     public void setPost(Post post) {
@@ -33,6 +35,7 @@ public class Favorite extends ParseObject {
     }
 
     public static Favorite getInstance(ParseObject object) {
-        return ParseObject.createWithoutData(Favorite.class, object.getObjectId());
+        if (object != null) return ParseObject.createWithoutData(Favorite.class, object.getObjectId());
+        return null;
     }
 }

@@ -23,6 +23,7 @@ public class MainActivity extends AppCompatActivity {
 
         ParseUser user = ParseUser.getCurrentUser();
 
+        // check if user already logged in and email verified, then skip login
         if (user != null) {
             if (user.getBoolean("emailVerified")) {
                 Intent postIntent = new Intent(this, HubActivity.class);

@@ -48,7 +48,9 @@ public class Carpool extends ParseObject {
     }
 
     public Post getPost() {
-        return ParseObject.createWithoutData(Post.class, getParseObject("post").getObjectId());
+        ParseObject object = getParseObject("post");
+        if (object != null) return ParseObject.createWithoutData(Post.class, object.getObjectId());
+        return null;
     }
 
     public void setPost(Post post) {
@@ -76,7 +78,8 @@ public class Carpool extends ParseObject {
     }
 
     public static Carpool getInstance(ParseObject object) {
-        return ParseObject.createWithoutData(Carpool.class, object.getObjectId());
+        if (object != null) return ParseObject.createWithoutData(Carpool.class, object.getObjectId());
+        return null;
     }
 
 }
