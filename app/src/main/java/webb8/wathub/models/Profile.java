@@ -14,81 +14,76 @@ import java.util.Date;
  */
 @ParseClassName("Profile")
 public class Profile extends ParseObject {
-    private ParseObject object;
-
-    public Profile(ParseObject object) {
-        this.object = object;
-    }
-
-    public Profile() {
-        this.object = this;
-    }
 
     public String getFirstName() {
-        return object.getString("firstName");
+        return getString("firstName");
     }
 
     public void setFirstName(String firstName) {
-        object.put("firstName", firstName);
+        put("firstName", firstName);
     }
 
     public String getLastName() {
-        return object.getString("lastName");
+        return getString("lastName");
     }
 
     public void setLastName(String lastName) {
-        object.put("lastName", lastName);
+        put("lastName", lastName);
     }
 
     public Date getBirthday() {
-        return object.getDate("birthday");
+        return getDate("birthday");
     }
 
     public void setBirthday(Date birthday) {
-        object.put("birthday", birthday);
+        put("birthday", birthday);
     }
 
     public String getPhone() {
-        return object.getString("phone");
+        return getString("phone");
     }
 
     public void setPhone(String phone) {
-        object.put("phone", phone);
+        put("phone", phone);
     }
 
     public String getMajor() {
-        return object.getString("major");
+        return getString("major");
     }
 
     public void setMajor(String major) {
-        object.put("major", major);
+        put("major", major);
     }
 
     public ParseFile getAvatar() {
-        return object.getParseFile("avatar");
+        return getParseFile("avatar");
     }
 
     public void setAvatar(ParseFile avatar) {
-        object.put("avatar", avatar);
+        put("avatar", avatar);
     }
 
     public JSONArray getContactLinks() {
-        return object.getJSONArray("contactLinks");
+        return getJSONArray("contactLinks");
     }
 
     public void addContactLink(String contactLink) {
-        object.addUnique("contactLinks", contactLink);
+        addUnique("contactLinks", contactLink);
     }
 
     public ParseUser getOwner() {
-        return (ParseUser) object.get("owner");
+        return (ParseUser) get("owner");
     }
 
     public void setOwner(ParseUser owner) {
-        object.put("owner", owner);
+        put("owner", owner);
     }
 
     public static ParseQuery<ParseObject> getQuery() {
         return ParseQuery.getQuery("Profile");
+    }
+
+    public static Profile getInstance(ParseObject object) {
+        return ParseObject.createWithoutData(Profile.class, object.getObjectId());
     }
 }

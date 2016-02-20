@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginStart="@dimen/activity_horizontal_margin"
+    android:layout_marginEnd="@dimen/activity_horizontal_margin"
+    android:layout_marginTop="@dimen/activity_vertical_margin"
+    android:layout_marginBottom="@dimen/activity_vertical_margin">
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/post_card"
+        card_view:cardCornerRadius="4dp"
+        card_view:cardElevation="5dp"
+        card_view:cardBackgroundColor="@color/yellow">
+        
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/padding">
+            
+            <ImageView
+                android:layout_width="@dimen/post_avatar_width"
+                android:layout_height="@dimen/post_avatar_height"
+                android:id="@+id/post_avatar"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginEnd="16dp"
+                android:contentDescription="@string/content_avatar"/>
+            
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/post_user"
+                android:layout_toEndOf="@id/post_avatar"
+                android:layout_alignParentTop="true"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/post_date"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentTop="true"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/post_content"
+                android:layout_below="@id/post_avatar"/>
+
+        </RelativeLayout>
+    </android.support.v7.widget.CardView>
+
+</LinearLayout>

@@ -11,42 +11,37 @@ import com.parse.ParseUser;
 
 @ParseClassName("Message")
 public class Message extends ParseObject {
-    private ParseObject object;
-
-    public Message(ParseObject object) {
-        this.object = object;
-    }
-
-    public Message() {
-        this.object = this;
-    }
 
     public ParseUser getFrom() {
-        return object.getParseUser("from");
+        return getParseUser("from");
     }
 
     public void setFrom(ParseUser from) {
-        object.put("from", from);
+        put("from", from);
     }
 
     public ParseUser getTo() {
-        return object.getParseUser("to");
+        return getParseUser("to");
     }
 
     public void setTo(ParseUser to) {
-        object.put("to", to);
+        put("to", to);
     }
 
     public String getMessage() {
-        return object.getString("message");
+        return getString("message");
     }
 
     public void setMessage(String message) {
-        object.put("message", message);
+        put("message", message);
     }
 
     public static ParseQuery<ParseObject> getQuery() {
         return ParseQuery.getQuery("Message");
+    }
+
+    public static Message getInstance(ParseObject object) {
+        return ParseObject.createWithoutData(Message.class, object.getObjectId());
     }
 }
 

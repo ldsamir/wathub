@@ -10,41 +10,36 @@ import com.parse.ParseQuery;
 
 @ParseClassName("Course")
 public class Course extends ParseObject {
-    private ParseObject object;
-
-    public Course(ParseObject object) {
-        this.object = object;
-    }
-
-    public Course() {
-        this.object = this;
-    }
 
     public String getSubject() {
-        return object.getString("subject");
+        return getString("subject");
     }
 
     public void setSubject(String subject) {
-        object.put("subject", subject);
+        put("subject", subject);
     }
 
     public int getNumber() {
-        return object.getInt("number");
+        return getInt("number");
     }
 
     public void setNumber(int number) {
-        object.put("number", number);
+        put("number", number);
     }
 
     public String getTitle() {
-        return object.getString("title");
+        return getString("title");
     }
 
     public void setTitle(String title) {
-        object.put("title", title);
+        put("title", title);
     }
 
     public static ParseQuery<ParseObject> getQuery() {
         return ParseQuery.getQuery("Course");
+    }
+
+    public static Course getInstance(ParseObject object) {
+        return ParseObject.createWithoutData(Course.class, object.getObjectId());
     }
 }

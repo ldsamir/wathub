@@ -8,6 +8,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -15,6 +17,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.support.v4.widget.DrawerLayout;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -188,8 +191,10 @@ public class HubActivity extends AppCompatActivity
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
             int sectionNumber = getArguments().getInt(ARG_SECTION_NUMBER);
-            View rootView = inflater.inflate(R.layout.fragment_hub, container, false);
-            final LinearLayout fragmentContainer = (LinearLayout) rootView;
+            View rootView = inflater.inflate(R.layout.fragment_post, container, false);
+            final RecyclerView postContainer = (RecyclerView) rootView;
+            LinearLayoutManager llm = new LinearLayoutManager(thisActivity.getApplicationContext());
+            postContainer.setLayoutManager(llm);
 
             if (sectionNumber == Action.PROFILE.getId()) {
 
@@ -206,14 +211,15 @@ public class HubActivity extends AppCompatActivity
                     @Override
                     public void done(List<ParseObject> objects, ParseException e) {
                         if (e == null) {
-                            ArrayList<Post> posts = new ArrayList<Post>();
+                            List<Post> posts = new ArrayList<Post>();
 
                             for (ParseObject object : objects) {
-                                Post post = new Post(object);
+                                Post post = Post.getInstance(object);
                                 posts.add(post);
-                                View postView = getPostView(post);
-                                fragmentContainer.addView(postView);
                             }
+
+                            PostAdapter postAdapter = new PostAdapter(posts);
+                            postContainer.setAdapter(postAdapter);
 
                         } else {
                             Toast.makeText(thisActivity.getApplicationContext(), R.string.error_loading_posts, Toast.LENGTH_SHORT).show();
@@ -243,18 +249,6 @@ public class HubActivity extends AppCompatActivity
             }
 
             return rootView;
-        }
-
-        public static View getPostView(Post post) {
-            CardView cardView = new CardView(thisActivity.getApplicationContext());
-            TextView textView = new TextView(thisActivity.getApplicationContext());
-            textView.setText(post.getContent());
-            textView.setTextColor(thisActivity.getResources().getColor(R.color.black));
-            textView.setGravity(Gravity.CENTER);
-            cardView.addView(textView);
-            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 200);
-            cardView.setLayoutParams(layoutParams);
-            return cardView;
         }
 
         @Override

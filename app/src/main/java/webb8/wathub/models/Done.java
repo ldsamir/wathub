@@ -10,32 +10,28 @@ import com.parse.ParseUser;
  */
 @ParseClassName("Done")
 public class Done extends ParseObject {
-    private ParseObject object;
 
-    public Done(ParseObject object) {
-        this.object = object;
-    }
-
-    public Done() {
-        this.object = this;
-    }
     public ParseUser getUser() {
-        return object.getParseUser("user");
+        return getParseUser("user");
     }
 
     public void setUser(ParseUser user) {
-        object.put("user", user);
+        put("user", user);
     }
 
-    public ParseObject getPost() {
-        return object.getParseObject("post");
+    public Post getPost() {
+        return ParseObject.createWithoutData(Post.class, getParseObject("post").getObjectId());
     }
 
-    public void setPost(ParseObject post) {
-        object.put("post", post);
+    public void setPost(Post post) {
+        put("post", post);
     }
 
     public static ParseQuery<ParseObject> getQuery() {
         return ParseQuery.getQuery("Done");
+    }
+
+    public static Done getInstance(ParseObject object) {
+        return ParseObject.createWithoutData(Done.class, object.getObjectId());
     }
 }

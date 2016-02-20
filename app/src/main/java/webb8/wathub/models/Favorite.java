@@ -11,33 +11,28 @@ import com.parse.ParseUser;
 
 @ParseClassName("Favorite")
 public class Favorite extends ParseObject {
-    private ParseObject object;
-
-    public Favorite(ParseObject object) {
-        this.object = object;
-    }
-
-    public Favorite() {
-        this.object = this;
-    }
 
     public ParseUser getUser() {
-        return object.getParseUser("user");
+        return getParseUser("user");
     }
 
     public void setUser(ParseUser user) {
-        object.put("user", user);
+        put("user", user);
     }
 
-    public ParseObject getPost() {
-        return object.getParseObject("post");
+    public Post getPost() {
+        return ParseObject.createWithoutData(Post.class, getParseObject("post").getObjectId());
     }
 
-    public void setPost(ParseObject post) {
-        object.put("post", post);
+    public void setPost(Post post) {
+        put("post", post);
     }
 
     public static ParseQuery<ParseObject> getQuery() {
         return ParseQuery.getQuery("Favorite");
+    }
+
+    public static Favorite getInstance(ParseObject object) {
+        return ParseObject.createWithoutData(Favorite.class, object.getObjectId());
     }
 }

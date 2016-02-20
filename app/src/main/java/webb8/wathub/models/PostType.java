@@ -10,25 +10,20 @@ import com.parse.ParseQuery;
 
 @ParseClassName("PostType")
 public class PostType extends ParseObject {
-    private ParseObject object;
-
-    public PostType(ParseObject object) {
-        this.object = object;
-    }
-
-    public PostType() {
-        this.object = this;
-    }
 
     public String getTypeName() {
-        return object.getString("typeName");
+        return getString("typeName");
     }
 
     public void setTypeName(String typeName) {
-        object.put("typeName", typeName);
+        put("typeName", typeName);
     }
 
     public static ParseQuery<ParseObject> getQuery() {
         return ParseQuery.getQuery("PostType");
+    }
+
+    public static PostType getInstance(ParseObject object) {
+        return ParseObject.createWithoutData(PostType.class, object.getObjectId());
     }
 }
