@@ -160,7 +160,7 @@ public class HubActivity extends AppCompatActivity
     }
 
     /**
-     * General Post Fragment
+     * Hub Fragment
      */
     public static class HubFragment extends Fragment {
         /**
@@ -181,8 +181,7 @@ public class HubActivity extends AppCompatActivity
             return fragment;
         }
 
-        public HubFragment() {
-        }
+        public HubFragment() {}
 
         public static void setThisActivity(Activity activity) {
             thisActivity = activity;
@@ -191,10 +190,7 @@ public class HubActivity extends AppCompatActivity
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
             int sectionNumber = getArguments().getInt(ARG_SECTION_NUMBER);
-            View rootView = inflater.inflate(R.layout.fragment_post, container, false);
-            final RecyclerView postContainer = (RecyclerView) rootView;
-            LinearLayoutManager llm = new LinearLayoutManager(thisActivity.getApplicationContext());
-            postContainer.setLayoutManager(llm);
+            View rootView = null;
 
             if (sectionNumber == Action.PROFILE.getId()) {
 
@@ -205,27 +201,47 @@ public class HubActivity extends AppCompatActivity
             }
 
             if (sectionNumber == Action.ALL_POSTS.getId()) {
+                rootView = inflater.inflate(R.layout.fragment_post, container, false);
+                final RecyclerView postContainer = (RecyclerView) rootView;
+                LinearLayoutManager llm = new LinearLayoutManager(thisActivity.getApplicationContext());
+                postContainer.setLayoutManager(llm);
                 ParseQuery<ParseObject> query = Post.getQuery();
                 query.orderByDescending("updatedAt");
-                query.findInBackground(new FindCallback<ParseObject>() {
-                    @Override
-                    public void done(List<ParseObject> objects, ParseException e) {
-                        if (e == null) {
-                            List<Post> posts = new ArrayList<Post>();
 
-                            for (ParseObject object : objects) {
-                                Post post = Post.getInstance(object);
-                                posts.add(post);
-                            }
+                try {
+                    List<ParseObject> objects = query.find();
+                    List<Post> posts = new ArrayList<Post>();
 
-                            PostAdapter postAdapter = new PostAdapter(posts);
-                            postContainer.setAdapter(postAdapter);
-
-                        } else {
-                            Toast.makeText(thisActivity.getApplicationContext(), R.string.error_loading_posts, Toast.LENGTH_SHORT).show();
-                        }
+                    for (ParseObject object : objects) {
+                        Post post = Post.getInstance(object);
+                        posts.add(post);
                     }
-                });
+
+                    PostAdapter postAdapter = new PostAdapter(posts);
+                    postContainer.setAdapter(postAdapter);
+                } catch (ParseException e) {
+
+                }
+
+//                query.findInBackground(new FindCallback<ParseObject>() {
+//                    @Override
+//                    public void done(List<ParseObject> objects, ParseException e) {
+//                        if (e == null) {
+//                            List<Post> posts = new ArrayList<Post>();
+//
+//                            for (ParseObject object : objects) {
+//                                Post post = Post.getInstance(object);
+//                                posts.add(post);
+//                            }
+//
+//                            PostAdapter postAdapter = new PostAdapter(posts);
+//                            postContainer.setAdapter(postAdapter);
+//
+//                        } else {
+//                            Toast.makeText(thisActivity.getApplicationContext(), R.string.error_loading_posts, Toast.LENGTH_SHORT).show();
+//                        }
+//                    }
+//                });
             }
 
             if (sectionNumber == Action.BOOK_EXCHANGE_POSTS.getId()) {
