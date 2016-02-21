@@ -9,18 +9,22 @@ import com.parse.ParseQuery;
  */
 
 @ParseClassName("PostType")
-public class PostType extends ParseObject {
+public class PostType extends ParseObject implements Parsable {
+
+    // class columns
+    public static final String KEY_CLASSNAME = "PostType";
+    public static final String KEY_TYPENAME = "typeName";
 
     public String getTypeName() {
-        return getString("typeName");
+        return getString(KEY_TYPENAME);
     }
 
     public void setTypeName(String typeName) {
-        put("typeName", typeName);
+        put(KEY_TYPENAME, typeName);
     }
 
     public static ParseQuery<ParseObject> getQuery() {
-        return ParseQuery.getQuery("PostType");
+        return ParseQuery.getQuery(KEY_CLASSNAME);
     }
 
     public static PostType getInstance(ParseObject object) {

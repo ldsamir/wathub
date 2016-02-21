@@ -10,34 +10,40 @@ import com.parse.ParseUser;
  */
 
 @ParseClassName("Message")
-public class Message extends ParseObject {
+public class Message extends ParseObject implements Parsable {
+
+    // class columns
+    public static final String KEY_CLASSNAME = "Message";
+    public static final String KEY_FROM = "from";
+    public static final String KEY_TO = "to";
+    public static final String KEY_MESSAGE = "message";
 
     public ParseUser getFrom() {
-        return getParseUser("from");
+        return getParseUser(KEY_FROM);
     }
 
     public void setFrom(ParseUser from) {
-        put("from", from);
+        put(KEY_FROM, from);
     }
 
     public ParseUser getTo() {
-        return getParseUser("to");
+        return getParseUser(KEY_TO);
     }
 
     public void setTo(ParseUser to) {
-        put("to", to);
+        put(KEY_TO, to);
     }
 
     public String getMessage() {
-        return getString("message");
+        return getString(KEY_MESSAGE);
     }
 
     public void setMessage(String message) {
-        put("message", message);
+        put(KEY_MESSAGE, message);
     }
 
     public static ParseQuery<ParseObject> getQuery() {
-        return ParseQuery.getQuery("Message");
+        return ParseQuery.getQuery(KEY_CLASSNAME);
     }
 
     public static Message getInstance(ParseObject object) {

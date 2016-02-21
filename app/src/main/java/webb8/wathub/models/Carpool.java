@@ -14,67 +14,78 @@ import java.util.Date;
  */
 
 @ParseClassName("Carpool")
-public class Carpool extends ParseObject {
+public class Carpool extends ParseObject implements Parsable {
+
+    // class columns
+    public static final String KEY_CLASSNAME = "Carpool";
+    public static final String KEY_FROM = "from";
+    public static final String KEY_TO = "to";
+    public static final String KEY_WHEN = "when";
+    public static final String KEY_MAX_PASSENGERS = "maxPassengers";
+    public static final String KEY_POST = "post";
+    public static final String KEY_PASSENGERS = "passengers";
+    public static final String KEY_PRICE = "price";
+
     public String getFrom() {
-        return getString("from");
+        return getString(KEY_FROM);
     }
 
     public void setFrom(String from) {
-        put("from", from);
+        put(KEY_FROM, from);
     }
 
     public String getTo() {
-        return getString("to");
+        return getString(KEY_TO);
     }
 
     public void setTo(String to) {
-        put("to", to);
+        put(KEY_TO, to);
     }
 
     public Date getWhen() {
-        return getDate("when");
+        return getDate(KEY_WHEN);
     }
 
     public void setWhen(Date when) {
-        put("when", when);
+        put(KEY_WHEN, when);
     }
 
     public int getMaxPassengers() {
-        return getInt("maxPassengers");
+        return getInt(KEY_MAX_PASSENGERS);
     }
 
     public void setMaxPassengers(int maxPassengers) {
-        put("maxPassengers", maxPassengers);
+        put(KEY_MAX_PASSENGERS, maxPassengers);
     }
 
     public Post getPost() {
-        ParseObject object = getParseObject("post");
+        ParseObject object = getParseObject(KEY_POST);
         if (object != null) return ParseObject.createWithoutData(Post.class, object.getObjectId());
         return null;
     }
 
     public void setPost(Post post) {
-        put("post", post);
+        put(KEY_POST, post);
     }
 
     public JSONArray getPassengers() {
-        return getJSONArray("passengers");
+        return getJSONArray(KEY_PASSENGERS);
     }
 
     public void addPassenger(ParseUser passenger) {
-        addUnique("passengers", passenger);
+        addUnique(KEY_PASSENGERS, passenger);
     }
 
     public double getPrice() {
-        return getDouble("price");
+        return getDouble(KEY_PRICE);
     }
 
     public void setPrice(double price) {
-        put("price", price);
+        put(KEY_PRICE, price);
     }
 
     public static ParseQuery<ParseObject> getQuery() {
-        return ParseQuery.getQuery("Carpool");
+        return ParseQuery.getQuery(KEY_CLASSNAME);
     }
 
     public static Carpool getInstance(ParseObject object) {

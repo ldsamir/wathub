@@ -7,22 +7,17 @@ import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.os.Bundle;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.support.v4.widget.DrawerLayout;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
+import android.widget.Button;
 import android.widget.Toast;
 
-import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
@@ -31,6 +26,7 @@ import com.parse.ParseUser;
 import java.util.ArrayList;
 import java.util.List;
 
+import webb8.wathub.models.Parsable;
 import webb8.wathub.models.Post;
 
 public class HubActivity extends AppCompatActivity
@@ -60,6 +56,8 @@ public class HubActivity extends AppCompatActivity
         mNavigationDrawerFragment.setUp(
                 R.id.navigation_drawer,
                 (DrawerLayout) findViewById(R.id.drawer_layout));
+
+        Button postButton = (Button) findViewById(R.id.post_button);
     }
 
     @Override
@@ -106,21 +104,37 @@ public class HubActivity extends AppCompatActivity
 
     public void onSectionAttached(int number) {
 
-        if (number == Action.PROFILE.getId()) { mTitle = getString(Action.PROFILE.getNameId()); }
+        if (number == Action.PROFILE.getId()) {
+            mTitle = getString(Action.PROFILE.getNameId());
+        }
 
-        if (number == Action.MESSAGES.getId()) { mTitle = getString(Action.MESSAGES.getNameId()); }
+        if (number == Action.MESSAGES.getId()) {
+            mTitle = getString(Action.MESSAGES.getNameId());
+        }
 
-        if (number == Action.ALL_POSTS.getId()) { mTitle = getString(Action.ALL_POSTS.getNameId()); }
+        if (number == Action.ALL_POSTS.getId()) {
+            mTitle = getString(Action.ALL_POSTS.getNameId());
+        }
 
-        if (number == Action.BOOK_EXCHANGE_POSTS.getId()) { mTitle = getString(Action.BOOK_EXCHANGE_POSTS.getNameId()); }
+        if (number == Action.BOOK_EXCHANGE_POSTS.getId()) {
+            mTitle = getString(Action.BOOK_EXCHANGE_POSTS.getNameId());
+        }
 
-        if (number == Action.CARPOOL_POSTS.getId()) { mTitle = getString(Action.CARPOOL_POSTS.getNameId()); }
+        if (number == Action.CARPOOL_POSTS.getId()) {
+            mTitle = getString(Action.CARPOOL_POSTS.getNameId());
+        }
 
-        if (number == Action.GROUP_STUDY_POSTS.getId()) { mTitle = getString(Action.GROUP_STUDY_POSTS.getNameId()); }
+        if (number == Action.GROUP_STUDY_POSTS.getId()) {
+            mTitle = getString(Action.GROUP_STUDY_POSTS.getNameId());
+        }
 
-        if (number == Action.FAVORITES.getId()) { mTitle = getString(Action.FAVORITES.getNameId()); }
+        if (number == Action.FAVORITES.getId()) {
+            mTitle = getString(Action.FAVORITES.getNameId());
+        }
 
-        if (number == Action.LOG_OUT.getId()) { mTitle = getString(Action.LOG_OUT.getNameId()); }
+        if (number == Action.LOG_OUT.getId()) {
+            mTitle = getString(Action.LOG_OUT.getNameId());
+        }
     }
 
     public void restoreActionBar() {
@@ -169,6 +183,7 @@ public class HubActivity extends AppCompatActivity
          */
         private static final String ARG_SECTION_NUMBER = "section_number";
         private static Activity thisActivity;
+
         /**
          * Returns a new instance of this fragment for the given section
          * number.
@@ -181,14 +196,15 @@ public class HubActivity extends AppCompatActivity
             return fragment;
         }
 
-        public HubFragment() {}
+        public HubFragment() {
+        }
 
         public static void setThisActivity(Activity activity) {
             thisActivity = activity;
         }
 
         @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        public View onCreateView(LayoutInflater inflater, ViewGroup viewContainer, Bundle savedInstanceState) {
             int sectionNumber = getArguments().getInt(ARG_SECTION_NUMBER);
             View rootView = null;
 
@@ -201,16 +217,16 @@ public class HubActivity extends AppCompatActivity
             }
 
             if (sectionNumber == Action.ALL_POSTS.getId()) {
-                rootView = inflater.inflate(R.layout.fragment_post, container, false);
-                final RecyclerView postContainer = (RecyclerView) rootView;
+                rootView = inflater.inflate(R.layout.fragment_post, viewContainer, false);
+                RecyclerView postContainer = (RecyclerView) rootView;
                 LinearLayoutManager llm = new LinearLayoutManager(thisActivity.getApplicationContext());
                 postContainer.setLayoutManager(llm);
                 ParseQuery<ParseObject> query = Post.getQuery();
-                query.orderByDescending("updatedAt");
+                query.orderByDescending(Parsable.KEY_UPDATED_AT);
 
                 try {
                     List<ParseObject> objects = query.find();
-                    List<Post> posts = new ArrayList<Post>();
+                    List<Post> posts = new ArrayList<>();
 
                     for (ParseObject object : objects) {
                         Post post = Post.getInstance(object);
@@ -220,7 +236,7 @@ public class HubActivity extends AppCompatActivity
                     PostAdapter postAdapter = new PostAdapter(posts);
                     postContainer.setAdapter(postAdapter);
                 } catch (ParseException e) {
-
+                    Toast.makeText(thisActivity.getApplicationContext(), R.string.error_loading_posts, Toast.LENGTH_SHORT).show();
                 }
 
 //                query.findInBackground(new FindCallback<ParseObject>() {

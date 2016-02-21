@@ -10,28 +10,33 @@ import com.parse.ParseUser;
  */
 
 @ParseClassName("Favorite")
-public class Favorite extends ParseObject {
+public class Favorite extends ParseObject implements Parsable {
+
+    // class columns
+    public static final String KEY_CLASSNAME = "Favorite";
+    public static final String KEY_USER = "user";
+    public static final String KEY_POST = "post";
 
     public ParseUser getUser() {
-        return getParseUser("user");
+        return getParseUser(KEY_USER);
     }
 
     public void setUser(ParseUser user) {
-        put("user", user);
+        put(KEY_USER, user);
     }
 
     public Post getPost() {
-        ParseObject object = getParseObject("post");
+        ParseObject object = getParseObject(KEY_POST);
         if (object != null) return ParseObject.createWithoutData(Post.class, object.getObjectId());
         return null;
     }
 
     public void setPost(Post post) {
-        put("post", post);
+        put(KEY_POST, post);
     }
 
     public static ParseQuery<ParseObject> getQuery() {
-        return ParseQuery.getQuery("Favorite");
+        return ParseQuery.getQuery(KEY_CLASSNAME);
     }
 
     public static Favorite getInstance(ParseObject object) {

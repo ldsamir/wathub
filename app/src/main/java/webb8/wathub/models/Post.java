@@ -10,40 +10,47 @@ import com.parse.ParseUser;
  */
 
 @ParseClassName("Post")
-public class Post extends ParseObject {
+public class Post extends ParseObject implements Parsable {
+
+    // class columns
+    public static final String KEY_CLASSNAME = "Post";
+    public static final String KEY_USER = "user";
+    public static final String KEY_POST_TYPE = "postType";
+    public static final String KEY_STATE = "state";
+    public static final String KEY_CONTENT = "content";
 
     public ParseUser getUser() {
-        return getParseUser("user");
+        return getParseUser(KEY_USER);
     }
 
     public void setUser(ParseUser user) {
-        put("user", user);
+        put(KEY_USER, user);
     }
 
     public PostType getPostType() {
-        ParseObject object =  getParseObject("postType");
+        ParseObject object =  getParseObject(KEY_POST_TYPE);
         if (object != null) return ParseObject.createWithoutData(PostType.class, object.getObjectId());
         return null;
     }
 
     public void setPostType(PostType postType) {
-        put("postType", postType);
+        put(KEY_POST_TYPE, postType);
     }
 
     public int getState() {
-        return getInt("user");
+        return getInt(KEY_STATE);
     }
 
     public void setState(int state) {
-        put("state", state);
+        put(KEY_STATE, state);
     }
 
     public String getContent(){
-        return getString("content");
+        return getString(KEY_CONTENT);
     }
 
     public static ParseQuery<ParseObject> getQuery() {
-        return ParseQuery.getQuery("Post");
+        return ParseQuery.getQuery(KEY_CLASSNAME);
     }
 
     public static Post getInstance(ParseObject object) {

@@ -9,34 +9,40 @@ import com.parse.ParseQuery;
  */
 
 @ParseClassName("Course")
-public class Course extends ParseObject {
+public class Course extends ParseObject implements Parsable {
+
+    // class columns
+    public static final String KEY_CLASSNAME = "Course";
+    public static final String KEY_SUBJECT = "subject";
+    public static final String KEY_NUMBER = "number";
+    public static final String KEY_TITLE = "title";
 
     public String getSubject() {
-        return getString("subject");
+        return getString(KEY_SUBJECT);
     }
 
     public void setSubject(String subject) {
-        put("subject", subject);
+        put(KEY_SUBJECT, subject);
     }
 
     public int getNumber() {
-        return getInt("number");
+        return getInt(KEY_NUMBER);
     }
 
     public void setNumber(int number) {
-        put("number", number);
+        put(KEY_NUMBER, number);
     }
 
     public String getTitle() {
-        return getString("title");
+        return getString(KEY_TITLE);
     }
 
     public void setTitle(String title) {
-        put("title", title);
+        put(KEY_TITLE, title);
     }
 
     public static ParseQuery<ParseObject> getQuery() {
-        return ParseQuery.getQuery("Course");
+        return ParseQuery.getQuery(KEY_CLASSNAME);
     }
 
     public static Course getInstance(ParseObject object) {

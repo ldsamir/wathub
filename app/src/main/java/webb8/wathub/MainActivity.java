@@ -9,6 +9,8 @@ import android.widget.Toast;
 
 import com.parse.ParseUser;
 
+import webb8.wathub.models.Parsable;
+
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
  * status bar and navigation/system bar) with user interaction.
@@ -25,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
 
         // check if user already logged in and email verified, then skip login
         if (user != null) {
-            if (user.getBoolean("emailVerified")) {
+            if (user.getBoolean(Parsable.KEY_EMAIL_VERIFIED)) {
                 Intent postIntent = new Intent(this, HubActivity.class);
                 startActivity(postIntent);
             } else {

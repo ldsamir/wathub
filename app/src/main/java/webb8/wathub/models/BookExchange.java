@@ -9,54 +9,62 @@ import com.parse.ParseQuery;
  */
 
 @ParseClassName("BookExchange")
-public class BookExchange extends ParseObject {
+public class BookExchange extends ParseObject implements Parsable {
+
+    // class columns
+    public static final String KEY_CLASSNAME = "BookExchange";
+    public static final String KEY_TITLE = "title";
+    public static final String KEY_COURSE = "course";
+    public static final String KEY_POST = "post";
+    public static final String KEY_PRICE = "price";
+    public static final String KEY_CONDITION = "condition";
 
     public String getTitle() {
-        return getString("title");
+        return getString(KEY_TITLE);
     }
 
     public void setTitle(String title) {
-        put("title", title);
+        put(KEY_TITLE, title);
     }
 
     public Course getCourse() {
-        ParseObject object = getParseObject("course");
+        ParseObject object = getParseObject(KEY_COURSE);
         if (object != null) return ParseObject.createWithoutData(Course.class, object.getObjectId());
         return null;
     }
 
     public void setCourse(Course course) {
-        put("course", course);
+        put(KEY_COURSE, course);
     }
 
     public Post getPost() {
-        ParseObject object = getParseObject("post");
+        ParseObject object = getParseObject(KEY_POST);
         if (object != null) return ParseObject.createWithoutData(Post.class, object.getObjectId());
         return null;
     }
 
     public void setPost(Post post) {
-        put("post", post);
+        put(KEY_POST, post);
     }
 
     public double getPrice() {
-        return getDouble("price");
+        return getDouble(KEY_PRICE);
     }
 
     public void setPrice(double price) {
-        put("price", price);
+        put(KEY_PRICE, price);
     }
 
     public int getCondition() {
-        return getInt("condition");
+        return getInt(KEY_CONDITION);
     }
 
     public void setCondition(int condition) {
-        put("condition", condition);
+        put(KEY_CONDITION, condition);
     }
 
     public static ParseQuery<ParseObject> getQuery() {
-        return ParseQuery.getQuery("BookExchange");
+        return ParseQuery.getQuery(KEY_CLASSNAME);
     }
 
     public static BookExchange getInstance(ParseObject object) {

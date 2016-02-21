@@ -77,7 +77,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
         if (postType != null) typeName = postType.getTypeName();
 
         ParseQuery<ParseObject> query = Profile.getQuery();
-        query.whereEqualTo("owner", user);
+        query.whereEqualTo(Profile.KEY_OWNER, user);
 
         try {
             List<ParseObject> objects = query.find();

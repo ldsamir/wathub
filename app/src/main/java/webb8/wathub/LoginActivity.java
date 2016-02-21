@@ -21,6 +21,8 @@ import com.parse.ParseException;
 import com.parse.ParseUser;
 import com.parse.RequestPasswordResetCallback;
 
+import webb8.wathub.models.Parsable;
+
 /**
  * A login screen that offers login via email/password.
  */
@@ -141,7 +143,7 @@ public class LoginActivity extends AppCompatActivity {
                 @Override
                 public void done(ParseUser user, ParseException e) {
                     if (user != null) {
-                        if (user.getBoolean("emailVerified")) {
+                        if (user.getBoolean(Parsable.KEY_EMAIL_VERIFIED)) {
                             System.out.println("signed in");
                             Intent postIntent = new Intent(LoginActivity.this, HubActivity.class);
                             startActivity(postIntent);
