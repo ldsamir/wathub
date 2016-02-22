@@ -45,6 +45,7 @@ public class Course extends ParseObject implements Parsable {
         return ParseQuery.getQuery(KEY_CLASSNAME);
     }
 
+    // convert ParseObject to Course
     public static Course getInstance(ParseObject object) {
         if (object != null) return ParseObject.createWithoutData(Course.class, object.getObjectId());
         return null;

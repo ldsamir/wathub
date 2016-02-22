@@ -46,6 +46,7 @@ public class Message extends ParseObject implements Parsable {
         return ParseQuery.getQuery(KEY_CLASSNAME);
     }
 
+    // convert ParseObject to Message
     public static Message getInstance(ParseObject object) {
         if (object != null) return ParseObject.createWithoutData(Message.class, object.getObjectId());
         return null;

@@ -35,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
+        // set login button
         Button logInButton = (Button) findViewById(R.id.action_log_in);
         logInButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -44,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        // set sign up button
         Button signUpButton = (Button) findViewById(R.id.action_sign_up);
         signUpButton.setOnClickListener(new View.OnClickListener() {
             @Override

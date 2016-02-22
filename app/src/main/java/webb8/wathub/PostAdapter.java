@@ -38,19 +38,20 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
     public static final String CARPOOL = Carpool.class.getSimpleName();
 
     public static class PostViewHolder extends RecyclerView.ViewHolder {
-        CardView postView;
-        ImageView postAvatarView;
-        TextView postUserView;
-        TextView postDateView;
-        TextView postContentView;
+        // UI views
+        CardView mPostView;
+        ImageView mPostAvatarView;
+        TextView mPostUserView;
+        TextView mPostDateView;
+        TextView mPostContentView;
 
         PostViewHolder(View itemView) {
             super(itemView);
-            postView = (CardView) itemView.findViewById(R.id.post_card);
-            postAvatarView = (ImageView) itemView.findViewById(R.id.post_avatar);
-            postUserView = (TextView) itemView.findViewById(R.id.post_user);
-            postDateView = (TextView) itemView.findViewById(R.id.post_date);
-            postContentView = (TextView) itemView.findViewById(R.id.post_content);
+            mPostView = (CardView) itemView.findViewById(R.id.post_card);
+            mPostAvatarView = (ImageView) itemView.findViewById(R.id.post_avatar);
+            mPostUserView = (TextView) itemView.findViewById(R.id.post_user);
+            mPostDateView = (TextView) itemView.findViewById(R.id.post_date);
+            mPostContentView = (TextView) itemView.findViewById(R.id.post_content);
         }
     }
 
@@ -89,6 +90,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
 
         }
 
+        //
         if (typeName.equalsIgnoreCase(BOOK_EXCHANGE)) {
 
         }
@@ -101,11 +103,11 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
 
         }
 
-        postViewHolder.postAvatarView.setImageResource(R.drawable.bb8);
-        if (profile != null) postViewHolder.postUserView.setText(profile.getFirstName() + " " + profile.getLastName());
+        postViewHolder.mPostAvatarView.setImageResource(R.drawable.bb8);
+        if (profile != null) postViewHolder.mPostUserView.setText(profile.getFirstName() + " " + profile.getLastName());
         SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy HH:mm a", Locale.CANADA);
-        postViewHolder.postDateView.setText(format.format(postDate));
-        postViewHolder.postContentView.setText(post.getContent());
+        postViewHolder.mPostDateView.setText(format.format(postDate));
+        postViewHolder.mPostContentView.setText(content);
     }
 
     @Override

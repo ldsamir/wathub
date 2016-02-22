@@ -53,6 +53,7 @@ public class Post extends ParseObject implements Parsable {
         return ParseQuery.getQuery(KEY_CLASSNAME);
     }
 
+    // convert ParseObject to Post
     public static Post getInstance(ParseObject object) {
         if (object != null) return ParseObject.createWithoutData(Post.class, object.getObjectId());
         return null;

@@ -88,6 +88,7 @@ public class Carpool extends ParseObject implements Parsable {
         return ParseQuery.getQuery(KEY_CLASSNAME);
     }
 
+    // convert ParseObject to Carpool
     public static Carpool getInstance(ParseObject object) {
         if (object != null) return ParseObject.createWithoutData(Carpool.class, object.getObjectId());
         return null;

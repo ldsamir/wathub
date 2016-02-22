@@ -3,6 +3,7 @@ package webb8.wathub.models;
 /**
  * Created by mismayil on 20/02/16.
  */
+// general Parse columns
 public interface Parsable {
     String KEY_OBJECT_ID = "objectId";
     String KEY_ACL = "ACL";

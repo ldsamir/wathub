@@ -39,6 +39,7 @@ public class Favorite extends ParseObject implements Parsable {
         return ParseQuery.getQuery(KEY_CLASSNAME);
     }
 
+    // convert ParseObject to Favorite
     public static Favorite getInstance(ParseObject object) {
         if (object != null) return ParseObject.createWithoutData(Favorite.class, object.getObjectId());
         return null;

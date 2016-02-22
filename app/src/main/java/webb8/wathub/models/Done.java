@@ -38,6 +38,7 @@ public class Done extends ParseObject implements Parsable {
         return ParseQuery.getQuery(KEY_CLASSNAME);
     }
 
+    // convert ParseObject to Done
     public static Done getInstance(ParseObject object) {
         if (object != null) return ParseObject.createWithoutData(Done.class, object.getObjectId());
         return null;

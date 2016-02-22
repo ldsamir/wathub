@@ -90,6 +90,7 @@ public class GroupStudy extends ParseObject implements Parsable {
         return ParseQuery.getQuery(KEY_CLASSNAME);
     }
 
+    // convert ParseObject to GroupStudy
     public static GroupStudy getInstance(ParseObject object) {
         if (object != null) return ParseObject.createWithoutData(GroupStudy.class, object.getObjectId());
         return null;

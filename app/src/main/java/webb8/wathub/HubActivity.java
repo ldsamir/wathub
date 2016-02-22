@@ -68,42 +68,16 @@ public class HubActivity extends AppCompatActivity
         // update the main content by replacing fragments
         FragmentManager fragmentManager = getSupportFragmentManager();
 
-        if (position == Action.PROFILE.getId()) {
-            fragmentManager.beginTransaction()
-                    .replace(R.id.container, HubFragment.newInstance(position))
-                    .commit();
-        }
-
-        if (position == Action.MESSAGES.getId()) {
-
-        }
-
-        if (position == Action.ALL_POSTS.getId()) {
-            fragmentManager.beginTransaction()
-                    .replace(R.id.container, HubFragment.newInstance(position))
-                    .commit();
-        }
-
-        if (position == Action.BOOK_EXCHANGE_POSTS.getId()) {
-
-        }
-
-        if (position == Action.CARPOOL_POSTS.getId()) {
-
-        }
-
-        if (position == Action.GROUP_STUDY_POSTS.getId()) {
-
-        }
-
-        if (position == Action.FAVORITES.getId()) {
-
-        }
-
+        // replace the fragment depending on action
         if (position == Action.LOG_OUT.getId()) {
             ParseUser.logOut();
             Intent mainIntent = new Intent(this, MainActivity.class);
             startActivity(mainIntent);
+            finish();
+        } else {
+            fragmentManager.beginTransaction()
+                    .replace(R.id.container, HubFragment.newInstance(position))
+                    .commit();
         }
     }
 
@@ -204,6 +178,7 @@ public class HubActivity extends AppCompatActivity
         public HubFragment() {
         }
 
+        // set current activity
         public static void setThisActivity(Activity activity) {
             thisActivity = activity;
         }
@@ -213,6 +188,7 @@ public class HubActivity extends AppCompatActivity
             int sectionNumber = getArguments().getInt(ARG_SECTION_NUMBER);
             View rootView = null;
 
+            // fill fragment depending on action
             if (sectionNumber == Action.PROFILE.getId()) {
                 rootView = inflater.inflate(R.layout.fragment_profile, viewContainer, false);
                 ParseQuery<ParseObject> query = Profile.getQuery();

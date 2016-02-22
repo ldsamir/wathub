@@ -50,9 +50,7 @@ public class SignUpActivity extends AppCompatActivity {
         setContentView(R.layout.activity_sign_up);
 
         // Set up the sign up form.
-
         mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
-
         mFirstNameView = (EditText) findViewById(R.id.first_name);
         mLastNameView = (EditText) findViewById(R.id.last_name);
 
@@ -68,6 +66,7 @@ public class SignUpActivity extends AppCompatActivity {
             }
         });
 
+        // set sign up button
         Button signUpButton = (Button) findViewById(R.id.sign_up_button);
         signUpButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -78,6 +77,7 @@ public class SignUpActivity extends AppCompatActivity {
     }
 
     // TODO: 20/02/16 split this function
+    // check user inputs
     private boolean checkFields(String firstName, String lastName, String email, String password) {
         // Reset errors.
         mEmailView.setError(null);

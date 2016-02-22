@@ -94,6 +94,7 @@ public class Profile extends ParseObject implements Parsable {
         return ParseQuery.getQuery(KEY_CLASSNAME);
     }
 
+    // convert ParseObject to Profile
     public static Profile getInstance(ParseObject object) {
         if (object != null) return ParseObject.createWithoutData(Profile.class, object.getObjectId());
         return null;

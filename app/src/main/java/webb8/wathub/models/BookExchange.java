@@ -67,6 +67,7 @@ public class BookExchange extends ParseObject implements Parsable {
         return ParseQuery.getQuery(KEY_CLASSNAME);
     }
 
+    // convert ParseObject to BookExchange
     public static BookExchange getInstance(ParseObject object) {
         if (object != null) return ParseObject.createWithoutData(BookExchange.class, object.getObjectId());
         return null;

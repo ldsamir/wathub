@@ -53,6 +53,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
+        // set sign in button
         Button signInButton = (Button) findViewById(R.id.sign_in_button);
         signInButton.setOnClickListener(new OnClickListener() {
             @Override
@@ -61,6 +62,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
+        // set forgot password button
         Button forgotPasswordButton = (Button) findViewById(R.id.forgot_password_button);
         forgotPasswordButton.setOnClickListener(new OnClickListener() {
             @Override
@@ -93,6 +95,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     // TODO: 20/02/16  split this function
+    // check email and password
     private boolean checkFields(String email, String password) {
         // Reset errors.
         mEmailView.setError(null);
@@ -170,6 +173,7 @@ public class LoginActivity extends AppCompatActivity {
         return password.length() > 8;
     }
 
+    // reset user password
     public void resetPassword() {
         String email = mEmailView.getText().toString();
         boolean check = checkFields(email, "123456789");
