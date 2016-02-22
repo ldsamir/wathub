@@ -19,4 +19,12 @@
     <string name="content_avatar">AVATAR</string>
 
     <string name="error_loading_posts">Error loading posts</string>
+
+
+    <string name="profile_hint_firstname">First Name</string>
+    <string name="profile_hint_lastname">Last Name</string>
+    <string name="profile_hint_birthday">Date of Birth</string>
+    <string name="profile_hint_program">Program of Study</string>
+    <string name="profile_hint_phone">Phone Number</string>
+    <string name="profile_photo_content_description">No photo available</string>
 </resources>
