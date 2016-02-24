@@ -1,4 +1,4 @@
-package webb8.wathub;
+package webb8.wathub.init;
 
 import android.app.Application;
 import android.content.Intent;

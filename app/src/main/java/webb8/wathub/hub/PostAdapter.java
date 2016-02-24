@@ -1,4 +1,4 @@
-package webb8.wathub;
+package webb8.wathub.hub;
 
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -18,6 +18,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+import webb8.wathub.R;
 import webb8.wathub.models.BookExchange;
 import webb8.wathub.models.Carpool;
 import webb8.wathub.models.GroupStudy;
@@ -55,7 +56,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
         }
     }
 
-    PostAdapter(List<Post> posts) {
+    public PostAdapter(List<Post> posts) {
         this.posts = posts;
     }
 

@@ -1,4 +1,4 @@
-package webb8.wathub;
+package webb8.wathub.login;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -21,6 +21,8 @@ import com.parse.ParseException;
 import com.parse.ParseUser;
 import com.parse.RequestPasswordResetCallback;
 
+import webb8.wathub.hub.HubActivity;
+import webb8.wathub.R;
 import webb8.wathub.models.Parsable;
 
 /**
@@ -74,8 +76,7 @@ public class LoginActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_sign_up, menu);
+        // Inflate the menu; this adds items to the action bar if it is present
         return true;
     }
 

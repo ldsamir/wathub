@@ -1,4 +1,4 @@
-package webb8.wathub;
+package webb8.wathub.init;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -9,6 +9,10 @@ import android.widget.Toast;
 
 import com.parse.ParseUser;
 
+import webb8.wathub.hub.HubActivity;
+import webb8.wathub.login.LoginActivity;
+import webb8.wathub.R;
+import webb8.wathub.login.SignUpActivity;
 import webb8.wathub.models.Parsable;
 
 /**
