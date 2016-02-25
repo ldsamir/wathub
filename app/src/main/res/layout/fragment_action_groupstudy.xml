@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/section_groupstudy"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <EditText
+        android:id="@+id/edit_group_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/post_hint_group_name"/>
+
+    <Spinner
+        android:id="@+id/select_group_course"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    </Spinner>
+
+    <EditText
+        android:id="@+id/edit_group_when"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/post_hint_group_when" />
+
+    <EditText
+        android:id="@+id/edit_group_start_time"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/post_hint_group_start_time"/>
+
+    <EditText
+        android:id="@+id/edit_group_end_time"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/post_hint_group_end_time"/>
+
+    <EditText
+        android:id="@+id/edit_group_where"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/post_hint_group_where"
+        android:inputType="text"/>
+
+    <EditText
+        android:id="@+id/edit_group_max_people"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/post_hint_group_max_people"
+        android:inputType="number"/>
+</LinearLayout>

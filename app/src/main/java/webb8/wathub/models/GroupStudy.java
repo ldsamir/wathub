@@ -25,6 +25,7 @@ public class GroupStudy extends ParseObject implements Parsable {
     public static final String KEY_DURATION = "duration";
     public static final String KEY_COURSE = "course";
     public static final String KEY_STUDENTS = "students";
+    public static final String KEY_GROUP_NAME = "groupName";
 
     public Post getPost() {
         ParseObject object = getParseObject(KEY_POST);
@@ -85,6 +86,10 @@ public class GroupStudy extends ParseObject implements Parsable {
     public void addStudent(ParseUser student) {
         addUnique(KEY_STUDENTS, student);
     }
+
+    public String getGroupName() { return getString(KEY_GROUP_NAME);}
+
+    public void setGroupName(String name) { put(KEY_GROUP_NAME, name); }
 
     public static ParseQuery<ParseObject> getQuery() {
         return ParseQuery.getQuery(KEY_CLASSNAME);

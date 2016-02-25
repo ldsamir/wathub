@@ -28,4 +28,23 @@
     <string name="profile_hint_program">Program of Study</string>
     <string name="profile_hint_phone">Phone Number</string>
     <string name="profile_photo_content_description">No photo available</string>
+
+    <string name="post_hint_content">What\'s happening?</string>
+    <string name="post_button_go">Post</string>
+
+    <string name="post_hint_book_title">Title</string>
+    <string name="post_hint_book_price">Price</string>
+    <string-array name="book_conditions">
+        <item>Bad</item>
+        <item>Moderate</item>
+        <item>Good</item>
+        <item>Excellent</item>
+    </string-array>
+
+    <string name="post_hint_group_name">Group Name</string>
+    <string name="post_hint_group_when">When</string>
+    <string name="post_hint_group_where">Where</string>
+    <string name="post_hint_group_max_people">Number of people</string>
+    <string name="post_hint_group_start_time">Start time</string>
+    <string name="post_hint_group_end_time">End time</string>
 </resources>

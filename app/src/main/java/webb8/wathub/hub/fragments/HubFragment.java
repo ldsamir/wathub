@@ -6,6 +6,7 @@ import android.content.Context;
 import android.os.Bundle;
 
 import webb8.wathub.hub.Action;
+import webb8.wathub.hub.NavItem;
 import webb8.wathub.hub.HubActivity;
 
 /**
@@ -13,7 +14,7 @@ import webb8.wathub.hub.HubActivity;
  */
 public class HubFragment extends Fragment {
 
-    private static final String ARG_SECTION_NUMBER = "SECTION_NUMBER";
+    protected static final String ARG_ACTION_NUMBER = "ACTION_NUMBER";
     protected static Activity mHubActivity;
 
     public HubFragment() {}
@@ -21,28 +22,42 @@ public class HubFragment extends Fragment {
     public static HubFragment newInstance(int action) {
         HubFragment fragment = null;
 
-        if (action == Action.PROFILE.getId()) {
+        if (action == NavItem.PROFILE.getId()) {
             fragment = new ProfileFragment();
-        }
+        } else
 
-        if (action == Action.ALL_POSTS.getId()) {
+        if (action == NavItem.MESSAGES.getId()) {
+            fragment = new MessageFragment();
+        } else
+
+        if (action == NavItem.ALL_POSTS.getId()) {
             fragment = new PostFragment();
-        }
+        } else
 
-        if (action == Action.BOOK_EXCHANGE_POSTS.getId()) {
+        if (action == NavItem.BOOK_EXCHANGE_POSTS.getId()) {
             fragment = new BookExchangeFragment();
-        }
+        } else
 
-        if (action == Action.CARPOOL_POSTS.getId()) {
+        if (action == NavItem.CARPOOL_POSTS.getId()) {
             fragment = new CarpoolFragment();
-        }
+        } else
 
-        if (action == Action.GROUP_STUDY_POSTS.getId()) {
+        if (action == NavItem.GROUP_STUDY_POSTS.getId()) {
             fragment = new GroupStudyFragment();
+        } else
+
+        if (action == NavItem.FAVORITES.getId()) {
+            fragment = new FavoriteFragment();
+        } else
+
+        if (action == Action.ACTION_POST_GENERAL.getId() ||
+            action == Action.ACTION_POST_BOOK_EXCHANGE.getId() ||
+            action == Action.ACTION_POST_GROUP_STUDY.getId()) {
+            fragment = new ActionPostFragment();
         }
 
         Bundle args = new Bundle();
-        args.putInt(ARG_SECTION_NUMBER, action);
+        args.putInt(ARG_ACTION_NUMBER, action);
         if (fragment != null) fragment.setArguments(args);
 
         return fragment;
@@ -57,6 +72,6 @@ public class HubFragment extends Fragment {
         public void onAttach(Context activity) {
             super.onAttach(activity);
             ((HubActivity) activity).onSectionAttached(
-                    getArguments().getInt(ARG_SECTION_NUMBER));
+                    getArguments().getInt(ARG_ACTION_NUMBER));
         }
 }

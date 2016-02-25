@@ -1,0 +1,26 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="webb8.wathub.hub.fragments.ActionPostFragment"
+    android:orientation="vertical">
+
+    <EditText
+        android:id="@+id/edit_post_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/post_hint_content"
+        android:inputType="textMultiLine"/>
+
+    <FrameLayout
+        android:id="@+id/post_action_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    </FrameLayout>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:text="@string/post_button_go"/>
+</LinearLayout>

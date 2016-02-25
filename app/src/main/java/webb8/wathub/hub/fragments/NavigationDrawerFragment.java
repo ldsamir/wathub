@@ -23,7 +23,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import webb8.wathub.R;
-import webb8.wathub.hub.Action;
+import webb8.wathub.hub.NavItem;
 
 /**
  * Fragment used for managing interactions for and presentation of a navigation drawer.
@@ -102,10 +102,10 @@ public class NavigationDrawerFragment extends Fragment {
             }
         });
 
-        String[] actionNames = new String[Action.values().length];
+        String[] actionNames = new String[NavItem.values().length];
         int i = 0;
 
-        for (Action action : Action.values()) {
+        for (NavItem action : NavItem.values()) {
             actionNames[i++] = getString(action.getNameId());
         }
 

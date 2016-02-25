@@ -10,6 +10,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.support.v4.widget.DrawerLayout;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.parse.ParseUser;
@@ -30,6 +31,7 @@ public class HubActivity extends AppCompatActivity
     /**
      * FAB buttons for posting
      */
+    private FrameLayout mContainerPostFab;
     private FloatingActionButton mPostFab;
     private FloatingActionButton mGeneralPostFab;
     private FloatingActionButton mBookExchangeFab;
@@ -37,6 +39,9 @@ public class HubActivity extends AppCompatActivity
     private TextView mGeneralPostFabTextView;
     private TextView mBookExchangeFabTextView;
     private TextView mGroupStudyFabTextView;
+
+    private static final int FAB_ADD = 0;
+    private static final int FAB_CANCEL = 1;
 
     /**
      * Used to store the last screen title. For use in {@link #restoreActionBar()}.
@@ -49,15 +54,7 @@ public class HubActivity extends AppCompatActivity
         setContentView(R.layout.activity_hub);
         HubFragment.setHubActivity(this);
 
-        mNavigationDrawerFragment = (NavigationDrawerFragment)
-                getFragmentManager().findFragmentById(R.id.navigation_drawer);
-        mTitle = getTitle();
-
-        // Set up the drawer.
-        mNavigationDrawerFragment.setUp(
-                R.id.navigation_drawer,
-                (DrawerLayout) findViewById(R.id.drawer_layout));
-
+        mContainerPostFab = (FrameLayout) findViewById(R.id.container_fab_post);
         mPostFab = (FloatingActionButton) findViewById(R.id.fab_post);
         mGeneralPostFab = (FloatingActionButton) findViewById(R.id.fab_general_post);
         mBookExchangeFab = (FloatingActionButton) findViewById(R.id.fab_book_exchange);
@@ -67,14 +64,23 @@ public class HubActivity extends AppCompatActivity
         mGroupStudyFabTextView = (TextView) findViewById(R.id.fab_text_group_study);
         mPostFab.setTag(R.drawable.ic_add_white_24dp);
 
+        mNavigationDrawerFragment = (NavigationDrawerFragment)
+                getFragmentManager().findFragmentById(R.id.navigation_drawer);
+        mTitle = getTitle();
+
+        // Set up the drawer.
+        mNavigationDrawerFragment.setUp(
+                R.id.navigation_drawer,
+                (DrawerLayout) findViewById(R.id.drawer_layout));
+
         mPostFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 int drawableId = (Integer) mPostFab.getTag();
                 if (drawableId == R.drawable.ic_add_white_24dp) {
-                    togglePostFab(View.VISIBLE, R.drawable.ic_clear_white_24dp);
+                    togglePostFab(FAB_CANCEL);
                 } else {
-                    togglePostFab(View.INVISIBLE, R.drawable.ic_add_white_24dp);
+                    togglePostFab(FAB_ADD);
                 }
 
             }
@@ -83,21 +89,56 @@ public class HubActivity extends AppCompatActivity
         mGeneralPostFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                FragmentManager fragmentManager = getFragmentManager();
 
+                fragmentManager.beginTransaction()
+                        .replace(R.id.container, HubFragment.newInstance(Action.ACTION_POST_GENERAL.getId()))
+                        .commit();
+            }
+        });
+
+        mBookExchangeFab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentManager fragmentManager = getFragmentManager();
+
+                fragmentManager.beginTransaction()
+                        .replace(R.id.container, HubFragment.newInstance(Action.ACTION_POST_BOOK_EXCHANGE.getId()))
+                        .commit();
+            }
+        });
+
+        mGroupStudyFab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentManager fragmentManager = getFragmentManager();
+
+                fragmentManager.beginTransaction()
+                        .replace(R.id.container, HubFragment.newInstance(Action.ACTION_POST_GROUP_STUDY.getId()))
+                        .commit();
             }
         });
     }
 
     // toggle post FAB
-    private void togglePostFab(int visibility, int drawable) {
+    private void togglePostFab(int state) {
+        // state FAB_ADD
+        int drawable = R.drawable.ic_add_white_24dp;
+        int optionsVisibility = View.GONE;
+
+        if (state == FAB_CANCEL) {
+            drawable = R.drawable.ic_clear_white_24dp;
+            optionsVisibility = View.VISIBLE;
+        }
+
         mPostFab.setTag(drawable);
         mPostFab.setImageResource(drawable);
-        mGeneralPostFab.setVisibility(visibility);
-        mBookExchangeFab.setVisibility(visibility);
-        mGroupStudyFab.setVisibility(visibility);
-        mGeneralPostFabTextView.setVisibility(visibility);
-        mBookExchangeFabTextView.setVisibility(visibility);
-        mGroupStudyFabTextView.setVisibility(visibility);
+        mGeneralPostFab.setVisibility(optionsVisibility);
+        mBookExchangeFab.setVisibility(optionsVisibility);
+        mGroupStudyFab.setVisibility(optionsVisibility);
+        mGeneralPostFabTextView.setVisibility(optionsVisibility);
+        mBookExchangeFabTextView.setVisibility(optionsVisibility);
+        mGroupStudyFabTextView.setVisibility(optionsVisibility);
     }
 
     @Override
@@ -106,7 +147,7 @@ public class HubActivity extends AppCompatActivity
         FragmentManager fragmentManager = getFragmentManager();
 
         // replace the fragment depending on action
-        if (position == Action.LOG_OUT.getId()) {
+        if (position == NavItem.LOG_OUT.getId()) {
             ParseUser.logOut();
             Intent mainIntent = new Intent(this, MainActivity.class);
             startActivity(mainIntent);
@@ -120,36 +161,63 @@ public class HubActivity extends AppCompatActivity
 
     public void onSectionAttached(int section) {
 
-        if (section == Action.PROFILE.getId()) {
-            mTitle = getString(Action.PROFILE.getNameId());
-        }
+        togglePostFab(FAB_ADD);
 
-        if (section == Action.MESSAGES.getId()) {
-            mTitle = getString(Action.MESSAGES.getNameId());
-        }
+        if (section == NavItem.PROFILE.getId()) {
+            mTitle = getString(NavItem.PROFILE.getNameId());
+            mContainerPostFab.setVisibility(View.GONE);
+        } else
 
-        if (section == Action.ALL_POSTS.getId()) {
-            mTitle = getString(Action.ALL_POSTS.getNameId());
-        }
+        if (section == NavItem.MESSAGES.getId()) {
+            mTitle = getString(NavItem.MESSAGES.getNameId());
+            mContainerPostFab.setVisibility(View.GONE);
+        } else
 
-        if (section == Action.BOOK_EXCHANGE_POSTS.getId()) {
-            mTitle = getString(Action.BOOK_EXCHANGE_POSTS.getNameId());
-        }
+        if (section == NavItem.ALL_POSTS.getId()) {
+            mTitle = getString(NavItem.ALL_POSTS.getNameId());
+            mContainerPostFab.setVisibility(View.VISIBLE);
+        } else
 
-        if (section == Action.CARPOOL_POSTS.getId()) {
-            mTitle = getString(Action.CARPOOL_POSTS.getNameId());
-        }
+        if (section == NavItem.BOOK_EXCHANGE_POSTS.getId()) {
+            mTitle = getString(NavItem.BOOK_EXCHANGE_POSTS.getNameId());
+            mContainerPostFab.setVisibility(View.VISIBLE);
+        } else
 
-        if (section == Action.GROUP_STUDY_POSTS.getId()) {
-            mTitle = getString(Action.GROUP_STUDY_POSTS.getNameId());
-        }
+        if (section == NavItem.CARPOOL_POSTS.getId()) {
+            mTitle = getString(NavItem.CARPOOL_POSTS.getNameId());
+            mContainerPostFab.setVisibility(View.VISIBLE);
+        } else
 
-        if (section == Action.FAVORITES.getId()) {
-            mTitle = getString(Action.FAVORITES.getNameId());
-        }
+        if (section == NavItem.GROUP_STUDY_POSTS.getId()) {
+            mTitle = getString(NavItem.GROUP_STUDY_POSTS.getNameId());
+            mContainerPostFab.setVisibility(View.VISIBLE);
+        } else
 
-        if (section == Action.LOG_OUT.getId()) {
-            mTitle = getString(Action.LOG_OUT.getNameId());
+        if (section == NavItem.FAVORITES.getId()) {
+            mTitle = getString(NavItem.FAVORITES.getNameId());
+            mContainerPostFab.setVisibility(View.VISIBLE);
+        } else
+
+        if (section == NavItem.LOG_OUT.getId()) {
+            mTitle = getString(NavItem.LOG_OUT.getNameId());
+        } else
+
+        if (section == Action.ACTION_POST_GENERAL.getId()) {
+            mTitle = getString(Action.ACTION_POST_GENERAL.getNameId());
+            mContainerPostFab.setVisibility(View.VISIBLE);
+            restoreActionBar();
+        } else
+
+        if (section == Action.ACTION_POST_BOOK_EXCHANGE.getId()) {
+            mTitle = getString(Action.ACTION_POST_BOOK_EXCHANGE.getNameId());
+            mContainerPostFab.setVisibility(View.VISIBLE);
+            restoreActionBar();
+        } else
+
+        if (section == Action.ACTION_POST_GROUP_STUDY.getId()) {
+            mTitle = getString(Action.ACTION_POST_GROUP_STUDY.getNameId());
+            mContainerPostFab.setVisibility(View.VISIBLE);
+            restoreActionBar();
         }
     }
 
