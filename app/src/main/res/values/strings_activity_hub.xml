@@ -22,6 +22,11 @@
     <string name="error_loading_posts">Error loading posts</string>
 
 
+    <string name="book_condition_bad">BAD</string>
+    <string name="book_condition_moderate">MODERATE</string>
+    <string name="book_condition_good">GOOD</string>
+    <string name="book_condition_excellent">EXCELLENT</string>
+
     <string name="profile_hint_firstname">First Name</string>
     <string name="profile_hint_lastname">Last Name</string>
     <string name="profile_hint_birthday">Date of Birth</string>
@@ -33,12 +38,21 @@
     <string name="post_button_go">Post</string>
 
     <string name="post_hint_book_title">Title</string>
+    <string name="post_hint_select_course_subject">Select a course subject</string>
+    <string name="post_hint_select_course_number">Select a course number</string>
+    <string-array name="book_course_subject_list">
+        <item>@string/post_hint_select_course_subject</item>
+    </string-array>
+    <string-array name="book_course_number_list">
+        <item>@string/post_hint_select_course_number</item>
+    </string-array>
     <string name="post_hint_book_price">Price</string>
     <string-array name="book_conditions">
-        <item>Bad</item>
-        <item>Moderate</item>
-        <item>Good</item>
-        <item>Excellent</item>
+        <item>Select the condition of book</item>
+        <item>@string/book_condition_bad</item>
+        <item>@string/book_condition_moderate</item>
+        <item>@string/book_condition_good</item>
+        <item>@string/book_condition_excellent</item>
     </string-array>
 
     <string name="post_hint_group_name">Group Name</string>

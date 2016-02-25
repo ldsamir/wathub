@@ -49,6 +49,8 @@ public class Post extends ParseObject implements Parsable {
         return getString(KEY_CONTENT);
     }
 
+    public void setContent(String content) {put(KEY_CONTENT, content); }
+
     public static ParseQuery<ParseObject> getQuery() {
         return ParseQuery.getQuery(KEY_CLASSNAME);
     }

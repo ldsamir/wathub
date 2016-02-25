@@ -10,7 +10,7 @@
         android:id="@+id/avatar"
         android:layout_width="200dp"
         android:layout_height="200dp"
-        android:background="@drawable/bb8"
+        android:background="@drawable/no_avatar"
         android:layout_gravity="center"
         android:contentDescription="@string/content_avatar"/>
     <ListView

@@ -40,6 +40,9 @@ public class HubActivity extends AppCompatActivity
     private TextView mBookExchangeFabTextView;
     private TextView mGroupStudyFabTextView;
 
+    /**
+     * FAB states
+     */
     private static final int FAB_ADD = 0;
     private static final int FAB_CANCEL = 1;
 
