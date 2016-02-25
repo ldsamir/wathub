@@ -37,5 +37,6 @@ public class App extends Application {
         ParseObject.registerSubclass(PostType.class);
         Parse.enableLocalDatastore(this);
         Parse.initialize(this);
+        Course.loadCourses();
     }
 }
