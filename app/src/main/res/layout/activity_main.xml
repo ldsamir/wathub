@@ -2,41 +2,43 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/yellow"
+    android:background="@color/uw_yellow"
     tools:context=".init.MainActivity">
 
     <!-- The primary full-screen view. This can be replaced with whatever view
          is needed to present your content, e.g. VideoView, SurfaceView,
          TextureView, etc. -->
-    <TextView
-        android:id="@+id/app_name"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:keepScreenOn="true"
-        android:text="@string/app_name"
-        android:textColor="@color/black"
-        android:layout_marginBottom="300dp"
-        android:textSize="70sp"
-        android:textStyle="bold" />
 
-    <TextView
-        android:id="@+id/app_slogan"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:keepScreenOn="true"
-        android:text="@string/app_slogan"
-        android:textColor="@color/black"
-        android:textSize="20sp"
-        android:textStyle="normal"/>
+    <!--<TextView-->
+        <!--android:id="@+id/app_name"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:gravity="center"-->
+        <!--android:keepScreenOn="true"-->
+        <!--android:text="@string/app_name"-->
+        <!--android:textColor="@color/black"-->
+        <!--android:layout_marginBottom="300dp"-->
+        <!--android:textSize="70sp"-->
+        <!--android:textStyle="bold" />-->
+
+    <!--<TextView-->
+        <!--android:id="@+id/app_slogan"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:gravity="center"-->
+        <!--android:keepScreenOn="true"-->
+        <!--android:text="@string/app_slogan"-->
+        <!--android:textColor="@color/black"-->
+        <!--android:textSize="20sp"-->
+        <!--android:textStyle="normal"/>-->
 
     <!-- This FrameLayout insets its children based on system windows using
          android:fitsSystemWindows. -->
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fitsSystemWindows="true">
+        android:layout_height="wrap_content"
+        android:fitsSystemWindows="true"
+        android:layout_gravity="center_horizontal|bottom">
 
         <LinearLayout
             android:id="@+id/app_actions"
@@ -66,5 +68,38 @@
 
         </LinearLayout>
     </FrameLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Wathub"
+        android:textSize="70dp"
+        android:id="@+id/textView"
+        android:layout_gravity="center_horizontal|top"
+        android:layout_marginTop="120dp"
+        android:layout_marginLeft="60dp"
+
+        android:textColor="@color/black"
+        android:typeface="sans"/>
+
+    <TextView
+        android:layout_width="150dp"
+        android:layout_height="20dp"
+        android:text="Study.Socialize.Share"
+        android:layout_gravity="center_horizontal|top"
+        android:layout_marginTop="195dp"
+        android:layout_marginLeft="120dp"
+        android:textColor="@color/black"
+        android:textStyle="bold"/>
+
+    <ImageView
+        android:layout_width="100dp"
+        android:layout_height="150dp"
+        android:id="@+id/imageView3"
+        android:layout_gravity="center_horizontal|top"
+        android:src="@drawable/uw_logo"
+        android:layout_marginTop="130dp"
+        android:layout_marginRight="110dp"/>
+
 
 </FrameLayout>
