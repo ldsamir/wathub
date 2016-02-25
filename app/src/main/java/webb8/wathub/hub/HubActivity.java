@@ -1,6 +1,7 @@
 package webb8.wathub.hub;
 
 import android.content.Intent;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.ActionBar;
 import android.app.FragmentManager;
@@ -8,7 +9,9 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.support.v4.widget.DrawerLayout;
-import android.widget.Button;
+import android.view.View;
+import android.widget.TextView;
+
 import com.parse.ParseUser;
 
 import webb8.wathub.R;
@@ -23,6 +26,17 @@ public class HubActivity extends AppCompatActivity
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
      */
     private NavigationDrawerFragment mNavigationDrawerFragment;
+
+    /**
+     * FAB buttons for posting
+     */
+    private FloatingActionButton mPostFab;
+    private FloatingActionButton mGeneralPostFab;
+    private FloatingActionButton mBookExchangeFab;
+    private FloatingActionButton mGroupStudyFab;
+    private TextView mGeneralPostFabTextView;
+    private TextView mBookExchangeFabTextView;
+    private TextView mGroupStudyFabTextView;
 
     /**
      * Used to store the last screen title. For use in {@link #restoreActionBar()}.
@@ -44,7 +58,46 @@ public class HubActivity extends AppCompatActivity
                 R.id.navigation_drawer,
                 (DrawerLayout) findViewById(R.id.drawer_layout));
 
-        Button postButton = (Button) findViewById(R.id.post_button);
+        mPostFab = (FloatingActionButton) findViewById(R.id.fab_post);
+        mGeneralPostFab = (FloatingActionButton) findViewById(R.id.fab_general_post);
+        mBookExchangeFab = (FloatingActionButton) findViewById(R.id.fab_book_exchange);
+        mGroupStudyFab = (FloatingActionButton) findViewById(R.id.fab_group_study);
+        mGeneralPostFabTextView = (TextView) findViewById(R.id.fab_text_general);
+        mBookExchangeFabTextView = (TextView) findViewById(R.id.fab_text_book_exchange);
+        mGroupStudyFabTextView = (TextView) findViewById(R.id.fab_text_group_study);
+        mPostFab.setTag(R.drawable.ic_add_white_24dp);
+
+        mPostFab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int drawableId = (Integer) mPostFab.getTag();
+                if (drawableId == R.drawable.ic_add_white_24dp) {
+                    togglePostFab(View.VISIBLE, R.drawable.ic_clear_white_24dp);
+                } else {
+                    togglePostFab(View.INVISIBLE, R.drawable.ic_add_white_24dp);
+                }
+
+            }
+        });
+
+        mGeneralPostFab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+    }
+
+    // toggle post FAB
+    private void togglePostFab(int visibility, int drawable) {
+        mPostFab.setTag(drawable);
+        mPostFab.setImageResource(drawable);
+        mGeneralPostFab.setVisibility(visibility);
+        mBookExchangeFab.setVisibility(visibility);
+        mGroupStudyFab.setVisibility(visibility);
+        mGeneralPostFabTextView.setVisibility(visibility);
+        mBookExchangeFabTextView.setVisibility(visibility);
+        mGroupStudyFabTextView.setVisibility(visibility);
     }
 
     @Override

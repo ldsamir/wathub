@@ -20,6 +20,7 @@ import webb8.wathub.R;
 import webb8.wathub.hub.PostAdapter;
 import webb8.wathub.models.Parsable;
 import webb8.wathub.models.Post;
+import webb8.wathub.util.PostCard;
 
 /**
  * Created by mismayil on 23/02/16.
@@ -30,47 +31,32 @@ public class PostFragment extends HubFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup viewContainer, Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_post, viewContainer, false);
-        final RecyclerView postContainer = (RecyclerView) rootView;
-        LinearLayoutManager llm = new LinearLayoutManager(hubActivity.getApplicationContext());
-        postContainer.setLayoutManager(llm);
+        final View rootView = inflater.inflate(R.layout.fragment_post, viewContainer, false);
         ParseQuery<ParseObject> query = Post.getQuery();
         query.orderByDescending(Parsable.KEY_UPDATED_AT);
+        final RecyclerView postContainer = (RecyclerView) rootView;
+        LinearLayoutManager llm = new LinearLayoutManager(mHubActivity.getApplicationContext());
+        postContainer.setLayoutManager(llm);
+        postContainer.setAdapter(new PostAdapter(new ArrayList<PostCard>()));
 
-        try {
-            List<ParseObject> objects = query.find();
-            List<Post> posts = new ArrayList<>();
+        query.findInBackground(new FindCallback<ParseObject>() {
+            @Override
+            public void done(List<ParseObject> objects, ParseException e) {
+                if (e == null) {
+                    List<PostCard> postCards = new ArrayList<>();
 
-            for (ParseObject object : objects) {
-                Post post = Post.getInstance(object);
-                posts.add(post);
+                    for (ParseObject object : objects) {
+                        Post post = Post.getInstance(object);
+                        postCards.add(new PostCard(mHubActivity, post));
+                    }
+
+                    PostAdapter postAdapter = new PostAdapter(postCards);
+                    postContainer.setAdapter(postAdapter);
+                } else {
+                    Toast.makeText(mHubActivity.getApplicationContext(), R.string.error_loading_posts, Toast.LENGTH_SHORT).show();
+                }
             }
-
-            PostAdapter postAdapter = new PostAdapter(posts);
-            postContainer.setAdapter(postAdapter);
-        } catch (ParseException e) {
-            Toast.makeText(hubActivity.getApplicationContext(), R.string.error_loading_posts, Toast.LENGTH_SHORT).show();
-        }
-
-//        query.findInBackground(new FindCallback<ParseObject>() {
-//            @Override
-//            public void done(List<ParseObject> objects, ParseException e) {
-//                if (e == null) {
-//                    List<Post> posts = new ArrayList<Post>();
-//
-//                    for (ParseObject object : objects) {
-//                        Post post = Post.getInstance(object);
-//                        posts.add(post);
-//                    }
-//
-//                    PostAdapter postAdapter = new PostAdapter(posts);
-//                    postContainer.setAdapter(postAdapter);
-//
-//                } else {
-//                    Toast.makeText(hubActivity.getApplicationContext(), R.string.error_loading_posts, Toast.LENGTH_SHORT).show();
-//                }
-//            }
-//        });
+        });
 
         return rootView;
     }

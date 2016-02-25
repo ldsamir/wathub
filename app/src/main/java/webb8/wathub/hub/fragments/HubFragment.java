@@ -14,7 +14,7 @@ import webb8.wathub.hub.HubActivity;
 public class HubFragment extends Fragment {
 
     private static final String ARG_SECTION_NUMBER = "SECTION_NUMBER";
-    protected static Activity hubActivity;
+    protected static Activity mHubActivity;
 
     public HubFragment() {}
 
@@ -50,7 +50,7 @@ public class HubFragment extends Fragment {
 
     // set current activity
     public static void setHubActivity(Activity activity) {
-        hubActivity = activity;
+        mHubActivity = activity;
     }
 
     @Override

@@ -10,6 +10,7 @@
     <string name="title_group_study_posts">Group Study</string>
     <string name="title_favorites">Favorites</string>
     <string name="title_log_out">Log out</string>
+    <string name="title_general_post">General</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>

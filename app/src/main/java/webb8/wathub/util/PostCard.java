@@ -4,7 +4,6 @@ import android.app.Activity;
 import webb8.wathub.R;
 import android.support.v7.widget.CardView;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -36,15 +35,8 @@ public class PostCard {
     private static final String GROUP_STUDY = GroupStudy.class.getSimpleName();
     private static final String CARPOOL = Carpool.class.getSimpleName();
 
-    // UI elements
-    private Activity mActivity;
-    private CardView mPostView;
-    private ImageView mPostAvatarView;
-    private TextView mPostUserView;
-    private TextView mPostDateView;
-    private TextView mPostContentView;
-
     // member fields
+    private Activity mActivity;
     private Post mPost;
 
     public PostCard() {}
@@ -54,13 +46,14 @@ public class PostCard {
         mPost = post;
     }
 
-    public View getView(ViewGroup root) {
-        View view = mActivity.getLayoutInflater().inflate(R.layout.item_post, root, false);
-        mPostView = (CardView) mActivity.findViewById(R.id.post_card);
-        mPostAvatarView = (ImageView) mActivity.findViewById(R.id.post_avatar);
-        mPostUserView = (TextView) mActivity.findViewById(R.id.post_user);
-        mPostDateView = (TextView) mActivity.findViewById(R.id.post_date);
-        mPostContentView = (TextView) mActivity.findViewById(R.id.post_content);
+    public View getView() {
+        View view = mActivity.getLayoutInflater().inflate(R.layout.item_post, null, false);
+        CardView mPostView = (CardView) view.findViewById(R.id.post_card);
+        ImageView mPostAvatarView = (ImageView) view.findViewById(R.id.post_avatar);
+        TextView mPostUserView = (TextView) view.findViewById(R.id.post_user);
+        TextView mPostDateView = (TextView) view.findViewById(R.id.post_date);
+        TextView mPostContentView = (TextView) view.findViewById(R.id.post_content);
+
         String content = mPost.getContent();
         ParseUser user = mPost.getUser();
         PostType postType = mPost.getPostType();
