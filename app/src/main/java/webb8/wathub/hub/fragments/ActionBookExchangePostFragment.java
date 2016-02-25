@@ -38,6 +38,13 @@ public class ActionBookExchangePostFragment extends ActionPostFragment {
 
     public ActionBookExchangePostFragment() {}
 
+    // UI fields
+    protected EditText mBookTitleView;
+    protected Spinner mCourseSubjectView;
+    protected Spinner mSelectCourseNumber;
+    protected EditText mBookPriceView;
+    protected Spinner mBookConditionView;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View actionPostView = inflater.inflate(R.layout.fragment_action_post, container, false);
@@ -46,34 +53,34 @@ public class ActionBookExchangePostFragment extends ActionPostFragment {
 
         actionPostContainer.addView(bookExchangeSectionView);
 
-        final EditText editContent = (EditText) actionPostView.findViewById(R.id.edit_post_content);
-        Button buttonPost = (Button) actionPostView.findViewById(R.id.action_post_go);
-        final EditText editBookTitle = (EditText) bookExchangeSectionView.findViewById(R.id.edit_book_title);
-        final Spinner selectBookCourseSubject = (Spinner) bookExchangeSectionView.findViewById(R.id.select_book_course_subject);
-        final Spinner selectBookCourseNumber = (Spinner) bookExchangeSectionView.findViewById(R.id.select_book_course_number);
-        final EditText editBookPrice = (EditText) bookExchangeSectionView.findViewById(R.id.edit_book_price);
-        Spinner selectBookCondition = (Spinner) bookExchangeSectionView.findViewById(R.id.select_book_condition);
+        mContentView = (EditText) actionPostView.findViewById(R.id.edit_post_content);
+        mPostBtnView = (Button) actionPostView.findViewById(R.id.action_post_go);
+        mBookTitleView = (EditText) bookExchangeSectionView.findViewById(R.id.edit_book_title);
+        mCourseSubjectView = (Spinner) bookExchangeSectionView.findViewById(R.id.select_book_course_subject);
+        mSelectCourseNumber = (Spinner) bookExchangeSectionView.findViewById(R.id.select_book_course_number);
+        mBookPriceView = (EditText) bookExchangeSectionView.findViewById(R.id.edit_book_price);
+        mBookConditionView = (Spinner) bookExchangeSectionView.findViewById(R.id.select_book_condition);
 
         final Course course = new Course();
         final Post post = new Post();
         final BookExchange bookExchangePost = new BookExchange();
 
         ArrayAdapter<CharSequence> courseSubjectAdapter = ArrayAdapter.createFromResource(mHubActivity.getApplicationContext(),
-                R.array.book_course_subject_list, R.layout.support_simple_spinner_dropdown_item);
-        courseSubjectAdapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
-        selectBookCourseSubject.setAdapter(courseSubjectAdapter);
+                R.array.book_course_subject_list, R.layout.spinner_dropdown_item);
+        courseSubjectAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
+        mCourseSubjectView.setAdapter(courseSubjectAdapter);
 
         ArrayAdapter<CharSequence> courseNumberAdapter = ArrayAdapter.createFromResource(mHubActivity.getApplicationContext(),
-                R.array.book_course_number_list, R.layout.support_simple_spinner_dropdown_item);
-        courseNumberAdapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
-        selectBookCourseNumber.setAdapter(courseNumberAdapter);
+                R.array.book_course_number_list, R.layout.spinner_dropdown_item);
+        courseNumberAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
+        mSelectCourseNumber.setAdapter(courseNumberAdapter);
 
         ArrayAdapter<CharSequence> conditionAdapter = ArrayAdapter.createFromResource(mHubActivity.getApplicationContext(),
-                R.array.book_conditions, R.layout.support_simple_spinner_dropdown_item);
-        conditionAdapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
-        selectBookCondition.setAdapter(conditionAdapter);
+                R.array.book_conditions, R.layout.spinner_dropdown_item);
+        conditionAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
+        mBookConditionView.setAdapter(conditionAdapter);
 
-        selectBookCourseSubject.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        mCourseSubjectView.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if (position != 0) course.setSubject(parent.getItemAtPosition(position).toString());
@@ -84,7 +91,7 @@ public class ActionBookExchangePostFragment extends ActionPostFragment {
             }
         });
 
-        selectBookCourseNumber.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        mSelectCourseNumber.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if (position != 0)
@@ -96,7 +103,7 @@ public class ActionBookExchangePostFragment extends ActionPostFragment {
             }
         });
 
-        selectBookCondition.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        mBookConditionView.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if (position != 0) {
@@ -138,24 +145,24 @@ public class ActionBookExchangePostFragment extends ActionPostFragment {
 
                 ArrayAdapter<CharSequence> subjectAdapter = new ArrayAdapter<CharSequence>(mHubActivity.getApplicationContext(),
                         R.layout.support_simple_spinner_dropdown_item, courseSubjects);
-                selectBookCourseSubject.setAdapter(subjectAdapter);
+                mCourseSubjectView.setAdapter(subjectAdapter);
                 ArrayAdapter<CharSequence> numberAdapter = new ArrayAdapter<CharSequence>(mHubActivity.getApplicationContext(),
                         R.layout.support_simple_spinner_dropdown_item, courseNumbers);
-                selectBookCourseNumber.setAdapter(numberAdapter);
+                mSelectCourseNumber.setAdapter(numberAdapter);
 
             }
         });
 
-        buttonPost.setOnClickListener(new View.OnClickListener() {
+        mPostBtnView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                post.setContent(editContent.getText().toString());
+                post.setContent(mContentView.getText().toString());
                 post.setUser(ParseUser.getCurrentUser());
                 post.setPostType(PostTypes.BOOK_EXCHANGE.getType());
                 bookExchangePost.setPost(post);
-                bookExchangePost.setTitle(editBookTitle.getText().toString());
+                bookExchangePost.setTitle(mBookTitleView.getText().toString());
                 bookExchangePost.setCourse(course);
-                bookExchangePost.setPrice(Double.parseDouble(editBookPrice.getText().toString()));
+                bookExchangePost.setPrice(Double.parseDouble(mBookTitleView.getText().toString()));
 
                 post.saveInBackground();
                 bookExchangePost.saveInBackground();
@@ -163,5 +170,9 @@ public class ActionBookExchangePostFragment extends ActionPostFragment {
         });
 
         return actionPostView;
+    }
+
+    private boolean checkInput() {
+        return true;
     }
 }

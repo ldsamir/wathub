@@ -1,10 +1,13 @@
 package webb8.wathub.init;
 
 import android.app.Application;
+import android.content.Context;
 import android.content.Intent;
 
 import com.parse.Parse;
 import com.parse.ParseObject;
+
+import java.io.File;
 
 import webb8.wathub.models.BookExchange;
 import webb8.wathub.models.Carpool;
@@ -37,6 +40,6 @@ public class App extends Application {
         ParseObject.registerSubclass(PostType.class);
         Parse.enableLocalDatastore(this);
         Parse.initialize(this);
-        Course.loadCourses();
+        //Course.loadCourses();
     }
 }

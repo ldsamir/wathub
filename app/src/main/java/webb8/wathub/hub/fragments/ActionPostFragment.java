@@ -18,6 +18,10 @@ import webb8.wathub.models.Post;
  */
 public class ActionPostFragment extends HubFragment {
 
+    // UI fields
+    protected EditText mContentView;
+    protected Button mPostBtnView;
+
     public ActionPostFragment() {
         // Required empty public constructor
     }
@@ -45,21 +49,22 @@ public class ActionPostFragment extends HubFragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View actionPostView = inflater.inflate(R.layout.fragment_action_post, container, false);
-        final EditText editContent = (EditText) actionPostView.findViewById(R.id.edit_post_content);
-        Button buttonPost = (Button) actionPostView.findViewById(R.id.action_post_go);
+        mContentView = (EditText) actionPostView.findViewById(R.id.edit_post_content);
+        mPostBtnView = (Button) actionPostView.findViewById(R.id.action_post_go);
 
         final Post post = new Post();
 
-        buttonPost.setOnClickListener(new View.OnClickListener() {
+        mPostBtnView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 post.setUser(ParseUser.getCurrentUser());
-                post.setContent(editContent.getText().toString());
+                post.setContent(mContentView.getText().toString());
                 post.setPostType(null);
 
                 post.saveInBackground();
             }
         });
+
         return actionPostView;
     }
 }

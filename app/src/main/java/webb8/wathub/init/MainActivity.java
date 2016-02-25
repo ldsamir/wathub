@@ -21,6 +21,10 @@ import webb8.wathub.models.Parsable;
  */
 public class MainActivity extends AppCompatActivity {
 
+    // UI fields
+    private Button mLogInBtnView;
+    private Button mSignUpBtnView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,8 +44,8 @@ public class MainActivity extends AppCompatActivity {
         }
 
         // set login button
-        Button logInButton = (Button) findViewById(R.id.action_log_in);
-        logInButton.setOnClickListener(new View.OnClickListener() {
+        mLogInBtnView = (Button) findViewById(R.id.action_log_in);
+        mLogInBtnView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent logInIntent = new Intent(MainActivity.this, LoginActivity.class);
@@ -50,8 +54,8 @@ public class MainActivity extends AppCompatActivity {
         });
 
         // set sign up button
-        Button signUpButton = (Button) findViewById(R.id.action_sign_up);
-        signUpButton.setOnClickListener(new View.OnClickListener() {
+        mSignUpBtnView = (Button) findViewById(R.id.action_sign_up);
+        mSignUpBtnView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent signUpIntent = new Intent(MainActivity.this, SignUpActivity.class);

@@ -17,6 +17,8 @@ import webb8.wathub.R;
  */
 public class ActionGroupStudyPostFragment extends ActionPostFragment {
 
+    // UI fields
+
     public ActionGroupStudyPostFragment() {}
 
     @Override

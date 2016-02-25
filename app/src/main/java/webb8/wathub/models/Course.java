@@ -23,7 +23,7 @@ public class Course extends ParseObject implements Parsable {
     public static final String KEY_SUBJECT = "subject";
     public static final String KEY_NUMBER = "number";
     public static final String KEY_TITLE = "title";
-    public static final String COURSES_FILE = "../data/Courses.json";
+    public static final String COURSES_FILE = "/home/mismayil/UW/CS446/wathub/app/src/main/java/webb8/wathub/data/Courses.json";
 
     public String getSubject() {
         return getString(KEY_SUBJECT);
