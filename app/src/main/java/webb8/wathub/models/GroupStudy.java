@@ -19,10 +19,10 @@ public class GroupStudy extends ParseObject implements Parsable {
     // class columns
     public static final String KEY_CLASSNAME = "GroupStudy";
     public static final String KEY_POST = "post";
-    public static final String KEY_WHEN = "when";
     public static final String KEY_WHERE = "where";
     public static final String KEY_MAX_PEOPLE = "maxPeople";
-    public static final String KEY_DURATION = "duration";
+    public static final String KEY_START_TIME = "startTime";
+    public static final String KEY_END_TIME = "endTime";
     public static final String KEY_COURSE = "course";
     public static final String KEY_STUDENTS = "students";
     public static final String KEY_GROUP_NAME = "groupName";
@@ -35,14 +35,6 @@ public class GroupStudy extends ParseObject implements Parsable {
 
     public void setPost(Post post) {
         put(KEY_POST, post);
-    }
-
-    public Date getWhen() {
-        return getDate(KEY_WHEN);
-    }
-
-    public void setWhen(Date when) {
-        put(KEY_WHEN, when);
     }
 
     public String getWhere() {
@@ -61,13 +53,13 @@ public class GroupStudy extends ParseObject implements Parsable {
         put(KEY_MAX_PEOPLE, maxPeople);
     }
 
-    public int getDuration() {
-        return getInt(KEY_DURATION);
-    }
+    public void setStartTime(Date when) { put(KEY_START_TIME, when);}
 
-    public void setDuration(int duration) {
-        put(KEY_DURATION, duration);
-    }
+    public Date getStartTime() { return getDate(KEY_START_TIME);}
+
+    public void setEndTime(Date when) { put(KEY_END_TIME, when);}
+
+    public Date getEndTime() { return getDate(KEY_END_TIME);}
 
     public Course getCourse() {
         ParseObject object = getParseObject(KEY_COURSE);

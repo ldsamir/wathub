@@ -1,5 +1,9 @@
 package webb8.wathub.models;
 
+import android.app.Activity;
+import android.content.Context;
+import android.content.res.AssetManager;
+
 import com.parse.ParseClassName;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
@@ -9,6 +13,8 @@ import java.io.FileReader;
 import java.util.Iterator;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import webb8.wathub.init.App;
 
 /**
  * Created by mismayil on 04/02/16;
