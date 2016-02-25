@@ -47,7 +47,7 @@ public class PostCard {
     }
 
     public View getView() {
-        View view = mActivity.getLayoutInflater().inflate(R.layout.item_post, null, false);
+        View view = mActivity.getLayoutInflater().inflate(R.layout.card_post, null, false);
         CardView mPostView = (CardView) view.findViewById(R.id.post_card);
         ImageView mPostAvatarView = (ImageView) view.findViewById(R.id.post_avatar);
         TextView mPostUserView = (TextView) view.findViewById(R.id.post_user);
