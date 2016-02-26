@@ -4,18 +4,18 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewParent;
 import android.widget.LinearLayout;
 
 import java.util.List;
-import webb8.wathub.util.PostCard;
+
 import webb8.wathub.R;
+import webb8.wathub.util.PostCard;
 
 /**
  * Created by mismayil on 20/02/16.
  */
 public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostCardViewHolder> {
-    List<View> mPostCardViews;
+    List<PostCard> mPostCards;
 
     class PostCardViewHolder extends RecyclerView.ViewHolder {
 
@@ -24,8 +24,8 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostCardViewHo
         }
     }
 
-    public PostAdapter(List<View> postCardViews) {
-        mPostCardViews = postCardViews;
+    public PostAdapter(List<PostCard> postCards) {
+        mPostCards = postCards;
     }
 
     @Override
@@ -36,11 +36,10 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostCardViewHo
 
     @Override
     public void onBindViewHolder(PostCardViewHolder postViewHolder, int i) {
-        View postCardView = mPostCardViews.get(i);
+        PostCard postCard = mPostCards.get(i);
         LinearLayout holderView = (LinearLayout) postViewHolder.itemView;
-        if (holderView.getChildCount() == 0) {
-            holderView.addView(postCardView);
-        }
+        holderView.removeAllViews();
+        holderView.addView(postCard.getView());
     }
 
     @Override
@@ -50,6 +49,6 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostCardViewHo
 
     @Override
     public int getItemCount() {
-        return mPostCardViews.size();
+        return mPostCards.size();
     }
 }

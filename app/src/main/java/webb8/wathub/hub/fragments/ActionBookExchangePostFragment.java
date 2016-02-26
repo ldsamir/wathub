@@ -1,5 +1,6 @@
 package webb8.wathub.hub.fragments;
 
+import android.app.FragmentManager;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -12,16 +13,19 @@ import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
+import com.parse.SaveCallback;
 
 import java.util.List;
 
 import webb8.wathub.R;
+import webb8.wathub.hub.NavItem;
 import webb8.wathub.models.BookConditions;
 import webb8.wathub.models.BookExchange;
 import webb8.wathub.models.Course;
@@ -166,7 +170,19 @@ public class ActionBookExchangePostFragment extends ActionPostFragment {
                     bookExchangePost.setCourse(course);
                     bookExchangePost.setPrice(Double.parseDouble(mBookPriceView.getText().toString()));
 
-                    post.saveInBackground();
+                    post.saveInBackground(new SaveCallback() {
+                        @Override
+                        public void done(ParseException e) {
+                            if (e == null) {
+                                FragmentManager fragmentManager = getFragmentManager();
+                                Toast.makeText(getActivity(), R.string.info_post_published, Toast.LENGTH_SHORT).show();
+                                fragmentManager.beginTransaction().replace(R.id.container, HubFragment.newInstance(NavItem.ALL_POSTS.getId())).commit();
+                            } else {
+                                Toast.makeText(getActivity(), R.string.error_publishing_post, Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
+
                     bookExchangePost.saveInBackground();
                 }
 
@@ -187,7 +203,7 @@ public class ActionBookExchangePostFragment extends ActionPostFragment {
         }
 
         if (TextUtils.isEmpty(mBookTitleView.getText().toString())) {
-            mBookTitleView.setError(getString(R.string.error_empty_book_title));
+            mBookTitleView.setError(getString(R.string.error_post_empty_book_title));
             return false;
         }
 

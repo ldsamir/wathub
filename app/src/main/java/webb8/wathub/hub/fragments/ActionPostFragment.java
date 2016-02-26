@@ -1,5 +1,6 @@
 package webb8.wathub.hub.fragments;
 
+import android.app.FragmentManager;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -9,18 +10,21 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
+import com.parse.SaveCallback;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import webb8.wathub.R;
 import webb8.wathub.hub.Action;
+import webb8.wathub.hub.NavItem;
 import webb8.wathub.models.Course;
 import webb8.wathub.models.Post;
 
@@ -73,7 +77,18 @@ public class ActionPostFragment extends HubFragment {
                     post.setContent(mContentView.getText().toString());
                     post.setPostType(null);
 
-                    post.saveInBackground();
+                    post.saveInBackground(new SaveCallback() {
+                        @Override
+                        public void done(ParseException e) {
+                            if (e == null) {
+                                FragmentManager fragmentManager = getFragmentManager();
+                                Toast.makeText(getActivity(), R.string.info_post_published, Toast.LENGTH_SHORT).show();
+                                fragmentManager.beginTransaction().replace(R.id.container, HubFragment.newInstance(NavItem.ALL_POSTS.getId())).commit();
+                            } else {
+                                Toast.makeText(getActivity(), R.string.error_publishing_post, Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
                 }
             }
         });

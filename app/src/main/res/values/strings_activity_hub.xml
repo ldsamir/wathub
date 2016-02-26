@@ -64,6 +64,9 @@
     <string name="post_hint_group_end_time">End time</string>
 
     <string name="error_post_empty_content">Please, enter the post content</string>
-    <string name="error_empty_book_title">Please, enter the book title</string>
+    <string name="error_post_empty_book_title">Please, enter the book title</string>
     <string name="error_post_empty_book_price">Please, enter the book price</string>
+    <string name="error_publishing_post">Error posting</string>
+
+    <string name="info_post_published">Posted</string>
 </resources>

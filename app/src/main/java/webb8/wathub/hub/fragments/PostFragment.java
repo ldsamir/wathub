@@ -68,7 +68,7 @@ public class PostFragment extends HubFragment {
         mPostContainerView = (RecyclerView) rootView;
         LinearLayoutManager llm = new LinearLayoutManager(getActivity());
         mPostContainerView.setLayoutManager(llm);
-        mPostContainerView.setAdapter(new PostAdapter(new ArrayList<View>()));
+        mPostContainerView.setAdapter(new PostAdapter(new ArrayList<PostCard>()));
         return rootView;
     }
 
@@ -79,12 +79,12 @@ public class PostFragment extends HubFragment {
             @Override
             public void done(List<ParseObject> objects, ParseException e) {
                 if (e == null) {
-                    List<View> mPostCardViews = new ArrayList<>();
+                    List<PostCard> mPostCards = new ArrayList<>();
                     for (ParseObject object : objects) {
                         Post post = Post.getInstance(object);
-                        mPostCardViews.add(new PostCard(getActivity(), post).getView());
+                        mPostCards.add(new PostCard(getActivity(), post));
                     }
-                    PostAdapter postAdapter = new PostAdapter(mPostCardViews);
+                    PostAdapter postAdapter = new PostAdapter(mPostCards);
                     mPostContainerView.setAdapter(postAdapter);
                 } else {
                     Toast.makeText(mHubActivity.getApplicationContext(), R.string.error_loading_posts, Toast.LENGTH_SHORT).show();
