@@ -85,8 +85,8 @@ public class PostCard {
 
         mPostAvatarView.setImageResource(R.drawable.no_avatar);
         if (profile != null) mPostUserView.setText(profile.getFirstName() + " " + profile.getLastName());
-        SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy HH:mm a", Locale.CANADA);
-        mPostDateView.setText(format.format(postDate));
+//        SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy HH:mm a", Locale.CANADA);
+//        mPostDateView.setText(format.format(postDate));
         mPostContentView.setText(content);
         return view;
     }

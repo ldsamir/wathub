@@ -57,12 +57,17 @@
                 android:layout_width="20dp"
                 android:layout_height="30dp"
                 android:layout_alignParentRight="false"
-                android:layout_alignParentBottom="false"
+                android:layout_alignParentTop="true"
                 android:layout_alignParentEnd="true"
-                android:layout_marginTop="40dp"
                 android:id="@+id/post_type_icon"/>
 
         </RelativeLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/inner_postCard">
+
+        </LinearLayout>
     </android.support.v7.widget.CardView>
 
 </LinearLayout>
