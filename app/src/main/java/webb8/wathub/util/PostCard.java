@@ -5,6 +5,8 @@ import webb8.wathub.R;
 import android.support.v7.widget.CardView;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.parse.ParseException;
@@ -31,8 +33,8 @@ import webb8.wathub.models.Profile;
 public class PostCard {
 
     // member fields
-    private Activity mActivity;
-    private Post mPost;
+    protected Activity mActivity;
+    protected Post mPost;
 
     public PostCard() {}
 
@@ -54,6 +56,7 @@ public class PostCard {
         PostType postType = mPost.getPostType();
         Date postDate = mPost.getUpdatedAt();
         Profile profile = null;
+        LinearLayout innerPostCard = (LinearLayout) view.findViewById(R.id.inner_postCard);
 
         mPostIconView.setImageResource(R.drawable.ic_lens_black_24dp);
 
@@ -72,7 +75,15 @@ public class PostCard {
 
         if (postType == PostTypes.BOOK_EXCHANGE.getType()) {
             mPostIconView.setImageResource(R.drawable.ic_book_black_24dp);
+            ParseQuery<ParseObject> postQuery = BookExchange.getQuery();
+            query.whereEqualTo(BookExchange.KEY_POST, mPost);
 
+            try {
+                ParseObject object = postQuery.getFirst();
+                innerPostCard.addView(new BookExchangeCard(mActivity, BookExchange.getInstance(object)).getView());
+            } catch (ParseException e) {
+
+            }
         }
 
         if (postType == PostTypes.GROUP_STUDY.getType()) {

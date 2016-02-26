@@ -24,6 +24,7 @@ import java.util.List;
 
 import webb8.wathub.R;
 import webb8.wathub.hub.Action;
+import webb8.wathub.hub.HubActivity;
 import webb8.wathub.hub.NavItem;
 import webb8.wathub.models.Course;
 import webb8.wathub.models.Post;
@@ -75,17 +76,16 @@ public class ActionPostFragment extends HubFragment {
                 if (checkInput()) {
                     post.setUser(ParseUser.getCurrentUser());
                     post.setContent(mContentView.getText().toString());
-                    post.setPostType(null);
 
                     post.saveInBackground(new SaveCallback() {
                         @Override
                         public void done(ParseException e) {
                             if (e == null) {
                                 FragmentManager fragmentManager = getFragmentManager();
-                                Toast.makeText(getActivity(), R.string.info_post_published, Toast.LENGTH_SHORT).show();
+                                Toast.makeText(mHubActivity.getApplicationContext(), R.string.info_post_published, Toast.LENGTH_SHORT).show();
                                 fragmentManager.beginTransaction().replace(R.id.container, HubFragment.newInstance(NavItem.ALL_POSTS.getId())).commit();
                             } else {
-                                Toast.makeText(getActivity(), R.string.error_publishing_post, Toast.LENGTH_SHORT).show();
+                                Toast.makeText(mHubActivity.getApplicationContext(), R.string.error_publishing_post, Toast.LENGTH_SHORT).show();
                             }
                         }
                     });
@@ -145,7 +145,7 @@ public class ActionPostFragment extends HubFragment {
 
                 for (ParseObject object : objects) {
                     Course c = Course.getInstance(object);
-                    courseNumbers.add(c.getNumber());
+                    if (!courseNumbers.contains(c.getNumber())) courseNumbers.add(c.getNumber());
                 }
 
                 ArrayAdapter<CharSequence> subjectAdapter = new ArrayAdapter<>(getActivity(),

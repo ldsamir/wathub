@@ -59,7 +59,7 @@ public class ProfileFragment extends HubFragment {
             });
             firstNameView.setText(cur_user.getFirstName());
             lastNameView.setText(cur_user.getLastName());
-            SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy HH:mm a", Locale.CANADA);
+            SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy", Locale.CANADA);
             if(cur_user.getBirthday() != null){
                 birthDayView.setText(format.format(cur_user.getBirthday()));
             }

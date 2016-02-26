@@ -26,13 +26,10 @@
             android:layout_alignParentEnd="true"
             android:orientation="vertical">
 
-
-
-
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/book_exchane_courseNumber"
+                android:id="@+id/book_exchange_course"
                 android:text="@string/book_exchange_courseNumber"
                 android:textSize="20sp"
                 android:textStyle="bold"/>
@@ -40,46 +37,40 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/book_exchane_bookTitle"
+                android:id="@+id/book_exchange_bookTitle"
                 android:text="@string/book_exchange_bookTitle"
                 android:textSize="17sp"/>
-
-
 
             <TextView
                 android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
-                android:id="@+id/book_exchane_bookCondition"
+                android:id="@+id/book_exchange_bookCondition"
                 android:text="@string/book_exchange_Condition"
                 android:textSize="17sp"
                 android:textColor="@android:color/holo_red_light"/>
-
-
-
-
         </LinearLayout>
 
 
         <RelativeLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_marginStart="280dp"
             android:layout_marginTop="17dp">
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/dollarIcon"
-                android:src="@drawable/ic_attach_money_black_24dp"/>
+                android:src="@drawable/ic_attach_money_black_24dp"
+                android:layout_toStartOf="@+id/book_exchange_bookPrice"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/book_exchane_bookPrice"
+                android:id="@+id/book_exchange_bookPrice"
                 android:text="@string/book_exchange_Price"
                 android:textSize="20sp"
-                android:layout_toEndOf="@id/dollarIcon"/>
+                android:layout_alignParentEnd="true"/>
         </RelativeLayout>
 
         <RelativeLayout

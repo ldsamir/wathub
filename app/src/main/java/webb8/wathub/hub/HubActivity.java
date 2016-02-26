@@ -163,9 +163,9 @@ public class HubActivity extends AppCompatActivity
         mGeneralPostFab.setVisibility(optionsVisibility);
         mBookExchangeFab.setVisibility(optionsVisibility);
         mGroupStudyFab.setVisibility(optionsVisibility);
-        mGeneralPostFabTextView.setVisibility(optionsVisibility);
-        mBookExchangeFabTextView.setVisibility(optionsVisibility);
-        mGroupStudyFabTextView.setVisibility(optionsVisibility);
+//        mGeneralPostFabTextView.setVisibility(optionsVisibility);
+//        mBookExchangeFabTextView.setVisibility(optionsVisibility);
+//        mGroupStudyFabTextView.setVisibility(optionsVisibility);
     }
 
     @Override
