@@ -74,5 +74,5 @@
     <string name="book_exchange_Condition">Book Condition</string>
     <string name="book_exchange_courseNumber">Course Number</string>
     <string name="book_exchange_Price">Price</string>
-
+    <string name="book_exchange_send_message_button">Message </string>
 </resources>
