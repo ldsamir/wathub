@@ -77,7 +77,7 @@ public class Course extends ParseObject implements Parsable {
 
         String stringCourse = "";
         try {
-            InputStream f = c.getAssets().open(COURSES_FILE);
+            InputStream f = c.getAssets().open("Courses.json");
             stringCourse = f.toString();
         } catch (Exception e) {
             e.printStackTrace();

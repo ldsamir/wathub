@@ -41,6 +41,20 @@ public class HubActivity extends AppCompatActivity
     private TextView mGroupStudyFabTextView;
 
     /**
+     * Fragments
+     */
+    private HubFragment mPostFragment;
+    private HubFragment mProfileFragment;
+    private HubFragment mMessageFragment;
+    private HubFragment mBookExchangeFragment;
+    private HubFragment mGroupStudyFragment;
+    private HubFragment mCarpoolFragment;
+    private HubFragment mFavoriteFragment;
+    private HubFragment mActionPostFragment;
+    private HubFragment mActionBookExchangePostFragment;
+    private HubFragment mActionGroupStudyPostFragment;
+
+    /**
      * FAB states
      */
     private static final int FAB_ADD = 0;
@@ -57,6 +71,25 @@ public class HubActivity extends AppCompatActivity
         setContentView(R.layout.activity_hub);
         HubFragment.setHubActivity(this);
 
+        mActionPostFragment = HubFragment.newInstance(Action.ACTION_POST_GENERAL.getId());
+        mActionBookExchangePostFragment = HubFragment.newInstance(Action.ACTION_POST_BOOK_EXCHANGE.getId());
+        mActionGroupStudyPostFragment = HubFragment.newInstance(Action.ACTION_POST_GROUP_STUDY.getId());
+
+        mNavigationDrawerFragment = (NavigationDrawerFragment)
+                getFragmentManager().findFragmentById(R.id.navigation_drawer);
+
+        mTitle = getTitle();
+
+        // Set up the drawer.
+        mNavigationDrawerFragment.setUp(
+                R.id.navigation_drawer,
+                (DrawerLayout) findViewById(R.id.drawer_layout));
+
+        setUpPostFab();
+    }
+
+    private void setUpPostFab() {
+
         mContainerPostFab = (FrameLayout) findViewById(R.id.container_fab_post);
         mPostFab = (FloatingActionButton) findViewById(R.id.fab_post);
         mGeneralPostFab = (FloatingActionButton) findViewById(R.id.fab_general_post);
@@ -66,15 +99,6 @@ public class HubActivity extends AppCompatActivity
         mBookExchangeFabTextView = (TextView) findViewById(R.id.fab_text_book_exchange);
         mGroupStudyFabTextView = (TextView) findViewById(R.id.fab_text_group_study);
         mPostFab.setTag(R.drawable.ic_add_white_24dp);
-
-        mNavigationDrawerFragment = (NavigationDrawerFragment)
-                getFragmentManager().findFragmentById(R.id.navigation_drawer);
-        mTitle = getTitle();
-
-        // Set up the drawer.
-        mNavigationDrawerFragment.setUp(
-                R.id.navigation_drawer,
-                (DrawerLayout) findViewById(R.id.drawer_layout));
 
         mPostFab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -95,7 +119,7 @@ public class HubActivity extends AppCompatActivity
                 FragmentManager fragmentManager = getFragmentManager();
 
                 fragmentManager.beginTransaction()
-                        .replace(R.id.container, HubFragment.newInstance(Action.ACTION_POST_GENERAL.getId()))
+                        .replace(R.id.container, mActionPostFragment)
                         .commit();
             }
         });
@@ -106,7 +130,7 @@ public class HubActivity extends AppCompatActivity
                 FragmentManager fragmentManager = getFragmentManager();
 
                 fragmentManager.beginTransaction()
-                        .replace(R.id.container, HubFragment.newInstance(Action.ACTION_POST_BOOK_EXCHANGE.getId()))
+                        .replace(R.id.container, mActionBookExchangePostFragment)
                         .commit();
             }
         });
@@ -117,7 +141,7 @@ public class HubActivity extends AppCompatActivity
                 FragmentManager fragmentManager = getFragmentManager();
 
                 fragmentManager.beginTransaction()
-                        .replace(R.id.container, HubFragment.newInstance(Action.ACTION_POST_GROUP_STUDY.getId()))
+                        .replace(R.id.container, mActionGroupStudyPostFragment)
                         .commit();
             }
         });
@@ -148,18 +172,55 @@ public class HubActivity extends AppCompatActivity
     public void onNavigationDrawerItemSelected(int position) {
         // update the main content by replacing fragments
         FragmentManager fragmentManager = getFragmentManager();
+        HubFragment fragment = null;
 
-        // replace the fragment depending on action
         if (position == NavItem.LOG_OUT.getId()) {
             ParseUser.logOut();
             Intent mainIntent = new Intent(this, MainActivity.class);
             startActivity(mainIntent);
             finish();
-        } else {
-            fragmentManager.beginTransaction()
-                    .replace(R.id.container, HubFragment.newInstance(position))
-                    .commit();
+            return;
         }
+
+        // replace the fragment depending on action
+        if (position == NavItem.PROFILE.getId()) {
+            if (mProfileFragment == null) mProfileFragment = HubFragment.newInstance(NavItem.PROFILE.getId());
+            fragment = mProfileFragment;
+        } else
+
+        if (position == NavItem.MESSAGES.getId()) {
+            if (mMessageFragment == null) mMessageFragment = HubFragment.newInstance(NavItem.MESSAGES.getId());
+            fragment = mMessageFragment;
+        } else
+
+        if (position == NavItem.ALL_POSTS.getId()) {
+            if (mPostFragment == null) mPostFragment = HubFragment.newInstance(NavItem.ALL_POSTS.getId());
+            fragment = mPostFragment;
+        } else
+
+        if (position == NavItem.BOOK_EXCHANGE_POSTS.getId()) {
+            if (mBookExchangeFragment == null) mBookExchangeFragment = HubFragment.newInstance(NavItem.BOOK_EXCHANGE_POSTS.getId());
+            fragment = mBookExchangeFragment;
+        } else
+
+        if (position == NavItem.CARPOOL_POSTS.getId()) {
+            if (mCarpoolFragment == null) mCarpoolFragment = HubFragment.newInstance(NavItem.CARPOOL_POSTS.getId());
+            fragment = mCarpoolFragment;
+        } else
+
+        if (position == NavItem.GROUP_STUDY_POSTS.getId()) {
+            if (mGroupStudyFragment == null) mGroupStudyFragment = HubFragment.newInstance(NavItem.GROUP_STUDY_POSTS.getId());
+            fragment = mGroupStudyFragment;
+        } else
+
+        if (position == NavItem.FAVORITES.getId()) {
+            if (mFavoriteFragment == null) mFavoriteFragment = HubFragment.newInstance(NavItem.FAVORITES.getId());
+            fragment = mFavoriteFragment;
+        }
+
+        fragmentManager.beginTransaction()
+                .replace(R.id.container, fragment)
+                .commit();
     }
 
     public void onSectionAttached(int section) {

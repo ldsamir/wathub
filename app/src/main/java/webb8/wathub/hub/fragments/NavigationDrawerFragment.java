@@ -1,5 +1,6 @@
 package webb8.wathub.hub.fragments;
 
+import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 import android.app.Activity;
 import android.support.v7.app.ActionBar;
@@ -209,7 +210,7 @@ public class NavigationDrawerFragment extends Fragment {
     }
 
     @Override
-    public void onAttach(Activity activity) {
+    public void onAttach(Context activity) {
         super.onAttach(activity);
         try {
             mCallbacks = (NavigationDrawerCallbacks) activity;

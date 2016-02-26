@@ -22,18 +22,13 @@ import webb8.wathub.models.Carpool;
 import webb8.wathub.models.GroupStudy;
 import webb8.wathub.models.Post;
 import webb8.wathub.models.PostType;
+import webb8.wathub.models.PostTypes;
 import webb8.wathub.models.Profile;
 
 /**
  * Created by mismayil on 23/02/16.
  */
 public class PostCard {
-
-    // post types
-    private static final String GENERIC = "GENERIC";
-    private static final String BOOK_EXCHANGE = BookExchange.class.getSimpleName();
-    private static final String GROUP_STUDY = GroupStudy.class.getSimpleName();
-    private static final String CARPOOL = Carpool.class.getSimpleName();
 
     // member fields
     private Activity mActivity;
@@ -58,10 +53,7 @@ public class PostCard {
         ParseUser user = mPost.getUser();
         PostType postType = mPost.getPostType();
         Date postDate = mPost.getUpdatedAt();
-        String typeName = GENERIC;
         Profile profile = null;
-
-        if (postType != null) typeName = postType.getTypeName();
 
         ParseQuery<ParseObject> query = Profile.getQuery();
         query.whereEqualTo(Profile.KEY_OWNER, user);
@@ -76,16 +68,15 @@ public class PostCard {
 
         }
 
-        //
-        if (typeName.equalsIgnoreCase(BOOK_EXCHANGE)) {
+        if (postType == PostTypes.BOOK_EXCHANGE.getType()) {
 
         }
 
-        if (typeName.equalsIgnoreCase(GROUP_STUDY)) {
+        if (postType == PostTypes.GROUP_STUDY.getType()) {
 
         }
 
-        if (typeName.equalsIgnoreCase(CARPOOL)) {
+        if (postType == PostTypes.CARPOOL.getType()) {
 
         }
 

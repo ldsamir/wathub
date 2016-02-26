@@ -27,37 +27,40 @@ import webb8.wathub.util.PostCard;
  */
 public class PostFragment extends HubFragment {
 
+    protected RecyclerView mPostContainerView;
+
     public PostFragment() {}
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup viewContainer, Bundle savedInstanceState) {
         final View rootView = inflater.inflate(R.layout.fragment_post, viewContainer, false);
+        mPostContainerView = (RecyclerView) rootView;
+        LinearLayoutManager llm = new LinearLayoutManager(mHubActivity.getApplicationContext());
+        mPostContainerView.setLayoutManager(llm);
+        mPostContainerView.setAdapter(new PostAdapter(new ArrayList<View>()));
+        return rootView;
+    }
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
         ParseQuery<ParseObject> query = Post.getQuery();
         query.orderByDescending(Parsable.KEY_UPDATED_AT);
-        final RecyclerView postContainer = (RecyclerView) rootView;
-        LinearLayoutManager llm = new LinearLayoutManager(mHubActivity.getApplicationContext());
-        postContainer.setLayoutManager(llm);
-        postContainer.setAdapter(new PostAdapter(new ArrayList<PostCard>()));
-
         query.findInBackground(new FindCallback<ParseObject>() {
             @Override
             public void done(List<ParseObject> objects, ParseException e) {
                 if (e == null) {
-                    List<PostCard> postCards = new ArrayList<>();
-
+                    List<View> mPostCardViews = new ArrayList<>();
                     for (ParseObject object : objects) {
                         Post post = Post.getInstance(object);
-                        postCards.add(new PostCard(mHubActivity, post));
+                        mPostCardViews.add(new PostCard(mHubActivity, post).getView());
                     }
-
-                    PostAdapter postAdapter = new PostAdapter(postCards);
-                    postContainer.setAdapter(postAdapter);
+                    PostAdapter postAdapter = new PostAdapter(mPostCardViews);
+                    mPostContainerView.setAdapter(postAdapter);
                 } else {
                     Toast.makeText(mHubActivity.getApplicationContext(), R.string.error_loading_posts, Toast.LENGTH_SHORT).show();
                 }
             }
         });
-
-        return rootView;
     }
 }

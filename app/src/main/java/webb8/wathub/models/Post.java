@@ -28,7 +28,7 @@ public class Post extends ParseObject implements Parsable {
     }
 
     public PostType getPostType() {
-        ParseObject object =  getParseObject(KEY_POST_TYPE);
+        ParseObject object = getParseObject(KEY_POST_TYPE);
         if (object != null) return ParseObject.createWithoutData(PostType.class, object.getObjectId());
         return null;
     }

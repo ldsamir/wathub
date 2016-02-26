@@ -14,7 +14,7 @@ import webb8.wathub.R;
  * Created by mismayil on 20/02/16.
  */
 public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostCardViewHolder> {
-    List<PostCard> mPostCards;
+    List<View> mPostCardViews;
 
     public static class PostCardViewHolder extends RecyclerView.ViewHolder {
 
@@ -23,8 +23,8 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostCardViewHo
         }
     }
 
-    public PostAdapter(List<PostCard> postCards) {
-        mPostCards = postCards;
+    public PostAdapter(List<View> postCardViews) {
+        mPostCardViews = postCardViews;
     }
 
     @Override
@@ -35,10 +35,10 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostCardViewHo
 
     @Override
     public void onBindViewHolder(PostCardViewHolder postViewHolder, int i) {
-        PostCard postCard = mPostCards.get(i);
+        View postCardView = mPostCardViews.get(i);
         LinearLayout holderView = (LinearLayout) postViewHolder.itemView;
         holderView.removeAllViews();
-        holderView.addView(postCard.getView());
+        holderView.addView(postCardView);
     }
 
     @Override
@@ -48,6 +48,6 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostCardViewHo
 
     @Override
     public int getItemCount() {
-        return mPostCards.size();
+        return mPostCardViews.size();
     }
 }
