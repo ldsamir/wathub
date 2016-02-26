@@ -62,4 +62,8 @@
     <string name="post_hint_group_max_people">Number of people</string>
     <string name="post_hint_group_start_time">Start time</string>
     <string name="post_hint_group_end_time">End time</string>
+
+    <string name="error_post_empty_content">Please, enter the post content</string>
+    <string name="error_empty_book_title">Please, enter the book title</string>
+    <string name="error_post_empty_book_price">Please, enter the book price</string>
 </resources>

@@ -41,8 +41,6 @@ import webb8.wathub.models.PostTypes;
  */
 public class ActionGroupStudyPostFragment extends ActionPostFragment {
 
-    // UI fields
-
     public ActionGroupStudyPostFragment() {}
 
     // UI fields
@@ -89,64 +87,52 @@ public class ActionGroupStudyPostFragment extends ActionPostFragment {
         courseNumberAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
         mCourseNumberView.setAdapter(courseNumberAdapter);
 
-        //final boolean subject_selection = false;
-        //final boolean number_selection = true;
+        updateCourseSubjectsAdapter(mCourseSubjectView);
 
         mCourseSubjectView.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if (position != 0) course.setSubject(parent.getItemAtPosition(position).toString());
-                //subject_selection = true;
-                //if (number_selection) course.getTitle();
-                if (course.getNumber() > 0) mCourseTitleView.setText(course.getTitle());
+                if (position != 0) {
+                    String subject = parent.getItemAtPosition(position).toString();
+                    course.setSubject(subject);
+                    updateCourseNumbersAdapter(mCourseNumberView, subject);
+                } else {
+                    mCourseTitleView.setVisibility(View.GONE);
+                }
+
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-                //subject_selection = false;
-            }
+            public void onNothingSelected(AdapterView<?> parent) {}
         });
 
         mCourseNumberView.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if (position != 0) course.setNumber(Integer.parseInt(parent.getItemAtPosition(position).toString()));
-                //number_selection = true;
-                //if (subject_selection) course.getTitle();
-                if (course.getSubject() != null) mCourseTitleView.setText(course.getTitle());
+                if (position != 0) {
+                    int number = Integer.parseInt(parent.getItemAtPosition(position).toString());
+                    course.setNumber(number);
+                    ParseQuery<ParseObject> query = Course.getQuery();
+                    query.whereEqualTo(Course.KEY_SUBJECT, course.getSubject());
+                    query.whereEqualTo(Course.KEY_NUMBER, course.getNumber());
+                    query.findInBackground(new FindCallback<ParseObject>() {
+                        @Override
+                        public void done(List<ParseObject> objects, ParseException e) {
+                            if (objects != null && objects.size() > 0) {
+                                Course selectedCourse = Course.getInstance(objects.get(0));
+                                mCourseTitleView.setText(selectedCourse.getTitle());
+                                mCourseTitleView.setVisibility(View.VISIBLE);
+                            }
+                        }
+                    });
+                } else {
+                    mCourseTitleView.setVisibility(View.GONE);
+                }
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
                 //number_selection = false;
-            }
-        });
-
-        //if (subject_selection && number_selection) mCourseTitleView.setText(course.getTitle());
-
-        ParseQuery<ParseObject> courseQuery = Course.getQuery();
-        courseQuery.orderByAscending(Course.KEY_SUBJECT);
-        courseQuery.findInBackground(new FindCallback<ParseObject>() {
-            @Override
-            public void done(List<ParseObject> objects, ParseException e) {
-                ArrayList<CharSequence> courseSubjects = new ArrayList<>();
-                ArrayList<CharSequence> courseNumbers = new ArrayList<>();
-
-                courseSubjects.add(getString(R.string.post_hint_select_course_subject));
-                courseNumbers.add(getString(R.string.post_hint_select_course_number));
-
-                for (ParseObject object : objects) {
-                    Course c = Course.getInstance(object);
-                    courseSubjects.add(c.getSubject());
-                    courseNumbers.add(String.valueOf(c.getNumber()));
-                }
-
-                ArrayAdapter<CharSequence> subjectAdapter = new ArrayAdapter<CharSequence>(mHubActivity.getApplicationContext(),
-                        R.layout.support_simple_spinner_dropdown_item, courseSubjects);
-                mCourseSubjectView.setAdapter(subjectAdapter);
-                ArrayAdapter<CharSequence> numberAdapter = new ArrayAdapter<CharSequence>(mHubActivity.getApplicationContext(),
-                        R.layout.support_simple_spinner_dropdown_item, courseNumbers);
-                mCourseNumberView.setAdapter(numberAdapter);
             }
         });
 
