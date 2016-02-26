@@ -69,4 +69,10 @@
     <string name="error_publishing_post">Error posting</string>
 
     <string name="info_post_published">Posted</string>
+    <string name="profile_save">Profile updated</string>
+    <string name="book_exchange_bookTitle">Book Title</string>
+    <string name="book_exchange_Condition">Book Condition</string>
+    <string name="book_exchange_courseNumber">Course Number</string>
+    <string name="book_exchange_Price">Price</string>
+
 </resources>

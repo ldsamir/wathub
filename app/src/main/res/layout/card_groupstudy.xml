@@ -76,6 +76,7 @@
                 android:orientation="horizontal"
                 android:id="@+id/LL2"
                 android:layout_below="@+id/edit_group_when">
+
                 <TimePicker
                     android:layout_width="160dp"
                     android:layout_height="45dp"

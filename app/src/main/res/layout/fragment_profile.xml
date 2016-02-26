@@ -56,11 +56,11 @@
         android:id="@+id/birthDay"
         android:hint="@string/profile_hint_birthday"
         android:editable="true"
-        android:inputType="date"
         android:layout_below="@+id/lastName"
         android:layout_alignParentStart="true"
         android:textColorHint="#494949"
-        android:textColor="@color/black" />
+        android:textColor="@color/black"
+        android:inputType="datetime" />
 
     <EditText
         android:layout_width="match_parent"
@@ -84,6 +84,18 @@
         android:layout_alignParentStart="true"
         android:textColorHint="#494949"
         android:textColor="@color/black" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Save"
+        android:id="@+id/saveButton"
+        android:layout_below="@+id/phoneNumber"
+        android:layout_centerHorizontal="true"
+        android:background="@color/uw_yellow"
+        android:textStyle="bold"
+        android:textSize="20dp"
+        android:padding="8dp"/>
 
 
 </RelativeLayout>

@@ -48,12 +48,14 @@ public class PostCard {
         TextView mPostUserView = (TextView) view.findViewById(R.id.post_user);
         TextView mPostDateView = (TextView) view.findViewById(R.id.post_date);
         TextView mPostContentView = (TextView) view.findViewById(R.id.post_content);
-
+        ImageView mPostIconView = (ImageView) view.findViewById(R.id.post_type_icon);
         String content = mPost.getContent();
         ParseUser user = mPost.getUser();
         PostType postType = mPost.getPostType();
         Date postDate = mPost.getUpdatedAt();
         Profile profile = null;
+
+        mPostIconView.setImageResource(R.drawable.ic_lens_black_24dp);
 
         ParseQuery<ParseObject> query = Profile.getQuery();
         query.whereEqualTo(Profile.KEY_OWNER, user);
@@ -69,6 +71,7 @@ public class PostCard {
         }
 
         if (postType == PostTypes.BOOK_EXCHANGE.getType()) {
+            mPostIconView.setImageResource(R.drawable.ic_book_black_24dp);
 
         }
 
@@ -80,7 +83,7 @@ public class PostCard {
 
         }
 
-        mPostAvatarView.setImageResource(R.drawable.bb8);
+        mPostAvatarView.setImageResource(R.drawable.no_avatar);
         if (profile != null) mPostUserView.setText(profile.getFirstName() + " " + profile.getLastName());
         SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy HH:mm a", Locale.CANADA);
         mPostDateView.setText(format.format(postDate));
