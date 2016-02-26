@@ -47,10 +47,10 @@ public class Course extends ParseObject implements Parsable {
     }
 
     public int getNumber() {
-        return getInt(KEY_NUMBER);
+        return getString(KEY_NUMBER);
     }
 
-    public void setNumber(int number) {
+    public void setNumber(String number) {
         put(KEY_NUMBER, number);
     }
 

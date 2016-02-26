@@ -30,32 +30,48 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/group_course_title"
-        android:hint="@string/post_hint_group_course_title"/>
+        android:hint="Course Title"
+        android:layout_below="@+id/LL"/>
 
     <EditText
-        android:id="@+id/edit_group_when"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/post_hint_group_when" />
-
-    <EditText
-        android:id="@+id/edit_group_start_time"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/post_hint_group_start_time"/>
-
-    <EditText
-        android:id="@+id/edit_group_end_time"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/post_hint_group_end_time"/>
-
-    <EditText
         android:id="@+id/edit_group_where"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/post_hint_group_where"
-        android:inputType="text"/>
+        android:layout_below="@+id/group_course_title"
+        android:hint="Location" />
+
+    <DatePicker
+        android:layout_width="wrap_content"
+        android:datePickerMode="spinner"
+        android:calendarViewShown="@bool/abc_config_closeDialogWhenTouchOutside"
+        android:layout_height="45dp"
+        android:contextClickable="@bool/abc_config_closeDialogWhenTouchOutside"
+        android:calendarTextColor="@color/yellow"
+        android:background="@color/yellow"
+        android:layout_below="@+id/edit_group_where"
+        android:id="@+id/edit_group_when"></DatePicker>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="45dp"
+        android:divider="@color/yellow"
+        android:orientation="horizontal"
+        android:id="@+id/LL2"
+        android:layout_below="@+id/edit_group_when">
+        <TimePicker
+            android:layout_width="160dp"
+            android:layout_height="45dp"
+            android:headerAmPmTextAppearance="@layout/select_dialog_singlechoice_material"
+            android:id="@+id/edit_group_start_time"
+            android:fadeScrollbars="true"/>
+
+        <TimePicker
+            android:layout_width="160dp"
+            android:layout_height="45dp"
+            android:headerAmPmTextAppearance="@layout/select_dialog_singlechoice_material"
+            android:id="@+id/edit_group_end_time"
+            android:fadeScrollbars="true" />
+    </LinearLayout>
 
     <EditText
         android:id="@+id/edit_group_max_people"
@@ -63,4 +79,9 @@
         android:layout_height="wrap_content"
         android:hint="@string/post_hint_group_max_people"
         android:inputType="number"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Create"/>
 </LinearLayout>
