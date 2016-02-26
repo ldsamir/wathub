@@ -68,19 +68,19 @@ public class ActionBookExchangePostFragment extends ActionPostFragment {
         final Post post = new Post();
         final BookExchange bookExchangePost = new BookExchange();
 
-        ArrayAdapter<CharSequence> courseSubjectAdapter = ArrayAdapter.createFromResource(mHubActivity.getApplicationContext(),
+        ArrayAdapter<CharSequence> courseSubjectAdapter = ArrayAdapter.createFromResource(getActivity(),
                 R.array.book_course_subject_list, R.layout.spinner_dropdown_item);
-        courseSubjectAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
+        courseSubjectAdapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
         mCourseSubjectView.setAdapter(courseSubjectAdapter);
 
-        ArrayAdapter<CharSequence> courseNumberAdapter = ArrayAdapter.createFromResource(mHubActivity.getApplicationContext(),
+        ArrayAdapter<CharSequence> courseNumberAdapter = ArrayAdapter.createFromResource(getActivity(),
                 R.array.book_course_number_list, R.layout.spinner_dropdown_item);
-        courseNumberAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
+        courseNumberAdapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
         mCourseNumberView.setAdapter(courseNumberAdapter);
 
-        ArrayAdapter<CharSequence> conditionAdapter = ArrayAdapter.createFromResource(mHubActivity.getApplicationContext(),
+        ArrayAdapter<CharSequence> conditionAdapter = ArrayAdapter.createFromResource(getActivity(),
                 R.array.book_conditions, R.layout.spinner_dropdown_item);
-        conditionAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
+        conditionAdapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
         mBookConditionView.setAdapter(conditionAdapter);
 
         updateCourseSubjectsAdapter(mCourseSubjectView);
@@ -106,7 +106,7 @@ public class ActionBookExchangePostFragment extends ActionPostFragment {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if (position != 0) {
-                    int number = Integer.parseInt(parent.getItemAtPosition(position).toString());
+                    String number = parent.getItemAtPosition(position).toString();
                     course.setNumber(number);
                     ParseQuery<ParseObject> query = Course.getQuery();
                     query.whereEqualTo(Course.KEY_SUBJECT, course.getSubject());

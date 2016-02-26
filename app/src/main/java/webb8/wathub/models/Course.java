@@ -36,7 +36,6 @@ public class Course extends ParseObject implements Parsable {
     public static final String KEY_SUBJECT = "subject";
     public static final String KEY_NUMBER = "number";
     public static final String KEY_TITLE = "title";
-    public static final String COURSES_FILE = "data/Courses.json";
 
     public String getSubject() {
         return getString(KEY_SUBJECT);
@@ -46,7 +45,7 @@ public class Course extends ParseObject implements Parsable {
         put(KEY_SUBJECT, subject);
     }
 
-    public int getNumber() {
+    public String getNumber() {
         return getString(KEY_NUMBER);
     }
 
@@ -70,51 +69,5 @@ public class Course extends ParseObject implements Parsable {
     public static Course getInstance(ParseObject object) {
         if (object != null) return ParseObject.createWithoutData(Course.class, object.getObjectId());
         return null;
-    }
-
-    // load Courses into DB
-    public static void loadCourses(Context c) {
-
-        String stringCourse = "";
-        try {
-            InputStream f = c.getAssets().open(COURSES_FILE);
-            stringCourse = f.toString();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        JSONObject courses = null;
-        try {
-            courses = new JSONObject(stringCourse);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-        Iterator<String> subjects = courses.keys();
-        while (subjects.hasNext()) {
-            String subject = subjects.next();
-            JSONObject part = null;
-            try {
-                part = courses.getJSONObject(subject);
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-
-            Iterator<String> numbers = part.keys();
-            while (numbers.hasNext()) {
-                String number = numbers.next();
-                String title = null;
-                try {
-                    title = part.getString(number);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-                Course new_course = new Course();
-                new_course.setSubject(subject);
-                new_course.setNumber(Integer.parseInt(number));
-                new_course.setTitle(title);
-                new_course.saveInBackground();
-            }
-        }
     }
 }

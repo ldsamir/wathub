@@ -3,10 +3,4 @@
     <color name="yellow">#FFEB3B</color>
     <color name="uw_yellow">#e1ea00</color>
     <color name = "blue">#0000ff</color>
-    <selector name ="listView_selector" xmlns:android="http://schemas.android.com/apk/res/android">
-        <item android:state_pressed="true" android:color="#e1ea00" />
-        <item android:state_selected="true" android:color="#e1ea00" />
-        <item android:color="#000000" />
-    </selector>
-
 </resources>
