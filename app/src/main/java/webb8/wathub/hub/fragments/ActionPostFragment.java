@@ -129,7 +129,7 @@ public class ActionPostFragment extends HubFragment {
 
                 for (ParseObject object : objects) {
                     Course c = Course.getInstance(object);
-                    courseNumbers.add(String.valueOf(c.getNumber()));
+                    courseNumbers.add(c.getNumber());
                 }
 
                 ArrayAdapter<CharSequence> subjectAdapter = new ArrayAdapter<>(mHubActivity.getApplicationContext(),

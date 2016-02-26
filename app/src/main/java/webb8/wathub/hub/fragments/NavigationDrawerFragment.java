@@ -200,7 +200,6 @@ public class NavigationDrawerFragment extends Fragment {
         mCurrentSelectedPosition = position;
         if (mDrawerListView != null) {
             mDrawerListView.setItemChecked(position, true);
-            mDrawerListView.setBackgroundColor();
         }
         if (mDrawerLayout != null) {
             mDrawerLayout.closeDrawer(mFragmentContainerView);

@@ -110,7 +110,7 @@ public class ActionGroupStudyPostFragment extends ActionPostFragment {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if (position != 0) {
-                    int number = Integer.parseInt(parent.getItemAtPosition(position).toString());
+                    String number = parent.getItemAtPosition(position).toString();
                     course.setNumber(number);
                     ParseQuery<ParseObject> query = Course.getQuery();
                     query.whereEqualTo(Course.KEY_SUBJECT, course.getSubject());
