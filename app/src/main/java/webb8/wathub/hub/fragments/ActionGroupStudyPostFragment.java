@@ -19,14 +19,10 @@ import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
-import java.security.acl.Group;
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 import webb8.wathub.R;
-import webb8.wathub.models.BookExchange;
 import webb8.wathub.models.Course;
 import webb8.wathub.models.GroupStudy;
 import webb8.wathub.models.Post;
@@ -78,13 +74,13 @@ public class ActionGroupStudyPostFragment extends ActionPostFragment {
         final GroupStudy GroupStudyPost = new GroupStudy();
 
         ArrayAdapter<CharSequence> courseSubjectAdapter = ArrayAdapter.createFromResource(mHubActivity.getApplicationContext(),
-                R.array.book_course_subject_list, R.layout.spinner_dropdown_item);
-        courseSubjectAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
+                R.array.book_course_subject_list, R.layout.simple_spinner_item);
+        courseSubjectAdapter.setDropDownViewResource(R.layout.simple_spinner_item);
         mCourseSubjectView.setAdapter(courseSubjectAdapter);
 
         ArrayAdapter<CharSequence> courseNumberAdapter = ArrayAdapter.createFromResource(mHubActivity.getApplicationContext(),
-                R.array.book_course_number_list, R.layout.spinner_dropdown_item);
-        courseNumberAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
+                R.array.book_course_number_list, R.layout.simple_spinner_item);
+        courseNumberAdapter.setDropDownViewResource(R.layout.simple_spinner_item);
         mCourseNumberView.setAdapter(courseNumberAdapter);
 
         updateCourseSubjectsAdapter(mCourseSubjectView);

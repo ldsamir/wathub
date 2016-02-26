@@ -8,6 +8,7 @@ import android.os.Bundle;
 import webb8.wathub.hub.Action;
 import webb8.wathub.hub.NavItem;
 import webb8.wathub.hub.HubActivity;
+import webb8.wathub.models.Post;
 
 /**
  * Created by mismayil on 23/02/16.
@@ -26,24 +27,14 @@ public class HubFragment extends Fragment {
             fragment = new ProfileFragment();
         } else
 
+        if (action == NavItem.ALL_POSTS.getId() ||
+            action == NavItem.BOOK_EXCHANGE_POSTS.getId() ||
+            action == NavItem.GROUP_STUDY_POSTS.getId()) {
+            fragment = PostFragment.newInstance(action);
+        } else
+
         if (action == NavItem.MESSAGES.getId()) {
             fragment = new MessageFragment();
-        } else
-
-        if (action == NavItem.ALL_POSTS.getId()) {
-            fragment = new PostFragment();
-        } else
-
-        if (action == NavItem.BOOK_EXCHANGE_POSTS.getId()) {
-            fragment = new BookExchangeFragment();
-        } else
-
-        if (action == NavItem.CARPOOL_POSTS.getId()) {
-            fragment = new CarpoolFragment();
-        } else
-
-        if (action == NavItem.GROUP_STUDY_POSTS.getId()) {
-            fragment = new GroupStudyFragment();
         } else
 
         if (action == NavItem.FAVORITES.getId()) {

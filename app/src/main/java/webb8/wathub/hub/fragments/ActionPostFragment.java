@@ -95,7 +95,6 @@ public class ActionPostFragment extends HubFragment {
     protected void updateCourseSubjectsAdapter(final Spinner spinner) {
         ParseQuery<ParseObject> courseQuery = Course.getQuery();
         courseQuery.orderByAscending(Course.KEY_SUBJECT);
-
         courseQuery.findInBackground(new FindCallback<ParseObject>() {
             @Override
             public void done(List<ParseObject> objects, ParseException e) {
@@ -105,11 +104,13 @@ public class ActionPostFragment extends HubFragment {
 
                 for (ParseObject object : objects) {
                     Course c = Course.getInstance(object);
-                    courseSubjects.add(c.getSubject());
+                    String subject = c.getSubject();
+                    if (!courseSubjects.contains(subject)) courseSubjects.add(c.getSubject());
                 }
 
-                ArrayAdapter<CharSequence> subjectAdapter = new ArrayAdapter<>(mHubActivity.getApplicationContext(),
-                        R.layout.support_simple_spinner_dropdown_item, courseSubjects);
+                ArrayAdapter<CharSequence> subjectAdapter = new ArrayAdapter<>(getActivity(),
+                        R.layout.simple_spinner_item, courseSubjects);
+                subjectAdapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
                 spinner.setAdapter(subjectAdapter);
             }
         });
@@ -132,8 +133,9 @@ public class ActionPostFragment extends HubFragment {
                     courseNumbers.add(c.getNumber());
                 }
 
-                ArrayAdapter<CharSequence> subjectAdapter = new ArrayAdapter<>(mHubActivity.getApplicationContext(),
-                        R.layout.support_simple_spinner_dropdown_item, courseNumbers);
+                ArrayAdapter<CharSequence> subjectAdapter = new ArrayAdapter<>(getActivity(),
+                        R.layout.simple_spinner_item, courseNumbers);
+                subjectAdapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
                 spinner.setAdapter(subjectAdapter);
             }
         });
