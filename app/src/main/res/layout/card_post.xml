@@ -15,13 +15,12 @@
         android:layout_margin="5dp"
         android:id="@+id/post_card"
         card_view:cardCornerRadius="4dp"
-        card_view:cardElevation="5dp">
-        
+        card_view:cardElevation="5dp"
+        card_view:cardBackgroundColor="@color/uw_yellow">
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="@dimen/padding">
-            
+            android:layout_height="wrap_content">
+
             <ImageView
                 android:layout_width="@dimen/post_avatar_width"
                 android:layout_height="@dimen/post_avatar_height"
@@ -30,13 +29,15 @@
                 android:layout_alignParentTop="true"
                 android:layout_marginEnd="16dp"
                 android:contentDescription="@string/content_avatar"/>
-            
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/post_user"
                 android:layout_toEndOf="@id/post_avatar"
-                android:layout_alignParentTop="true"/>
+                android:layout_alignParentTop="true"
+                android:textStyle="bold"
+                android:textSize="17sp"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -49,7 +50,17 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/post_content"
-                android:layout_below="@id/post_avatar"/>
+                android:layout_below="@id/post_user"
+                android:layout_toEndOf="@id/post_avatar"/>
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="30dp"
+                android:layout_alignParentRight="false"
+                android:layout_alignParentBottom="false"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="40dp"
+                android:id="@+id/post_type_icon"/>
 
         </RelativeLayout>
     </android.support.v7.widget.CardView>

@@ -66,4 +66,9 @@
     <string name="error_post_empty_content">Please, enter the post content</string>
     <string name="error_empty_book_title">Please, enter the book title</string>
     <string name="error_post_empty_book_price">Please, enter the book price</string>
+    <string name="profile_save">Profile updated</string>
+    <string name="book_exchange_bookTitle">Book Title</string>
+    <string name="book_exchange_Condition">Book Condition</string>
+    <string name="book_exchange_courseNumber">Course Number</string>
+    <string name="book_exchange_Price">Price</string>
 </resources>
