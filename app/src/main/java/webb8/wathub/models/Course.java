@@ -1,7 +1,11 @@
 package webb8.wathub.models;
 
 import android.app.Activity;
+import android.app.ActivityManager;
+import android.app.Application;
 import android.content.Context;
+import android.content.ContextWrapper;
+import android.content.pm.ApplicationInfo;
 import android.content.res.AssetManager;
 
 import com.parse.ParseClassName;
@@ -9,7 +13,10 @@ import com.parse.ParseObject;
 import com.parse.ParseQuery;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.Iterator;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -29,7 +36,7 @@ public class Course extends ParseObject implements Parsable {
     public static final String KEY_SUBJECT = "subject";
     public static final String KEY_NUMBER = "number";
     public static final String KEY_TITLE = "title";
-    public static final String COURSES_FILE = "/home/mismayil/UW/CS446/wathub/app/src/main/java/webb8/wathub/data/Courses.json";
+    public static final String COURSES_FILE = "data/Courses.json";
 
     public String getSubject() {
         return getString(KEY_SUBJECT);
@@ -66,21 +73,15 @@ public class Course extends ParseObject implements Parsable {
     }
 
     // load Courses into DB
-    public static void loadCourses() {
+    public static void loadCourses(Context c) {
+
         String stringCourse = "";
         try {
-            BufferedReader br = new BufferedReader(new FileReader(COURSES_FILE));
-            StringBuilder sb = new StringBuilder();
-            String line = br.readLine();
-            while (line != null) {
-                sb.append(line);
-                line = br.readLine();
-            }
-            stringCourse = sb.toString();
+            InputStream f = c.getAssets().open(COURSES_FILE);
+            stringCourse = f.toString();
         } catch (Exception e) {
             e.printStackTrace();
         }
-
         JSONObject courses = null;
         try {
             courses = new JSONObject(stringCourse);
