@@ -35,16 +35,13 @@ public class BookExchangeCard extends PostCard {
         TextView bookPrice = (TextView) view.findViewById(R.id.book_exchange_bookPrice);
         Course course = mBookExchange.getCourse();
 
-//        try {
-//            ParseQuery<ParseObject> courseQuery = Course.getQuery();
-//            courseQuery.whereEqualTo(Parsable.KEY_OBJECT_ID, course.getObjectId());
-//            ParseObject object = courseQuery.getFirst();
-//            course = Course.getInstance(object);
-//        } catch (ParseException e) {
-//
-//        }
+        try {
+            course.fetch();
+        } catch (ParseException e) {
 
-        bookCourse.setText("ACTSC 221"); //course.getSubject() + course.getNumber());
+        }
+
+        bookCourse.setText(course.getSubject() + course.getNumber());
         bookTitle.setText(mBookExchange.getTitle());
         int condition = mBookExchange.getCondition();
         if (condition == BookConditions.BAD.getId()) bookCondition.setText(mActivity.getString(BookConditions.BAD.getNameId()));

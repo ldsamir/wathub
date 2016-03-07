@@ -66,7 +66,7 @@ public class PostFragment extends HubFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup viewContainer, Bundle savedInstanceState) {
         final View rootView = inflater.inflate(R.layout.fragment_post, viewContainer, false);
         mPostContainerView = (RecyclerView) rootView;
-        LinearLayoutManager llm = new LinearLayoutManager(getActivity());
+        LinearLayoutManager llm = new LinearLayoutManager(mHubActivity);
         mPostContainerView.setLayoutManager(llm);
         mPostContainerView.setAdapter(new PostAdapter(new ArrayList<PostCard>()));
         return rootView;
@@ -82,7 +82,7 @@ public class PostFragment extends HubFragment {
                     List<PostCard> mPostCards = new ArrayList<>();
                     for (ParseObject object : objects) {
                         Post post = Post.getInstance(object);
-                        mPostCards.add(new PostCard(getActivity(), post));
+                        mPostCards.add(new PostCard(mHubActivity, post));
                     }
                     PostAdapter postAdapter = new PostAdapter(mPostCards);
                     mPostContainerView.setAdapter(postAdapter);

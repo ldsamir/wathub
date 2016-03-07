@@ -12,7 +12,7 @@
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/groupstudy_card"
+        android:id="@+id/group_study_card"
         card_view:cardCornerRadius="4dp"
         card_view:cardElevation="5dp"
         card_view:cardBackgroundColor="@color/material_grey_300">
@@ -21,109 +21,76 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="@dimen/padding"
-            android:id="@+id/GS_RL"
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:id="@+id/LL">
-                <EditText
-                    android:id="@+id/select_group_course_subject"
-                    android:layout_width="160dp"
-                    android:layout_height="wrap_content"
-                    android:text="Course Subject">
-                </EditText>
-                <EditText
-                    android:id="@+id/select_group_course_number"
-                    android:layout_width="160dp"
-                    android:layout_height="wrap_content"
-                    android:text="Course Number">
-                </EditText>
-            </LinearLayout>
-
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/group_course_title"
-                android:text="Course Title"
-                android:layout_below="@+id/LL"/>
-
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/edit_group_where"
-                android:layout_below="@+id/group_course_title"
-                android:text="Location" />
-
-            <DatePicker
+            <TextView
                 android:layout_width="wrap_content"
-                android:datePickerMode="spinner"
-                android:calendarViewShown="@bool/abc_config_closeDialogWhenTouchOutside"
-                android:layout_height="45dp"
-                android:contextClickable="@bool/abc_config_closeDialogWhenTouchOutside"
-                android:calendarTextColor="@color/yellow"
-                android:background="@color/yellow"
-                android:layout_below="@+id/edit_group_where"
-                android:id="@+id/edit_group_when"></DatePicker>
+                android:layout_height="wrap_content"
+                android:id="@+id/group_study_group_name"
+                android:text="hello"/>
 
-            <LinearLayout
+            <TextView
                 android:layout_width="wrap_content"
-                android:layout_height="45dp"
-                android:divider="@color/yellow"
-                android:orientation="horizontal"
-                android:id="@+id/LL2"
-                android:layout_below="@+id/edit_group_when">
+                android:layout_height="wrap_content"
+                android:id="@+id/group_study_course"
+                android:layout_below="@id/group_study_group_name"
+                android:text="hello"/>
 
-                <TimePicker
-                    android:layout_width="160dp"
-                    android:layout_height="45dp"
-                    android:headerAmPmTextAppearance="@layout/select_dialog_singlechoice_material"
-                    android:id="@+id/edit_group_start_time"
-                    android:fadeScrollbars="true"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/group_study_where"
+                android:layout_below="@id/group_study_course"
+                android:text="hello"/>
 
-                <TimePicker
-                    android:layout_width="160dp"
-                    android:layout_height="45dp"
-                    android:headerAmPmTextAppearance="@layout/select_dialog_singlechoice_material"
-                    android:id="@+id/edit_group_end_time"
-                    android:fadeScrollbars="true" />
-            </LinearLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/group_study_where"
+                android:id="@+id/group_study_start_time"
+                android:text="hello"/>
 
-            <EditText
-                android:layout_width="70dp"
-                android:layout_height="45dp"
-                android:id="@+id/joined"
-                android:layout_below="@+id/LL2"
-                android:text="joined"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/group_study_end_time"
+                android:layout_below="@id/group_study_where"
+                android:layout_toEndOf="@id/group_study_start_time"
+                android:paddingLeft="100dp"
+                android:text="hello"/>
 
-            <EditText
-                android:layout_width="20dp"
-                android:layout_height="45dp"
-                android:layout_toRightOf="@+id/joined"
-                android:layout_below="@+id/LL2"
-                android:id="@+id/slash"
-                android:text="/" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/group_study_num_joined"
+                android:layout_below="@id/group_study_start_time"
+                android:text="hello"/>
 
-            <EditText
-                android:layout_width="70dp"
-                android:layout_height="45dp"
-                android:layout_toRightOf="@+id/slash"
-                android:layout_below="@+id/LL2"
-                android:id="@+id/edit_group_max_people"
-                android:text="Max"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/group_study_separator_slash"
+                android:layout_below="@id/group_study_start_time"
+                android:layout_toEndOf="@id/group_study_num_joined"
+                android:text="/"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/group_study_max_people"
+                android:layout_below="@id/group_study_start_time"
+                android:layout_toEndOf="@id/group_study_separator_slash"
+                android:text="hello"/>
 
             <Button
-                android:background="@color/material_blue_grey_800"
-                android:layout_width="match_parent"
-                android:layout_height="45dp"
-                android:layout_below="@+id/LL2"
-                android:layout_toRightOf="@+id/edit_group_max_people"
-                android:text="JOIN"
-                android:textColor="@color/yellow"/>
-
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/group_study_btn_join"
+                android:text="Join"
+                android:background="@android:color/transparent"
+                android:layout_below="@id/group_study_num_joined"
+                android:layout_centerHorizontal="true"/>
         </RelativeLayout>
     </android.support.v7.widget.CardView>
 

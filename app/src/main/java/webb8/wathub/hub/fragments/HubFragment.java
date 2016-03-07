@@ -43,7 +43,8 @@ public class HubFragment extends Fragment {
 
         if (action == Action.ACTION_POST_GENERAL.getId() ||
             action == Action.ACTION_POST_BOOK_EXCHANGE.getId() ||
-            action == Action.ACTION_POST_GROUP_STUDY.getId()) {
+            action == Action.ACTION_POST_GROUP_STUDY.getId() ||
+            action == Action.ACTION_CARPOOL.getId()) {
             fragment = ActionPostFragment.newInstance(action);
         }
 

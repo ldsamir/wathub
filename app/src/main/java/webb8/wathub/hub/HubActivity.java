@@ -36,9 +36,10 @@ public class HubActivity extends AppCompatActivity
     private FloatingActionButton mGeneralPostFab;
     private FloatingActionButton mBookExchangeFab;
     private FloatingActionButton mGroupStudyFab;
-    private TextView mGeneralPostFabTextView;
-    private TextView mBookExchangeFabTextView;
-    private TextView mGroupStudyFabTextView;
+    private FloatingActionButton mCarpoolFab;
+//    private TextView mGeneralPostFabTextView;
+//    private TextView mBookExchangeFabTextView;
+//    private TextView mGroupStudyFabTextView;
 
     /**
      * Fragments
@@ -53,6 +54,7 @@ public class HubActivity extends AppCompatActivity
     private HubFragment mActionPostFragment;
     private HubFragment mActionBookExchangePostFragment;
     private HubFragment mActionGroupStudyPostFragment;
+    private HubFragment mActionCarpoolFragment;
 
     /**
      * FAB states
@@ -74,6 +76,7 @@ public class HubActivity extends AppCompatActivity
         mActionPostFragment = HubFragment.newInstance(Action.ACTION_POST_GENERAL.getId());
         mActionBookExchangePostFragment = HubFragment.newInstance(Action.ACTION_POST_BOOK_EXCHANGE.getId());
         mActionGroupStudyPostFragment = HubFragment.newInstance(Action.ACTION_POST_GROUP_STUDY.getId());
+        mActionCarpoolFragment = HubFragment.newInstance(Action.ACTION_CARPOOL.getId());
 
         mNavigationDrawerFragment = (NavigationDrawerFragment)
                 getFragmentManager().findFragmentById(R.id.navigation_drawer);
@@ -95,9 +98,10 @@ public class HubActivity extends AppCompatActivity
         mGeneralPostFab = (FloatingActionButton) findViewById(R.id.fab_general_post);
         mBookExchangeFab = (FloatingActionButton) findViewById(R.id.fab_book_exchange);
         mGroupStudyFab = (FloatingActionButton) findViewById(R.id.fab_group_study);
-        mGeneralPostFabTextView = (TextView) findViewById(R.id.fab_text_general);
-        mBookExchangeFabTextView = (TextView) findViewById(R.id.fab_text_book_exchange);
-        mGroupStudyFabTextView = (TextView) findViewById(R.id.fab_text_group_study);
+        mCarpoolFab = (FloatingActionButton) findViewById(R.id.fab_carpool);
+//        mGeneralPostFabTextView = (TextView) findViewById(R.id.fab_text_general);
+//        mBookExchangeFabTextView = (TextView) findViewById(R.id.fab_text_book_exchange);
+//        mGroupStudyFabTextView = (TextView) findViewById(R.id.fab_text_group_study);
         mPostFab.setTag(R.drawable.ic_add_white_24dp);
 
         mPostFab.setOnClickListener(new View.OnClickListener() {
@@ -145,6 +149,17 @@ public class HubActivity extends AppCompatActivity
                         .commit();
             }
         });
+
+        mCarpoolFab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentManager fragmentManager = getFragmentManager();
+
+                fragmentManager.beginTransaction()
+                        .replace(R.id.container, mActionCarpoolFragment)
+                        .commit();
+            }
+        });
     }
 
     // toggle post FAB
@@ -163,6 +178,7 @@ public class HubActivity extends AppCompatActivity
         mGeneralPostFab.setVisibility(optionsVisibility);
         mBookExchangeFab.setVisibility(optionsVisibility);
         mGroupStudyFab.setVisibility(optionsVisibility);
+        mCarpoolFab.setVisibility(optionsVisibility);
 //        mGeneralPostFabTextView.setVisibility(optionsVisibility);
 //        mBookExchangeFabTextView.setVisibility(optionsVisibility);
 //        mGroupStudyFabTextView.setVisibility(optionsVisibility);

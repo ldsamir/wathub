@@ -55,6 +55,10 @@ public class ActionPostFragment extends HubFragment {
 
         if (action == Action.ACTION_POST_GROUP_STUDY.getId()) {
             fragment = new ActionGroupStudyPostFragment();
+        } else
+
+        if (action == Action.ACTION_CARPOOL.getId()) {
+            fragment = new ActionCarpoolFragment();
         }
 
         return fragment;

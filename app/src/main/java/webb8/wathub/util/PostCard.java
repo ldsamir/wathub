@@ -76,7 +76,7 @@ public class PostCard {
         if (postType == PostTypes.BOOK_EXCHANGE.getType()) {
             mPostIconView.setImageResource(R.drawable.ic_book_black_24dp);
             ParseQuery<ParseObject> postQuery = BookExchange.getQuery();
-            query.whereEqualTo(BookExchange.KEY_POST, mPost);
+            postQuery.whereEqualTo(BookExchange.KEY_POST, mPost);
 
             try {
                 ParseObject object = postQuery.getFirst();
@@ -87,7 +87,16 @@ public class PostCard {
         }
 
         if (postType == PostTypes.GROUP_STUDY.getType()) {
+            mPostIconView.setImageResource(R.drawable.ic_book_black_24dp);
+            ParseQuery<ParseObject> postQuery = GroupStudy.getQuery();
+            postQuery.whereEqualTo(GroupStudy.KEY_POST, mPost);
 
+            try {
+                ParseObject object = postQuery.getFirst();
+                innerPostCard.addView(new GroupStudyCard(mActivity, GroupStudy.getInstance(object)).getView());
+            } catch (ParseException e) {
+
+            }
         }
 
         if (postType == PostTypes.CARPOOL.getType()) {
