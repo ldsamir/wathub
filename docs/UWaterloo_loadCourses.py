@@ -21,10 +21,19 @@ myClassName = "Course";
 Course = Object.factory(myClassName);
 subjects = data.keys();
 for sub in subjects:
+    if (sub == ""):
+        print "FOUND EMPTY SUBJECT";
+        continue;
     numbers = data[sub]
     nums = numbers.keys();
     for num in nums:
+        if (num == ""):
+            print "FOUND EMPTY NUMBERSPACE";
+            continue;
         title = numbers[num];
+        if (title == ""):
+            print "FOUND EMPTY TITLE";
+            continue;
         course = Course(subject=sub, number=num, title=title);
         course.save();
         print sub+" "+num+": "+title;
