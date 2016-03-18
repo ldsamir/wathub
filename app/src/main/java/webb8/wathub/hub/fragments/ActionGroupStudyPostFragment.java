@@ -2,6 +2,7 @@ package webb8.wathub.hub.fragments;
 
 import android.app.FragmentManager;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -184,6 +185,31 @@ public class ActionGroupStudyPostFragment extends ActionPostFragment {
     }
 
     private boolean checkInput() {
+        mContentView.setError(null);
+        mGroupNameView.setError(null);
+        mNumberPeopleView.setError(null);
+        mWhereView.setError(null);
+
+        if (TextUtils.isEmpty(mContentView.getText().toString())) {
+            mContentView.setError(getString(R.string.error_post_empty_content));
+            return false;
+        }
+
+        if (TextUtils.isEmpty(mGroupNameView.getText().toString())) {
+            mGroupNameView.setError(getString(R.string.error_groupstudy_empty_groupname));
+            return false;
+        }
+
+        if (TextUtils.isEmpty(mNumberPeopleView.getText().toString())) {
+            mNumberPeopleView.setError(getString(R.string.error_groupstudy_empty_numberpeople));
+            return false;
+        }
+
+        if (TextUtils.isEmpty(mWhereView.getText().toString())) {
+            mWhereView.setError(getString(R.string.error_groupstudy_empty_where));
+            return false;
+        }
+
         return true;
     }
 }
