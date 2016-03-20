@@ -197,6 +197,7 @@ public class ActionBookExchangePostFragment extends ActionPostFragment {
         mBookTitleView.setError(null);
         mBookPriceView.setError(null);
 
+
         if (TextUtils.isEmpty(mContentView.getText().toString())) {
             mContentView.setError(getString(R.string.error_post_empty_content));
             return false;
@@ -207,12 +208,24 @@ public class ActionBookExchangePostFragment extends ActionPostFragment {
             return false;
         }
 
+        if(mCourseSubjectView.getSelectedItem().toString().equals(getResources().getString(R.string.select_course_subject))){
+            Toast.makeText(getActivity(),"Please select course subject", Toast.LENGTH_SHORT).show();
+            return false;
+        }
 
+        if(mCourseNumberView.getSelectedItem().toString().equals(getResources().getString(R.string.select_course_number))){
+            Toast.makeText(getActivity(),"Please select course number", Toast.LENGTH_SHORT).show();
+            return false;
+        }
 
         if (TextUtils.isEmpty(mBookPriceView.getText().toString())) {
             mBookPriceView.setError(getString(R.string.error_post_empty_book_price));
             return false;
         }
+
+
+
+
         return true;
     }
 }

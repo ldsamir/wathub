@@ -1,8 +1,14 @@
 package webb8.wathub.hub.fragments;
 
+
+import android.app.DatePickerDialog;
+import android.app.Dialog;
+import android.app.DialogFragment;
 import android.app.FragmentManager;
+import android.app.TimePickerDialog;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -58,6 +64,7 @@ public class ActionGroupStudyPostFragment extends ActionPostFragment {
     protected EditText mWhereView;
     protected EditText mNumberPeopleView;
 
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View actionPostView = inflater.inflate(R.layout.fragment_action_post, container, false);
@@ -81,6 +88,25 @@ public class ActionGroupStudyPostFragment extends ActionPostFragment {
         final Course course = new Course();
         final Post post = new Post();
         final GroupStudy groupStudyPost = new GroupStudy();
+        mWhenView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showDatePickerDialog(v);
+            }
+        });
+        mStartTimeView.setOnClickListener(new View.OnClickListener(){
+            @Override
+        public void onClick(View v){
+                showTimePickerDialog(v, 0);
+            }
+        });
+
+        mEndTimeView.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                showTimePickerDialog(v, 1);
+            }
+        });
 
         ArrayAdapter<CharSequence> courseSubjectAdapter = ArrayAdapter.createFromResource(getActivity(),
                 R.array.book_course_subject_list, R.layout.simple_spinner_item);
@@ -93,6 +119,10 @@ public class ActionGroupStudyPostFragment extends ActionPostFragment {
         mCourseNumberView.setAdapter(courseNumberAdapter);
 
         updateCourseSubjectsAdapter(mCourseSubjectView);
+
+
+
+
 
         mCourseSubjectView.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -143,46 +173,117 @@ public class ActionGroupStudyPostFragment extends ActionPostFragment {
         mPostBtnView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                post.setContent(mContentView.getText().toString());
-                post.setUser(ParseUser.getCurrentUser());
-                post.setPostType(PostTypes.GROUP_STUDY.getType());
-                groupStudyPost.setPost(post);
-                groupStudyPost.setCourse(course);
-                SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.CANADA);
-                Calendar startTime = Calendar.getInstance();
-                Calendar endTime = Calendar.getInstance();
+                if (checkInput()) {
+                    post.setContent(mContentView.getText().toString());
+                    post.setUser(ParseUser.getCurrentUser());
+                    post.setPostType(PostTypes.GROUP_STUDY.getType());
+                    groupStudyPost.setPost(post);
+                    groupStudyPost.setCourse(course);
+                    SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.CANADA);
+                    Calendar startTime = Calendar.getInstance();
+                    Calendar endTime = Calendar.getInstance();
 
-                try {
-                    startTime.setTime(format.parse(mWhenView.getText().toString() + " " + mStartTimeView.getText().toString()));
-                    endTime.setTime(format.parse(mWhenView.getText().toString() + " " + mEndTimeView.getText().toString()));
-                } catch (java.text.ParseException e) {
+                    try {
+                        startTime.setTime(format.parse(mWhenView.getText().toString() + " " + mStartTimeView.getText().toString()));
+                        endTime.setTime(format.parse(mWhenView.getText().toString() + " " + mEndTimeView.getText().toString()));
+                    } catch (java.text.ParseException e) {
 
-                }
-
-                groupStudyPost.setStartTime(startTime.getTime());
-                groupStudyPost.setEndTime(endTime.getTime());
-                groupStudyPost.setWhere(mWhereView.getText().toString());
-                groupStudyPost.setGroupName(mGroupNameView.getText().toString());
-                groupStudyPost.setMaxPeople(Integer.parseInt(mNumberPeopleView.getText().toString()));
-
-                post.saveInBackground(new SaveCallback() {
-                    @Override
-                    public void done(ParseException e) {
-                        if (e == null) {
-                            FragmentManager fragmentManager = getFragmentManager();
-                            Toast.makeText(getActivity(), R.string.info_post_published, Toast.LENGTH_SHORT).show();
-                            fragmentManager.beginTransaction().replace(R.id.container, HubFragment.newInstance(NavItem.ALL_POSTS.getId())).commit();
-                        } else {
-                            Toast.makeText(getActivity(), R.string.error_publishing_post, Toast.LENGTH_SHORT).show();
-                        }
                     }
-                });
-                groupStudyPost.saveInBackground();
+
+                    groupStudyPost.setStartTime(startTime.getTime());
+                    groupStudyPost.setEndTime(endTime.getTime());
+                    groupStudyPost.setWhere(mWhereView.getText().toString());
+                    groupStudyPost.setGroupName(mGroupNameView.getText().toString());
+                    groupStudyPost.setMaxPeople(Integer.parseInt(mNumberPeopleView.getText().toString()));
+
+                    post.saveInBackground(new SaveCallback() {
+                        @Override
+                        public void done(ParseException e) {
+                            if (e == null) {
+                                FragmentManager fragmentManager = getFragmentManager();
+                                Toast.makeText(getActivity(), R.string.info_post_published, Toast.LENGTH_SHORT).show();
+                                fragmentManager.beginTransaction().replace(R.id.container, HubFragment.newInstance(NavItem.ALL_POSTS.getId())).commit();
+                            } else {
+                                Toast.makeText(getActivity(), R.string.error_publishing_post, Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
+                    groupStudyPost.saveInBackground();
+                }
             }
         });
 
         return actionPostView;
     }
+
+    public static class DatePickerFragment extends DialogFragment
+            implements DatePickerDialog.OnDateSetListener {
+
+        @Override
+        public Dialog onCreateDialog(Bundle savedInstanceState) {
+            // Use the current date as the default date in the picker
+            final Calendar c = Calendar.getInstance();
+            int year = c.get(Calendar.YEAR);
+            int month = c.get(Calendar.MONTH);
+            int day = c.get(Calendar.DAY_OF_MONTH);
+
+            // Create a new instance of DatePickerDialog and return it
+            return new DatePickerDialog(getActivity(), this, year, month, day);
+        }
+
+        public void onDateSet(DatePicker view, int year, int month, int day) {
+            EditText mDateView = (EditText) mHubActivity.findViewById(R.id.edit_group_start_when);
+            mDateView.setText(new StringBuilder().append(day).append("/")
+                    .append(month).append("/").append(year));
+        }
+    }
+
+    public void showDatePickerDialog(View v) {
+        DialogFragment newFragment = new DatePickerFragment();
+        newFragment.show(getActivity().getFragmentManager(), "datePicker");
+    }
+
+    public static class TimePickerFragment extends DialogFragment
+            implements TimePickerDialog.OnTimeSetListener {
+        Bundle bundle = this.getArguments();
+        private int start_or_end = 0;
+
+
+        @Override
+        public Dialog onCreateDialog(Bundle savedInstanceState) {
+            // Use the current time as the default values for the picker
+            final Calendar c = Calendar.getInstance();
+            int hour = c.get(Calendar.HOUR_OF_DAY);
+            int minute = c.get(Calendar.MINUTE);
+            Bundle bundle = this.getArguments();
+            start_or_end = bundle.getInt("st_or_nd");
+            // Create a new instance of TimePickerDialog and return it
+            return new TimePickerDialog(getActivity(), this, hour, minute,
+                    DateFormat.is24HourFormat(getActivity()));
+        }
+
+        public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+            if(start_or_end == 0){
+                EditText mStartTimeView = (EditText) mHubActivity.findViewById(R.id.edit_group_start_time);
+                mStartTimeView.setText(new StringBuilder().append(hourOfDay).append(":").append(minute));
+            }
+            else if(start_or_end == 1){
+                EditText mEndTimeView = (EditText) mHubActivity.findViewById(R.id.edit_group_end_time);
+                mEndTimeView.setText(new StringBuilder().append(hourOfDay).append(":").append(minute));
+            }
+        }
+    }
+
+    public void showTimePickerDialog(View v, int st_or_nd) {
+        DialogFragment newFragment = new TimePickerFragment();
+        Bundle bundle = new Bundle();
+        System.out.println("This is st_or_nd " + st_or_nd);
+        bundle.putInt("st_or_nd", st_or_nd);
+        System.out.println(bundle.getInt("st_or_nd"));
+        newFragment.setArguments(bundle);
+        newFragment.show(getActivity().getFragmentManager(), "timePicker");
+    }
+
 
     private boolean checkInput() {
         mContentView.setError(null);
@@ -199,6 +300,17 @@ public class ActionGroupStudyPostFragment extends ActionPostFragment {
             mGroupNameView.setError(getString(R.string.error_groupstudy_empty_groupname));
             return false;
         }
+
+        if(mCourseSubjectView.getSelectedItem().toString().equals(getResources().getString(R.string.select_course_subject))){
+            Toast.makeText(getActivity(),"Please select course subject", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        if(mCourseNumberView.getSelectedItem().toString().equals(getResources().getString(R.string.select_course_number))){
+            Toast.makeText(getActivity(),"Please select course number", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
 
         if (TextUtils.isEmpty(mNumberPeopleView.getText().toString())) {
             mNumberPeopleView.setError(getString(R.string.error_groupstudy_empty_numberpeople));

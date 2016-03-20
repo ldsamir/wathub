@@ -80,9 +80,15 @@
     <string name="book_exchange_Price">Price</string>
     <string name="book_exchange_send_message_button">Message </string>
 
+    <string name="select_course_subject">Select a course subject</string>
+    <string name="select_course_number">Select a course number</string>
+
+
     <string name="error_post_empty_carpool_from">Please, enter the source</string>
     <string name="error_post_empty_carpool_to">Please, enter the destination</string>
     <string name="error_post_empty_carpool_when">Please, enter the departure time</string>
     <string name="error_post_empty_carpool_price">Please, enter the price of ride</string>
     <string name="error_post_empty_carpool_num_passengers">Please, enter the max number of passengers</string>
+
+
 </resources>
