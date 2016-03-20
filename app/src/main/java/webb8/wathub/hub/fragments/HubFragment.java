@@ -29,7 +29,8 @@ public class HubFragment extends Fragment {
 
         if (action == NavItem.ALL_POSTS.getId() ||
             action == NavItem.BOOK_EXCHANGE_POSTS.getId() ||
-            action == NavItem.GROUP_STUDY_POSTS.getId()) {
+            action == NavItem.GROUP_STUDY_POSTS.getId() ||
+            action == NavItem.CARPOOL_POSTS.getId()) {
             fragment = PostFragment.newInstance(action);
         } else
 

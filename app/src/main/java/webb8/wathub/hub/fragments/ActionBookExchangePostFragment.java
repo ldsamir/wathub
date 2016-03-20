@@ -207,11 +207,12 @@ public class ActionBookExchangePostFragment extends ActionPostFragment {
             return false;
         }
 
+
+
         if (TextUtils.isEmpty(mBookPriceView.getText().toString())) {
             mBookPriceView.setError(getString(R.string.error_post_empty_book_price));
             return false;
         }
-
         return true;
     }
 }
