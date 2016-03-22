@@ -1,5 +1,8 @@
 package webb8.wathub.hub.fragments;
 
+import android.app.DatePickerDialog;
+import android.app.Dialog;
+import android.app.DialogFragment;
 import android.app.FragmentManager;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -7,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.Toast;
@@ -57,6 +61,16 @@ public class ActionCarpoolFragment extends ActionPostFragment {
         final Post post = new Post();
         final Carpool carpoolPost = new Carpool();
 
+
+        mWhenView.setOnFocusChangeListener(new View.OnFocusChangeListener(){
+            @Override
+            public void onFocusChange(View v, boolean arg){
+                if(arg) {
+                    showDatePickerDialog(v);
+                }
+            }
+        });
+
         mPostBtnView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -101,6 +115,33 @@ public class ActionCarpoolFragment extends ActionPostFragment {
         });
 
         return actionPostView;
+    }
+
+    public static class DatePickerFragment extends DialogFragment
+            implements DatePickerDialog.OnDateSetListener {
+
+        @Override
+        public Dialog onCreateDialog(Bundle savedInstanceState) {
+            // Use the current date as the default date in the picker
+            final Calendar c = Calendar.getInstance();
+            int year = c.get(Calendar.YEAR);
+            int month = c.get(Calendar.MONTH);
+            int day = c.get(Calendar.DAY_OF_MONTH);
+
+            // Create a new instance of DatePickerDialog and return it
+            return new DatePickerDialog(getActivity(), this, year, month, day);
+        }
+
+        public void onDateSet(DatePicker view, int year, int month, int day) {
+            EditText mWhenView = (EditText) mHubActivity.findViewById(R.id.edit_carpool_when);
+            mWhenView.setText(new StringBuilder().append(day).append("/")
+                    .append(month).append("/").append(year));
+        }
+    }
+
+    public void showDatePickerDialog(View v) {
+        DialogFragment newFragment = new DatePickerFragment();
+        newFragment.show(getActivity().getFragmentManager(), "datePicker");
     }
 
     private boolean checkInput() {

@@ -66,6 +66,10 @@
     <string name="error_groupstudy_empty_groupname">Please, enter the group name</string>
     <string name="error_groupstudy_empty_numberpeople">Please, enter the number of people</string>
     <string name="error_groupstudy_empty_where">Please, enter the location</string>
+    <string name="error_groupstudy_empty_starttime">Please enter start time</string>
+    <string name="error_groupstudy_empty_endtime">Please enter end time</string>
+    <string name="error_groupstudy_empty_when">Please enter the date</string>
+
 
     <string name="error_post_empty_content">Please, enter the post content</string>
     <string name="error_post_empty_book_title">Please, enter the book title</string>
@@ -90,5 +94,9 @@
     <string name="error_post_empty_carpool_price">Please, enter the price of ride</string>
     <string name="error_post_empty_carpool_num_passengers">Please, enter the max number of passengers</string>
 
+
+    <string name="card_carpool_arrow">-------></string>
+    <string name="card_carpool_from_default_value">FROM</string>
+    <string name="card_carpool_to_default_value">TO</string>
 
 </resources>

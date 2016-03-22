@@ -42,10 +42,14 @@ public class GroupStudyCard extends PostCard {
         }
 
         groupName.setText(mGroupStudy.getGroupName());
-        groupCourse.setText(course.getSubject() + course.getNumber());
+        groupCourse.setText(course.getSubject() + " " + course.getNumber());
         groupWhere.setText(mGroupStudy.getWhere());
-        groupStartTime.setText(mGroupStudy.getStartTime().toString());
-        groupEndTime.setText(mGroupStudy.getEndTime().toString());
+        String startTime = mGroupStudy.getStartTime().toString();
+        startTime = startTime.substring(4, startTime.length()-12);
+        groupStartTime.setText(startTime);
+        String endTime = mGroupStudy.getEndTime().toString();
+        endTime = endTime.substring(4, endTime.length()-12);
+        groupEndTime.setText(endTime);
         groupNumJoined.setText(String.valueOf(mGroupStudy.getStudents() == null ? 0 : "" + mGroupStudy.getStudents().length()));
         groupMaxPeople.setText(String.valueOf(mGroupStudy.getMaxPeople()));
 

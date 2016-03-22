@@ -88,23 +88,30 @@ public class ActionGroupStudyPostFragment extends ActionPostFragment {
         final Course course = new Course();
         final Post post = new Post();
         final GroupStudy groupStudyPost = new GroupStudy();
-        mWhenView.setOnClickListener(new View.OnClickListener() {
+        mWhenView.setOnFocusChangeListener(new View.OnFocusChangeListener(){
             @Override
-            public void onClick(View v) {
-                showDatePickerDialog(v);
-            }
-        });
-        mStartTimeView.setOnClickListener(new View.OnClickListener(){
-            @Override
-        public void onClick(View v){
-                showTimePickerDialog(v, 0);
+            public void onFocusChange(View v, boolean arg){
+                if(arg) {
+                    showDatePickerDialog(v);
+                }
             }
         });
 
-        mEndTimeView.setOnClickListener(new View.OnClickListener(){
+        mStartTimeView.setOnFocusChangeListener(new View.OnFocusChangeListener(){
             @Override
-            public void onClick(View v){
-                showTimePickerDialog(v, 1);
+            public void onFocusChange(View v, boolean arg){
+                if(arg) {
+                    showTimePickerDialog(v, 0);
+                }
+            }
+        });
+
+        mEndTimeView.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean arg) {
+                if (arg) {
+                    showTimePickerDialog(v, 1);
+                }
             }
         });
 
@@ -290,6 +297,9 @@ public class ActionGroupStudyPostFragment extends ActionPostFragment {
         mGroupNameView.setError(null);
         mNumberPeopleView.setError(null);
         mWhereView.setError(null);
+        mStartTimeView.setError(null);
+        mEndTimeView.setError(null);
+        mWhenView.setError(null);
 
         if (TextUtils.isEmpty(mContentView.getText().toString())) {
             mContentView.setError(getString(R.string.error_post_empty_content));
@@ -306,19 +316,33 @@ public class ActionGroupStudyPostFragment extends ActionPostFragment {
             return false;
         }
 
-        if(mCourseNumberView.getSelectedItem().toString().equals(getResources().getString(R.string.select_course_number))){
-            Toast.makeText(getActivity(),"Please select course number", Toast.LENGTH_SHORT).show();
-            return false;
-        }
-
-
-        if (TextUtils.isEmpty(mNumberPeopleView.getText().toString())) {
-            mNumberPeopleView.setError(getString(R.string.error_groupstudy_empty_numberpeople));
+        if(mCourseNumberView.getSelectedItem().toString().equals(getResources().getString(R.string.select_course_number))) {
+            Toast.makeText(getActivity(), "Please select course number", Toast.LENGTH_SHORT).show();
             return false;
         }
 
         if (TextUtils.isEmpty(mWhereView.getText().toString())) {
             mWhereView.setError(getString(R.string.error_groupstudy_empty_where));
+            return false;
+        }
+
+        if(TextUtils.isEmpty(mWhenView.getText().toString())){
+            mWhenView.setError(getString(R.string.error_groupstudy_empty_when));
+            return false;
+        }
+
+        if(TextUtils.isEmpty(mStartTimeView.getText().toString())){
+            mStartTimeView.setError(getString(R.string.error_groupstudy_empty_starttime));
+            return false;
+        }
+
+        if(TextUtils.isEmpty(mEndTimeView.getText().toString())){
+            mEndTimeView.setError(getString(R.string.error_groupstudy_empty_endtime));
+            return false;
+        }
+
+        if (TextUtils.isEmpty(mNumberPeopleView.getText().toString())) {
+            mNumberPeopleView.setError(getString(R.string.error_groupstudy_empty_numberpeople));
             return false;
         }
 
