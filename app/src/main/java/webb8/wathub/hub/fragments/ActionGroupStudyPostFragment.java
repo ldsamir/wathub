@@ -272,11 +272,13 @@ public class ActionGroupStudyPostFragment extends ActionPostFragment {
         public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
             if(start_or_end == 0){
                 EditText mStartTimeView = (EditText) mHubActivity.findViewById(R.id.edit_group_start_time);
-                mStartTimeView.setText(new StringBuilder().append(hourOfDay).append(":").append(minute));
+                mStartTimeView.setText(new StringBuilder().append(hourOfDay < 10 ? "0" : "").append(hourOfDay).append(":")
+                                                          .append(minute < 10 ? "0" : "").append(minute));
             }
             else if(start_or_end == 1){
                 EditText mEndTimeView = (EditText) mHubActivity.findViewById(R.id.edit_group_end_time);
-                mEndTimeView.setText(new StringBuilder().append(hourOfDay).append(":").append(minute));
+                mEndTimeView.setText(new StringBuilder().append(hourOfDay < 10 ? "0" : "").append(hourOfDay).append(":")
+                                                         .append(minute < 10 ? "0" : "").append(minute));
             }
         }
     }

@@ -75,6 +75,10 @@ public class GroupStudy extends ParseObject implements Parsable {
         return getJSONArray(KEY_STUDENTS);
     }
 
+    public void setStudents(JSONArray students) {
+        put(KEY_STUDENTS, students);
+    }
+
     public void addStudent(ParseUser student) {
         addUnique(KEY_STUDENTS, student);
     }

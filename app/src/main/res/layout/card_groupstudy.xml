@@ -95,14 +95,22 @@
                     android:layout_height="wrap_content"
                     android:layout_toEndOf="@id/group_study_time_icon"
                     android:id="@+id/group_study_start_time"
+                    android:paddingRight="0dp"
                     android:text="hello"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toEndOf="@id/group_study_start_time"
+                    android:id="@+id/group_study_time_dash"
+                    android:text=" - "/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/group_study_end_time"
-                    android:paddingLeft="100dp"
-                    android:text="hello"/>
+                    android:layout_toEndOf="@id/group_study_time_dash"
+                    android:paddingLeft="0dp"
+                    android:text="hello" />
             </RelativeLayout>
 
 
