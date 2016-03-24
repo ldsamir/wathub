@@ -1,25 +1,12 @@
-package webb8.wathub.hub.fragments;
+package webb8.wathub.hub.fragments.navigation;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
-import com.parse.FindCallback;
-import com.parse.ParseException;
-import com.parse.ParseObject;
-import com.parse.ParseQuery;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import webb8.wathub.R;
-import webb8.wathub.hub.PostAdapter;
-import webb8.wathub.models.Parsable;
 import webb8.wathub.models.Post;
 import webb8.wathub.models.PostTypes;
-import webb8.wathub.util.PostCard;
 
 /**
  * Created by mismayil on 23/02/16.

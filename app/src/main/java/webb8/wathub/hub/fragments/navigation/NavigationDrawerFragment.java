@@ -1,5 +1,6 @@
-package webb8.wathub.hub.fragments;
+package webb8.wathub.hub.fragments.navigation;
 
+import android.app.FragmentManager;
 import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 import android.app.Activity;
@@ -24,7 +25,10 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import webb8.wathub.R;
+import webb8.wathub.hub.Action;
 import webb8.wathub.hub.NavItem;
+import webb8.wathub.hub.fragments.HubFragment;
+import webb8.wathub.hub.fragments.actions.ActionSearchFragment;
 
 /**
  * Fragment used for managing interactions for and presentation of a navigation drawer.
@@ -255,10 +259,14 @@ public class NavigationDrawerFragment extends Fragment {
             return true;
         }
 
-        if (item.getItemId() == R.id.action_example) {
-            Toast.makeText(getActivity(), "Example action.", Toast.LENGTH_SHORT).show();
-            return true;
-        }
+//        if (item.getItemId() == R.id.action_search) {
+//            FragmentManager fragmentManager = getFragmentManager();
+//
+//            fragmentManager.beginTransaction()
+//                    .replace(R.id.container, HubFragment.newInstance(Action.ACTION_SEARCH.getId()))
+//                    .commit();
+//            return true;
+//        }
 
         return super.onOptionsItemSelected(item);
     }

@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    tools:context=".hub.fragments.NavigationDrawerFragment"
+    tools:context=".hub.fragments.navigation.NavigationDrawerFragment"
     android:orientation="vertical"
     android:background="#000000">
     <ImageView

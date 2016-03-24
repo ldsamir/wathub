@@ -1,4 +1,4 @@
-package webb8.wathub.hub.fragments;
+package webb8.wathub.hub.fragments.actions;
 
 import android.app.FragmentManager;
 import android.os.Bundle;
@@ -6,27 +6,18 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.parse.FindCallback;
 import com.parse.ParseException;
-import com.parse.ParseObject;
-import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import webb8.wathub.R;
 import webb8.wathub.hub.Action;
-import webb8.wathub.hub.HubActivity;
 import webb8.wathub.hub.NavItem;
-import webb8.wathub.models.Course;
+import webb8.wathub.hub.fragments.HubFragment;
 import webb8.wathub.models.Post;
 
 /**
@@ -38,9 +29,7 @@ public class ActionPostFragment extends HubFragment {
     protected EditText mContentView;
     protected Button mPostBtnView;
 
-    public ActionPostFragment() {
-        // Required empty public constructor
-    }
+    public ActionPostFragment() {}
 
     public static ActionPostFragment newInstance(int action) {
         ActionPostFragment fragment = null;
@@ -50,15 +39,15 @@ public class ActionPostFragment extends HubFragment {
         } else
 
         if (action == Action.ACTION_POST_BOOK_EXCHANGE.getId()) {
-            fragment = new ActionBookExchangePostFragment();
+            fragment = new ActionPostBookExchangeFragment();
         } else
 
         if (action == Action.ACTION_POST_GROUP_STUDY.getId()) {
-            fragment = new ActionGroupStudyPostFragment();
+            fragment = new ActionPostGroupStudyFragment();
         } else
 
         if (action == Action.ACTION_CARPOOL.getId()) {
-            fragment = new ActionCarpoolFragment();
+            fragment = new ActionPostCarpoolFragment();
         }
 
         return fragment;
@@ -109,54 +98,5 @@ public class ActionPostFragment extends HubFragment {
         }
 
         return true;
-    }
-
-    protected void updateCourseSubjectsAdapter(final Spinner spinner) {
-        ParseQuery<ParseObject> courseQuery = Course.getQuery();
-        courseQuery.orderByAscending(Course.KEY_SUBJECT);
-        courseQuery.findInBackground(new FindCallback<ParseObject>() {
-            @Override
-            public void done(List<ParseObject> objects, ParseException e) {
-                ArrayList<CharSequence> courseSubjects = new ArrayList<>();
-
-                courseSubjects.add(getString(R.string.post_hint_select_course_subject));
-
-                for (ParseObject object : objects) {
-                    Course c = Course.getInstance(object);
-                    String subject = c.getSubject();
-                    if (!courseSubjects.contains(subject)) courseSubjects.add(c.getSubject());
-                }
-
-                ArrayAdapter<CharSequence> subjectAdapter = new ArrayAdapter<>(getActivity(),
-                        R.layout.simple_spinner_item, courseSubjects);
-                subjectAdapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
-                spinner.setAdapter(subjectAdapter);
-            }
-        });
-    }
-
-    protected void updateCourseNumbersAdapter(final Spinner spinner, String courseSubject) {
-        ParseQuery<ParseObject> courseQuery = Course.getQuery();
-        courseQuery.orderByAscending(Course.KEY_NUMBER);
-        courseQuery.whereEqualTo(Course.KEY_SUBJECT, courseSubject);
-
-        courseQuery.findInBackground(new FindCallback<ParseObject>() {
-            @Override
-            public void done(List<ParseObject> objects, ParseException e) {
-                ArrayList<CharSequence> courseNumbers = new ArrayList<>();
-
-                courseNumbers.add(getString(R.string.post_hint_select_course_number));
-
-                for (ParseObject object : objects) {
-                    Course c = Course.getInstance(object);
-                    if (!courseNumbers.contains(c.getNumber())) courseNumbers.add(c.getNumber());
-                }
-
-                ArrayAdapter<CharSequence> subjectAdapter = new ArrayAdapter<>(getActivity(),
-                        R.layout.simple_spinner_item, courseNumbers);
-                subjectAdapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
-                spinner.setAdapter(subjectAdapter);
-            }
-        });
     }
 }

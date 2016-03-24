@@ -1,4 +1,4 @@
-package webb8.wathub.hub.fragments;
+package webb8.wathub.hub.fragments.actions;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
@@ -25,6 +25,7 @@ import java.util.Locale;
 
 import webb8.wathub.R;
 import webb8.wathub.hub.NavItem;
+import webb8.wathub.hub.fragments.HubFragment;
 import webb8.wathub.models.Carpool;
 import webb8.wathub.models.Post;
 import webb8.wathub.models.PostTypes;
@@ -32,8 +33,8 @@ import webb8.wathub.models.PostTypes;
 /**
  * Created by jorujlu on 06/03/16.
  */
-public class ActionCarpoolFragment extends ActionPostFragment {
-    public ActionCarpoolFragment() {}
+public class ActionPostCarpoolFragment extends ActionPostFragment {
+    public ActionPostCarpoolFragment() {}
 
     // UI fields
     protected EditText mFromView;

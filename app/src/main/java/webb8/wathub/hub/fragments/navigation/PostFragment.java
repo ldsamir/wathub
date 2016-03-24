@@ -1,4 +1,4 @@
-package webb8.wathub.hub.fragments;
+package webb8.wathub.hub.fragments.navigation;
 
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -19,6 +19,7 @@ import java.util.List;
 import webb8.wathub.R;
 import webb8.wathub.hub.NavItem;
 import webb8.wathub.hub.PostAdapter;
+import webb8.wathub.hub.fragments.HubFragment;
 import webb8.wathub.models.Parsable;
 import webb8.wathub.models.Post;
 import webb8.wathub.util.PostCard;
@@ -73,18 +74,18 @@ public class PostFragment extends HubFragment {
     }
 
     @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
         mPostQuery.findInBackground(new FindCallback<ParseObject>() {
             @Override
             public void done(List<ParseObject> objects, ParseException e) {
                 if (e == null) {
-                    List<PostCard> mPostCards = new ArrayList<>();
+                    List<PostCard> postCards = new ArrayList<>();
                     for (ParseObject object : objects) {
                         Post post = Post.getInstance(object);
-                        mPostCards.add(new PostCard(mHubActivity, post));
+                        postCards.add(new PostCard(mHubActivity, post));
                     }
-                    PostAdapter postAdapter = new PostAdapter(mPostCards);
+                    PostAdapter postAdapter = new PostAdapter(postCards);
                     mPostContainerView.setAdapter(postAdapter);
                 } else {
                     Toast.makeText(mHubActivity.getApplicationContext(), R.string.error_loading_posts, Toast.LENGTH_SHORT).show();

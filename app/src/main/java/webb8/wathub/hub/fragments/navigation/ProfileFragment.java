@@ -1,4 +1,4 @@
-package webb8.wathub.hub.fragments;
+package webb8.wathub.hub.fragments.navigation;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -23,6 +23,7 @@ import java.util.List;
 import java.util.Locale;
 
 import webb8.wathub.R;
+import webb8.wathub.hub.fragments.HubFragment;
 import webb8.wathub.models.Profile;
 
 /**

@@ -1,4 +1,4 @@
-package webb8.wathub.hub.fragments;
+package webb8.wathub.hub.fragments.actions;
 
 import android.app.FragmentManager;
 import android.os.Bundle;
@@ -26,6 +26,7 @@ import java.util.List;
 
 import webb8.wathub.R;
 import webb8.wathub.hub.NavItem;
+import webb8.wathub.hub.fragments.HubFragment;
 import webb8.wathub.models.BookConditions;
 import webb8.wathub.models.BookExchange;
 import webb8.wathub.models.Course;
@@ -39,9 +40,9 @@ import webb8.wathub.models.PostTypes;
 /**
  * This fragment handles book exchange posts
  */
-public class ActionBookExchangePostFragment extends ActionPostFragment {
+public class ActionPostBookExchangeFragment extends ActionPostFragment {
 
-    public ActionBookExchangePostFragment() {}
+    public ActionPostBookExchangeFragment() {}
 
     // UI fields
     protected EditText mBookTitleView;

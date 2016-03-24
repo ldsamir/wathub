@@ -1,4 +1,4 @@
-package webb8.wathub.hub.fragments;
+package webb8.wathub.hub.fragments.actions;
 
 
 import android.app.DatePickerDialog;
@@ -37,6 +37,8 @@ import java.util.Locale;
 
 import webb8.wathub.R;
 import webb8.wathub.hub.NavItem;
+import webb8.wathub.hub.fragments.HubFragment;
+import webb8.wathub.hub.fragments.actions.ActionPostFragment;
 import webb8.wathub.models.Course;
 import webb8.wathub.models.GroupStudy;
 import webb8.wathub.models.Post;
@@ -49,9 +51,9 @@ import webb8.wathub.models.PostTypes;
 /**
  * This fragment handles group study posts
  */
-public class ActionGroupStudyPostFragment extends ActionPostFragment {
+public class ActionPostGroupStudyFragment extends ActionPostFragment {
 
-    public ActionGroupStudyPostFragment() {}
+    public ActionPostGroupStudyFragment() {}
 
     // UI fields
     protected EditText mGroupNameView;

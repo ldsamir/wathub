@@ -11,12 +11,11 @@ import android.view.MenuItem;
 import android.support.v4.widget.DrawerLayout;
 import android.view.View;
 import android.widget.FrameLayout;
-import android.widget.TextView;
 
 import com.parse.ParseUser;
 
 import webb8.wathub.R;
-import webb8.wathub.hub.fragments.NavigationDrawerFragment;
+import webb8.wathub.hub.fragments.navigation.NavigationDrawerFragment;
 import webb8.wathub.init.MainActivity;
 import webb8.wathub.hub.fragments.HubFragment;
 
@@ -330,6 +329,15 @@ public class HubActivity extends AppCompatActivity
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            return true;
+        }
+
+        if (id == R.id.action_search) {
+            FragmentManager fragmentManager = getFragmentManager();
+
+            fragmentManager.beginTransaction()
+                    .replace(R.id.container, HubFragment.newInstance(Action.ACTION_SEARCH.getId()))
+                    .commit();
             return true;
         }
 

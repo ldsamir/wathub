@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <EditText
+        android:id="@+id/edit_search_carpool_from"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/search_from"/>
+
+    <EditText
+        android:id="@+id/edit_search_carpool_to"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/search_to"/>
+
+    <EditText
+        android:id="@+id/edit_search_carpool_when"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/search_when"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/edit_search_carpool_min_passenger"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="@string/search_min_passengers"/>
+
+        <EditText
+            android:id="@+id/edit_search_carpool_max_passenger"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="@string/search_max_passengers"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/edit_search_min_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="@string/search_min_price"
+            android:inputType="numberDecimal"/>
+
+        <EditText
+            android:id="@+id/edit_search_max_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="@string/search_max_price"
+            android:inputType="numberDecimal"/>
+    </LinearLayout>
+
+</LinearLayout>

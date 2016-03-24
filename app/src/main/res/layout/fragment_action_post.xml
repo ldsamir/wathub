@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="webb8.wathub.hub.fragments.ActionPostFragment"
+    tools:context=".hub.fragments.actions.ActionPostFragment"
     android:orientation="vertical">
 
     <EditText

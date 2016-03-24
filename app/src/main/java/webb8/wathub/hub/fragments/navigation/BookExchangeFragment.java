@@ -1,4 +1,4 @@
-package webb8.wathub.hub.fragments;
+package webb8.wathub.hub.fragments.navigation;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -11,14 +11,14 @@ import webb8.wathub.models.PostTypes;
 /**
  * Created by mismayil on 23/02/16.
  */
-public class CarpoolFragment extends PostFragment {
+public class BookExchangeFragment extends PostFragment {
 
-    public CarpoolFragment() {}
+    public BookExchangeFragment() {}
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mPostQuery.whereEqualTo(Post.KEY_POST_TYPE, PostTypes.CARPOOL.getType());
+        mPostQuery.whereEqualTo(Post.KEY_POST_TYPE, PostTypes.BOOK_EXCHANGE.getType());
     }
 
     @Override
