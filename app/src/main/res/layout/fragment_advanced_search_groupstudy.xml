@@ -4,19 +4,19 @@
     android:layout_height="match_parent">
 
     <EditText
-        android:id="@+id/edit_search_carpool_from"
+        android:id="@+id/edit_search_group_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/search_from"/>
+        android:hint="@string/search_group_name"/>
 
     <EditText
-        android:id="@+id/edit_search_carpool_to"
+        android:id="@+id/edit_search_group_where"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/search_to"/>
+        android:hint="@string/search_where"/>
 
     <EditText
-        android:id="@+id/edit_search_carpool_when"
+        android:id="@+id/edit_search_group_when"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/search_when"/>
@@ -27,16 +27,35 @@
         android:orientation="horizontal">
 
         <EditText
-            android:id="@+id/edit_search_carpool_min_passenger"
+            android:id="@+id/edit_search_group_start_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:hint="@string/search_min_passengers"/>
+            android:hint="@string/search_start_time"/>
 
         <EditText
-            android:id="@+id/edit_search_carpool_max_passenger"
+            android:id="@+id/edit_search_group_end_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:hint="@string/search_max_passengers"/>
+            android:hint="@string/search_end_time"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Spinner
+            android:id="@+id/select_search_group_course_subject"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content">
+        </Spinner>
+
+        <Spinner
+            android:id="@+id/select_search_group_course_number"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content">
+        </Spinner>
 
     </LinearLayout>
 
@@ -46,18 +65,19 @@
         android:orientation="horizontal">
 
         <EditText
-            android:id="@+id/edit_search_min_price"
+            android:id="@+id/edit_search_group_min_people"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:hint="@string/search_min_price"
-            android:inputType="numberDecimal"/>
+            android:hint="@string/search_min_people"
+            android:inputType="number"/>
 
         <EditText
-            android:id="@+id/edit_search_max_price"
+            android:id="@+id/edit_search_group_max_people"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:hint="@string/search_max_price"
-            android:inputType="numberDecimal"/>
+            android:hint="@string/search_max_people"
+            android:inputType="number"/>
+
     </LinearLayout>
 
 </LinearLayout>

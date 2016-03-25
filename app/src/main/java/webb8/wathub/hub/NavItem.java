@@ -13,7 +13,8 @@ public enum NavItem implements Selectable {
     CARPOOL_POSTS(4, R.string.title_carpool_posts),
     GROUP_STUDY_POSTS(5, R.string.title_group_study_posts),
     FAVORITES(6, R.string.title_favorites),
-    LOG_OUT(7, R.string.title_log_out);
+    LOG_OUT(7, R.string.title_log_out),
+    POST_FEED(16, R.string.action_search);
 
     private int id;
     private int nameId;

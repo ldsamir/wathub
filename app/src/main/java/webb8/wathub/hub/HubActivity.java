@@ -1,5 +1,7 @@
 package webb8.wathub.hub;
 
+import android.app.SearchManager;
+import android.content.Context;
 import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
@@ -11,6 +13,7 @@ import android.view.MenuItem;
 import android.support.v4.widget.DrawerLayout;
 import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.SearchView;
 
 import com.parse.ParseUser;
 
@@ -18,6 +21,7 @@ import webb8.wathub.R;
 import webb8.wathub.hub.fragments.navigation.NavigationDrawerFragment;
 import webb8.wathub.init.MainActivity;
 import webb8.wathub.hub.fragments.HubFragment;
+import webb8.wathub.search.AdvancedSearchActivity;
 
 public class HubActivity extends AppCompatActivity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks {
@@ -314,6 +318,25 @@ public class HubActivity extends AppCompatActivity
             // if the drawer is not showing. Otherwise, let the drawer
             // decide what to show in the action bar.
             getMenuInflater().inflate(R.menu.post, menu);
+
+            MenuItem advancedSearchItem = (MenuItem) menu.findItem(R.id.action_advanced_search);
+
+            advancedSearchItem.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+                @Override
+                public boolean onMenuItemClick(MenuItem item) {
+                    Intent intent = new Intent(getApplicationContext(), AdvancedSearchActivity.class);
+                    startActivity(intent);
+                    return false;
+                }
+            });
+
+            // Get the SearchView and set the searchable configuration
+            SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+            SearchView searchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
+
+            // Assumes current activity is the searchable activity
+            searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+            searchView.setIconifiedByDefault(false); // Do not iconify the widget; expand it by default
             restoreActionBar();
             return true;
         }
@@ -333,11 +356,6 @@ public class HubActivity extends AppCompatActivity
         }
 
         if (id == R.id.action_search) {
-            FragmentManager fragmentManager = getFragmentManager();
-
-            fragmentManager.beginTransaction()
-                    .replace(R.id.container, HubFragment.newInstance(Action.ACTION_SEARCH.getId()))
-                    .commit();
             return true;
         }
 

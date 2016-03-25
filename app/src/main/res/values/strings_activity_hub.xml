@@ -15,7 +15,6 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
-    <string name="action_search">Search</string>
     <string name="action_post">Post</string>
     <string name="content_avatar">AVATAR</string>
 
@@ -98,41 +97,5 @@
     <string name="card_carpool_arrow">-------></string>
     <string name="card_carpool_from_default_value">FROM</string>
     <string name="card_carpool_to_default_value">TO</string>
-
-    <string name="search_content">Search in content</string>
-    <string name="search_type">Type</string>
-    <string name="search_title">Title</string>
-    <string name="search_min_price">Min price</string>
-    <string name="search_max_price">Max price</string>
-    <string name="search_group_name">Group name</string>
-    <string name="search_where">Where</string>
-    <string name="search_when">When</string>
-    <string name="search_start_time">Start time</string>
-    <string name="search_end_time">End time</string>
-    <string name="search_min_people">Min people</string>
-    <string name="search_max_people">Max people</string>
-    <string name="search_from">From</string>
-    <string name="search_to">To</string>
-    <string name="search_min_passengers">Min passengers</string>
-    <string name="search_max_passengers">Max passengers</string>
-    <string-array name="search_type_list">
-        <item>@string/title_all_posts</item>
-        <item>@string/title_book_exchange_posts</item>
-        <item>@string/title_group_study_posts</item>
-        <item>@string/title_carpool_posts</item>
-    </string-array>
-    <string-array name="search_course_subject_list">
-        <item>Any</item>
-    </string-array>
-    <string-array name="search_course_number_list">
-        <item>Any</item>
-    </string-array>
-    <string-array name="search_book_conditions">
-        <item>Any</item>
-        <item>@string/book_condition_bad</item>
-        <item>@string/book_condition_moderate</item>
-        <item>@string/book_condition_good</item>
-        <item>@string/book_condition_excellent</item>
-    </string-array>
 
 </resources>

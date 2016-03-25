@@ -43,6 +43,7 @@ import webb8.wathub.models.Course;
 import webb8.wathub.models.GroupStudy;
 import webb8.wathub.models.Post;
 import webb8.wathub.models.PostTypes;
+import webb8.wathub.util.Util;
 
 /**
  * Created by mismayil on 25/02/16.
@@ -127,11 +128,7 @@ public class ActionPostGroupStudyFragment extends ActionPostFragment {
         courseNumberAdapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
         mCourseNumberView.setAdapter(courseNumberAdapter);
 
-        updateCourseSubjectsAdapter(mCourseSubjectView);
-
-
-
-
+        Util.updateCourseSubjectsAdapter(getActivity(), mCourseSubjectView);
 
         mCourseSubjectView.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -139,7 +136,7 @@ public class ActionPostGroupStudyFragment extends ActionPostFragment {
                 if (position != 0) {
                     String subject = parent.getItemAtPosition(position).toString();
                     course.setSubject(subject);
-                    updateCourseNumbersAdapter(mCourseNumberView, subject);
+                    Util.updateCourseNumbersAdapter(getActivity(), mCourseNumberView, subject);
                 } else {
                     mCourseTitleView.setVisibility(View.GONE);
                 }

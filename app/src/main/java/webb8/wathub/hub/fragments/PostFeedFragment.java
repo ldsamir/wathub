@@ -1,5 +1,6 @@
 package webb8.wathub.hub.fragments;
 
+import android.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
@@ -18,7 +19,7 @@ import webb8.wathub.util.PostCard;
 /**
  * Created by mismayil on 3/23/16.
  */
-public class PostFeedFragment extends HubFragment {
+public class PostFeedFragment extends Fragment {
     protected List<PostCard> mPostCards;
     protected RecyclerView mPostContainerView;
 
@@ -37,7 +38,7 @@ public class PostFeedFragment extends HubFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         final View postFeedView = inflater.inflate(R.layout.fragment_post, container, false);
         mPostContainerView = (RecyclerView) postFeedView;
-        LinearLayoutManager llm = new LinearLayoutManager(mHubActivity);
+        LinearLayoutManager llm = new LinearLayoutManager(getActivity());
         mPostContainerView.setLayoutManager(llm);
         mPostContainerView.setAdapter(new PostAdapter(new ArrayList<PostCard>()));
         return postFeedView;

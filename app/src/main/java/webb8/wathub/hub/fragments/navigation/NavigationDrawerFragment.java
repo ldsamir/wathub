@@ -1,9 +1,7 @@
 package webb8.wathub.hub.fragments.navigation;
 
-import android.app.FragmentManager;
 import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
-import android.app.Activity;
 import android.support.v7.app.ActionBar;
 import android.app.Fragment;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -22,13 +20,9 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import webb8.wathub.R;
-import webb8.wathub.hub.Action;
 import webb8.wathub.hub.NavItem;
-import webb8.wathub.hub.fragments.HubFragment;
-import webb8.wathub.hub.fragments.actions.ActionSearchFragment;
 
 /**
  * Fragment used for managing interactions for and presentation of a navigation drawer.

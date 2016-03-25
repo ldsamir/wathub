@@ -32,6 +32,7 @@ import webb8.wathub.models.BookExchange;
 import webb8.wathub.models.Course;
 import webb8.wathub.models.Post;
 import webb8.wathub.models.PostTypes;
+import webb8.wathub.util.Util;
 
 /**
  * Created by mismayil on 25/02/16.
@@ -88,14 +89,14 @@ public class ActionPostBookExchangeFragment extends ActionPostFragment {
         conditionAdapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
         mBookConditionView.setAdapter(conditionAdapter);
 
-        updateCourseSubjectsAdapter(mCourseSubjectView);
+        Util.updateCourseSubjectsAdapter(getActivity(), mCourseSubjectView);
 
         mCourseSubjectView.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if (position != 0) {
                     String subject = parent.getItemAtPosition(position).toString();
-                    updateCourseNumbersAdapter(mCourseNumberView, subject);
+                    Util.updateCourseNumbersAdapter(getActivity(), mCourseNumberView, subject);
                     course.setSubject(subject);
                 } else {
                     mCourseTitleView.setVisibility(View.GONE);

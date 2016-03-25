@@ -25,10 +25,10 @@
             android:theme="@style/FullscreenTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".login.LoginActivity"
             android:label="@string/title_activity_login"
@@ -49,11 +49,37 @@
         <activity
             android:name=".hub.HubActivity"
             android:label="@string/title_activity_post" />
-        <!-- ATTENTION: This was auto-generated to add Google Play services to your project for
-             App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information. -->
+        <!--
+             ATTENTION: This was auto-generated to add Google Play services to your project for
+             App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information.
+        -->
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
+        <meta-data
+            android:name="android.app.default_searchable"
+            android:value=".search.SearchActivity" />
+
+        <activity
+            android:name=".search.SearchActivity"
+            android:label="@string/action_search">
+            <intent-filter>
+                <action android:name="android.intent.action.SEARCH" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.app.searchable"
+                android:resource="@xml/searchable" />
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".hub.HubActivity" />
+        </activity>
+        <activity android:name=".search.AdvancedSearchActivity"
+            android:label="@string/action_advanced_search">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".hub.HubActivity" />
+        </activity>
     </application>
 
 </manifest>

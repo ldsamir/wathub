@@ -7,12 +7,12 @@
         android:id="@+id/edit_search_content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/search_content"/>
+        android:hint="@string/search_hint"/>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="vertical">
 
         <TextView
             android:id="@+id/text_search_type"
@@ -28,7 +28,7 @@
     </LinearLayout>
 
     <FrameLayout
-        android:id="@+id/action_search_container"
+        android:id="@+id/advanced_search_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
     </FrameLayout>
