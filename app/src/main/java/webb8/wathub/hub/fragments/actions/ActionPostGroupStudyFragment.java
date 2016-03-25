@@ -88,9 +88,9 @@ public class ActionPostGroupStudyFragment extends ActionPostFragment {
         mWhereView = (EditText) groupStudySectionView.findViewById(R.id.edit_group_where);
         mNumberPeopleView = (EditText) groupStudySectionView.findViewById(R.id.edit_group_max_people);
 
-        final Course course = new Course();
         final Post post = new Post();
         final GroupStudy groupStudyPost = new GroupStudy();
+
         mWhenView.setOnFocusChangeListener(new View.OnFocusChangeListener(){
             @Override
             public void onFocusChange(View v, boolean arg){
@@ -135,7 +135,6 @@ public class ActionPostGroupStudyFragment extends ActionPostFragment {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if (position != 0) {
                     String subject = parent.getItemAtPosition(position).toString();
-                    course.setSubject(subject);
                     Util.updateCourseNumbersAdapter(getActivity(), mCourseNumberView, subject);
                 } else {
                     mCourseTitleView.setVisibility(View.GONE);
@@ -152,15 +151,15 @@ public class ActionPostGroupStudyFragment extends ActionPostFragment {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if (position != 0) {
                     String number = parent.getItemAtPosition(position).toString();
-                    course.setNumber(number);
                     ParseQuery<ParseObject> query = Course.getQuery();
-                    query.whereEqualTo(Course.KEY_SUBJECT, course.getSubject());
-                    query.whereEqualTo(Course.KEY_NUMBER, course.getNumber());
+                    query.whereEqualTo(Course.KEY_SUBJECT, mCourseSubjectView.getSelectedItem().toString());
+                    query.whereEqualTo(Course.KEY_NUMBER, number);
                     query.findInBackground(new FindCallback<ParseObject>() {
                         @Override
                         public void done(List<ParseObject> objects, ParseException e) {
                             if (objects != null && objects.size() > 0) {
                                 Course selectedCourse = Course.getInstance(objects.get(0));
+                                groupStudyPost.setCourse(selectedCourse);
                                 mCourseTitleView.setText(selectedCourse.getTitle());
                                 mCourseTitleView.setVisibility(View.VISIBLE);
                             }
@@ -184,7 +183,6 @@ public class ActionPostGroupStudyFragment extends ActionPostFragment {
                     post.setUser(ParseUser.getCurrentUser());
                     post.setPostType(PostTypes.GROUP_STUDY.getType());
                     groupStudyPost.setPost(post);
-                    groupStudyPost.setCourse(course);
                     SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.CANADA);
                     Calendar startTime = Calendar.getInstance();
                     Calendar endTime = Calendar.getInstance();

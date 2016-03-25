@@ -6,6 +6,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.parse.FindCallback;
@@ -31,6 +33,7 @@ public class PostFragment extends HubFragment {
 
     protected RecyclerView mPostContainerView;
     protected ParseQuery<ParseObject> mPostQuery;
+    protected FrameLayout mProgressBar;
 
     public PostFragment() {}
     
@@ -61,15 +64,17 @@ public class PostFragment extends HubFragment {
         super.onCreate(savedInstanceState);
         mPostQuery = Post.getQuery();
         mPostQuery.orderByDescending(Parsable.KEY_UPDATED_AT);
+        mProgressBar = (FrameLayout) mHubActivity.findViewById(R.id.progress_bar);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup viewContainer, Bundle savedInstanceState) {
-        final View rootView = inflater.inflate(R.layout.fragment_post, viewContainer, false);
+        View rootView = inflater.inflate(R.layout.fragment_post, viewContainer, false);
         mPostContainerView = (RecyclerView) rootView;
         LinearLayoutManager llm = new LinearLayoutManager(mHubActivity);
         mPostContainerView.setLayoutManager(llm);
         mPostContainerView.setAdapter(new PostAdapter(new ArrayList<PostCard>()));
+        mProgressBar.setVisibility(View.VISIBLE);
         return rootView;
     }
 
@@ -80,6 +85,7 @@ public class PostFragment extends HubFragment {
             @Override
             public void done(List<ParseObject> objects, ParseException e) {
                 if (e == null) {
+                    mProgressBar.setVisibility(View.GONE);
                     List<PostCard> postCards = new ArrayList<>();
                     for (ParseObject object : objects) {
                         Post post = Post.getInstance(object);

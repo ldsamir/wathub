@@ -22,6 +22,7 @@ public class Util {
     public static void updateCourseSubjectsAdapter(final Activity activity, final Spinner spinner) {
         ParseQuery<ParseObject> courseQuery = Course.getQuery();
         courseQuery.orderByAscending(Course.KEY_SUBJECT);
+        courseQuery.setLimit(5200);
         courseQuery.findInBackground(new FindCallback<ParseObject>() {
             @Override
             public void done(List<ParseObject> objects, ParseException e) {

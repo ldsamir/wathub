@@ -70,7 +70,6 @@ public class ActionPostBookExchangeFragment extends ActionPostFragment {
         mBookConditionView = (Spinner) bookExchangeSectionView.findViewById(R.id.select_book_condition);
         mCourseTitleView = (TextView) bookExchangeSectionView.findViewById(R.id.text_course_title);
 
-        final Course course = new Course();
         final Post post = new Post();
         final BookExchange bookExchangePost = new BookExchange();
 
@@ -97,7 +96,6 @@ public class ActionPostBookExchangeFragment extends ActionPostFragment {
                 if (position != 0) {
                     String subject = parent.getItemAtPosition(position).toString();
                     Util.updateCourseNumbersAdapter(getActivity(), mCourseNumberView, subject);
-                    course.setSubject(subject);
                 } else {
                     mCourseTitleView.setVisibility(View.GONE);
                 }
@@ -113,15 +111,15 @@ public class ActionPostBookExchangeFragment extends ActionPostFragment {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if (position != 0) {
                     String number = parent.getItemAtPosition(position).toString();
-                    course.setNumber(number);
                     ParseQuery<ParseObject> query = Course.getQuery();
-                    query.whereEqualTo(Course.KEY_SUBJECT, course.getSubject());
-                    query.whereEqualTo(Course.KEY_NUMBER, course.getNumber());
+                    query.whereEqualTo(Course.KEY_SUBJECT, mCourseSubjectView.getSelectedItem().toString());
+                    query.whereEqualTo(Course.KEY_NUMBER, number);
                     query.findInBackground(new FindCallback<ParseObject>() {
                         @Override
                         public void done(List<ParseObject> objects, ParseException e) {
                             if (objects != null && objects.size() > 0) {
                                 Course selectedCourse = Course.getInstance(objects.get(0));
+                                bookExchangePost.setCourse(selectedCourse);
                                 mCourseTitleView.setText(selectedCourse.getTitle());
                                 mCourseTitleView.setVisibility(View.VISIBLE);
                             }
@@ -169,7 +167,6 @@ public class ActionPostBookExchangeFragment extends ActionPostFragment {
                     post.setPostType(PostTypes.BOOK_EXCHANGE.getType());
                     bookExchangePost.setPost(post);
                     bookExchangePost.setTitle(mBookTitleView.getText().toString());
-                    bookExchangePost.setCourse(course);
                     bookExchangePost.setPrice(Double.parseDouble(mBookPriceView.getText().toString()));
 
                     post.saveInBackground(new SaveCallback() {
