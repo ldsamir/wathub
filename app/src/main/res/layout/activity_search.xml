@@ -2,6 +2,15 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/progress_bar"
+        android:visibility="gone">
+        <include layout="@layout/progress_bar" />
+    </RelativeLayout>
+
     <FrameLayout
         android:id="@+id/search_container"
         android:layout_width="match_parent"

@@ -11,6 +11,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -63,6 +64,7 @@ public class ActionPostBookExchangeFragment extends ActionPostFragment {
 
         mContentView = (EditText) actionPostView.findViewById(R.id.edit_post_content);
         mPostBtnView = (Button) actionPostView.findViewById(R.id.action_post_go);
+        mProgressBar = (RelativeLayout) actionPostView.findViewById(R.id.progress_bar);
         mBookTitleView = (EditText) bookExchangeSectionView.findViewById(R.id.edit_book_title);
         mCourseSubjectView = (Spinner) bookExchangeSectionView.findViewById(R.id.select_book_course_subject);
         mCourseNumberView = (Spinner) bookExchangeSectionView.findViewById(R.id.select_book_course_number);
@@ -162,6 +164,7 @@ public class ActionPostBookExchangeFragment extends ActionPostFragment {
             @Override
             public void onClick(View v) {
                 if (checkInput()) {
+                    mProgressBar.setVisibility(View.VISIBLE);
                     post.setContent(mContentView.getText().toString());
                     post.setUser(ParseUser.getCurrentUser());
                     post.setPostType(PostTypes.BOOK_EXCHANGE.getType());
@@ -173,6 +176,7 @@ public class ActionPostBookExchangeFragment extends ActionPostFragment {
                         @Override
                         public void done(ParseException e) {
                             if (e == null) {
+                                mProgressBar.setVisibility(View.GONE);
                                 FragmentManager fragmentManager = getFragmentManager();
                                 Toast.makeText(getActivity(), R.string.info_post_published, Toast.LENGTH_SHORT).show();
                                 fragmentManager.beginTransaction().replace(R.id.container, HubFragment.newInstance(NavItem.ALL_POSTS.getId())).commit();

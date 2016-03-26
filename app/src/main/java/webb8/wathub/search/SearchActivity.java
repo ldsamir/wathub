@@ -6,6 +6,8 @@ import android.app.SearchManager;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.RelativeLayout;
 
 import com.parse.FindCallback;
 import com.parse.ParseException;
@@ -22,12 +24,14 @@ import webb8.wathub.util.PostCard;
 
 public class SearchActivity extends AppCompatActivity {
     private Activity thisActivity;
+    private RelativeLayout mProgressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
         thisActivity = this;
+        mProgressBar = (RelativeLayout) findViewById(R.id.progress_bar);
 
         // Get the intent, verify the action and get the query
         Intent intent = getIntent();
@@ -36,6 +40,8 @@ public class SearchActivity extends AppCompatActivity {
             String query = intent.getStringExtra(SearchManager.QUERY);
             ParseQuery<ParseObject> postQuery = Post.getQuery();
             postQuery.whereContains(Post.KEY_CONTENT, query);
+            mProgressBar.setVisibility(View.VISIBLE);
+
             postQuery.findInBackground(new FindCallback<ParseObject>() {
                 @Override
                 public void done(List<ParseObject> objects, ParseException e) {
@@ -47,6 +53,7 @@ public class SearchActivity extends AppCompatActivity {
                     }
 
                     PostFeedFragment postFeedFragment = PostFeedFragment.newInstance(postCards);
+                    mProgressBar.setVisibility(View.GONE);
 
                     FragmentManager fragmentManager = getFragmentManager();
 

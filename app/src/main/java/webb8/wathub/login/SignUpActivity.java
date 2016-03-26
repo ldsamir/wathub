@@ -12,6 +12,7 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,6 +31,7 @@ public class SignUpActivity extends AppCompatActivity {
     private EditText mFirstNameView;
     private EditText mLastNameView;
     private EditText mPasswordView;
+    private RelativeLayout mProgressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +54,8 @@ public class SignUpActivity extends AppCompatActivity {
                 return false;
             }
         });
+
+        mProgressBar = (RelativeLayout) findViewById(R.id.progress_bar);
 
         // set sign up button
         Button signUpButton = (Button) findViewById(R.id.sign_up_button);
@@ -130,6 +134,7 @@ public class SignUpActivity extends AppCompatActivity {
             user.setUsername(email.substring(0, email.indexOf("@")));
             user.setEmail(email);
             user.setPassword(password);
+            mProgressBar.setVisibility(View.VISIBLE);
 
             user.signUpInBackground(new SignUpCallback() {
                 @Override
@@ -156,6 +161,7 @@ public class SignUpActivity extends AppCompatActivity {
                         System.out.println("error signing up");
                         Toast.makeText(getApplicationContext(), R.string.error_signing_up, Toast.LENGTH_SHORT).show();
                     }
+                    mProgressBar.setVisibility(View.GONE);
                 }
             });
         }

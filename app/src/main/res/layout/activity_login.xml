@@ -6,6 +6,14 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin" tools:context=".login.LoginActivity">
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/progress_bar"
+        android:visibility="gone">
+        <include layout="@layout/progress_bar" />
+    </RelativeLayout>
+
     <AutoCompleteTextView
         style="@style/AppTheme"
         android:id="@+id/email" android:layout_width="match_parent"

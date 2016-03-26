@@ -13,6 +13,8 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -33,6 +35,7 @@ public class LoginActivity extends AppCompatActivity {
     // UI references.
     private AutoCompleteTextView mEmailView;
     private EditText mPasswordView;
+    private RelativeLayout mProgressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +57,8 @@ public class LoginActivity extends AppCompatActivity {
                 return false;
             }
         });
+
+        mProgressBar = (RelativeLayout) findViewById(R.id.progress_bar);
 
         // set sign in button
         Button signInButton = (Button) findViewById(R.id.sign_in_button);
@@ -143,6 +148,7 @@ public class LoginActivity extends AppCompatActivity {
         if (check) {
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
+            mProgressBar.setVisibility(View.VISIBLE);
             ParseUser.logInInBackground(email.substring(0, email.indexOf("@")), password, new LogInCallback() {
                 @Override
                 public void done(ParseUser user, ParseException e) {
@@ -159,6 +165,7 @@ public class LoginActivity extends AppCompatActivity {
                         System.out.println("error logging in");
                         Toast.makeText(getApplicationContext(), R.string.error_incorrect_password_or_email, Toast.LENGTH_SHORT).show();
                     }
+                    mProgressBar.setVisibility(View.GONE);
                 }
             });
         }

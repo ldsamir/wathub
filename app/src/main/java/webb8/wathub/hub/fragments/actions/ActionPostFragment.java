@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.parse.ParseException;
@@ -28,6 +29,7 @@ public class ActionPostFragment extends HubFragment {
     // UI fields
     protected EditText mContentView;
     protected Button mPostBtnView;
+    protected RelativeLayout mProgressBar;
 
     public ActionPostFragment() {}
 
@@ -59,6 +61,7 @@ public class ActionPostFragment extends HubFragment {
         View actionPostView = inflater.inflate(R.layout.fragment_action_post, container, false);
         mContentView = (EditText) actionPostView.findViewById(R.id.edit_post_content);
         mPostBtnView = (Button) actionPostView.findViewById(R.id.action_post_go);
+        mProgressBar = (RelativeLayout) actionPostView.findViewById(R.id.progress_bar);
 
         final Post post = new Post();
 
@@ -66,6 +69,7 @@ public class ActionPostFragment extends HubFragment {
             @Override
             public void onClick(View v) {
                 if (checkInput()) {
+                    mProgressBar.setVisibility(View.VISIBLE);
                     post.setUser(ParseUser.getCurrentUser());
                     post.setContent(mContentView.getText().toString());
 
@@ -73,6 +77,7 @@ public class ActionPostFragment extends HubFragment {
                         @Override
                         public void done(ParseException e) {
                             if (e == null) {
+                                mProgressBar.setVisibility(View.GONE);
                                 FragmentManager fragmentManager = getFragmentManager();
                                 Toast.makeText(mHubActivity.getApplicationContext(), R.string.info_post_published, Toast.LENGTH_SHORT).show();
                                 fragmentManager.beginTransaction().replace(R.id.container, HubFragment.newInstance(NavItem.ALL_POSTS.getId())).commit();

@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.parse.ParseException;
@@ -53,6 +54,7 @@ public class ActionPostCarpoolFragment extends ActionPostFragment {
 
         mContentView = (EditText) actionPostView.findViewById(R.id.edit_post_content);
         mPostBtnView = (Button) actionPostView.findViewById(R.id.action_post_go);
+        mProgressBar = (RelativeLayout) actionPostView.findViewById(R.id.progress_bar);
         mFromView = (EditText) carpoolSectionView.findViewById(R.id.edit_carpool_from);
         mToView = (EditText) carpoolSectionView.findViewById(R.id.edit_carpool_to);
         mWhenView = (EditText) carpoolSectionView.findViewById(R.id.edit_carpool_when);
@@ -76,6 +78,7 @@ public class ActionPostCarpoolFragment extends ActionPostFragment {
             @Override
             public void onClick(View v) {
                 if (checkInput()) {
+                    mProgressBar.setVisibility(View.VISIBLE);
                     post.setContent(mContentView.getText().toString());
                     post.setUser(ParseUser.getCurrentUser());
                     post.setPostType(PostTypes.CARPOOL.getType());
@@ -100,6 +103,7 @@ public class ActionPostCarpoolFragment extends ActionPostFragment {
                         @Override
                         public void done(ParseException e) {
                             if (e == null) {
+                                mProgressBar.setVisibility(View.GONE);
                                 FragmentManager fragmentManager = getFragmentManager();
                                 Toast.makeText(getActivity(), R.string.info_post_published, Toast.LENGTH_SHORT).show();
                                 fragmentManager.beginTransaction().replace(R.id.container, HubFragment.newInstance(NavItem.ALL_POSTS.getId())).commit();

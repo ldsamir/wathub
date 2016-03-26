@@ -8,6 +8,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.parse.CountCallback;
@@ -15,6 +17,7 @@ import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
+import com.parse.ParseUser;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,7 +40,7 @@ public class PostFragment extends HubFragment {
 
     protected RecyclerView mPostContainerView;
     protected ParseQuery<ParseObject> mPostQuery;
-    protected FrameLayout mProgressBar;
+    protected RelativeLayout mProgressBar;
     protected PostAdapter mPostAdapter;
 
     public PostFragment() {}
@@ -77,7 +80,7 @@ public class PostFragment extends HubFragment {
         super.onCreate(savedInstanceState);
         mPostQuery = Post.getQuery();
         mPostQuery.orderByDescending(Parsable.KEY_UPDATED_AT);
-        mProgressBar = (FrameLayout) mHubActivity.findViewById(R.id.progress_bar);
+        mProgressBar = (RelativeLayout) mHubActivity.findViewById(R.id.progress_bar);
     }
 
     @Override
@@ -117,6 +120,7 @@ public class PostFragment extends HubFragment {
                         final Post post = Post.getInstance(object);
                         ParseQuery<ParseObject> doneQuery = Done.getQuery();
                         doneQuery.whereEqualTo(Done.KEY_POST, post);
+                        doneQuery.whereEqualTo(Done.KEY_USER, ParseUser.getCurrentUser());
                         doneQuery.countInBackground(new CountCallback() {
                             @Override
                             public void done(int count, ParseException e) {
@@ -124,6 +128,7 @@ public class PostFragment extends HubFragment {
                                     if (count == 0) {
                                         ParseQuery<ParseObject> favoriteQuery = Favorite.getQuery();
                                         favoriteQuery.whereEqualTo(Favorite.KEY_POST, post);
+                                        favoriteQuery.whereEqualTo(Favorite.KEY_USER, ParseUser.getCurrentUser());
                                         favoriteQuery.countInBackground(new CountCallback() {
                                             @Override
                                             public void done(int count, ParseException e) {
