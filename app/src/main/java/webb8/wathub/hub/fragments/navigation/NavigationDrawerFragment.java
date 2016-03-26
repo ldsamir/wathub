@@ -22,7 +22,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import webb8.wathub.R;
-import webb8.wathub.hub.NavItem;
+import webb8.wathub.util.NavItem;
 
 /**
  * Fragment used for managing interactions for and presentation of a navigation drawer.

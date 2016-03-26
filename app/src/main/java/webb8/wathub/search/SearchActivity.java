@@ -3,12 +3,9 @@ package webb8.wathub.search;
 import android.app.Activity;
 import android.app.FragmentManager;
 import android.app.SearchManager;
-import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.Menu;
-import android.widget.SearchView;
 
 import com.parse.FindCallback;
 import com.parse.ParseException;
@@ -19,8 +16,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import webb8.wathub.R;
-import webb8.wathub.hub.NavItem;
-import webb8.wathub.hub.fragments.HubFragment;
 import webb8.wathub.hub.fragments.PostFeedFragment;
 import webb8.wathub.models.Post;
 import webb8.wathub.util.PostCard;

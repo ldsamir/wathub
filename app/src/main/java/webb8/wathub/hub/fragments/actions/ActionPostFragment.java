@@ -15,8 +15,8 @@ import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
 import webb8.wathub.R;
-import webb8.wathub.hub.Action;
-import webb8.wathub.hub.NavItem;
+import webb8.wathub.util.Action;
+import webb8.wathub.util.NavItem;
 import webb8.wathub.hub.fragments.HubFragment;
 import webb8.wathub.models.Post;
 

@@ -5,11 +5,10 @@ import android.app.Fragment;
 import android.content.Context;
 import android.os.Bundle;
 
-import webb8.wathub.hub.Action;
-import webb8.wathub.hub.NavItem;
+import webb8.wathub.util.Action;
+import webb8.wathub.util.NavItem;
 import webb8.wathub.hub.HubActivity;
 import webb8.wathub.hub.fragments.actions.ActionPostFragment;
-import webb8.wathub.hub.fragments.navigation.FavoriteFragment;
 import webb8.wathub.hub.fragments.navigation.MessageFragment;
 import webb8.wathub.hub.fragments.navigation.PostFragment;
 import webb8.wathub.hub.fragments.navigation.ProfileFragment;

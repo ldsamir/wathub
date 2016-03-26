@@ -8,10 +8,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
-import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import com.github.brnunes.swipeablerecyclerview.SwipeableRecyclerViewTouchListener;
+import com.parse.CountCallback;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
@@ -21,8 +20,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import webb8.wathub.R;
-import webb8.wathub.hub.NavItem;
-import webb8.wathub.hub.PostAdapter;
+import webb8.wathub.models.Done;
+import webb8.wathub.models.Favorite;
+import webb8.wathub.util.NavItem;
+import webb8.wathub.util.PostAdapter;
 import webb8.wathub.hub.fragments.HubFragment;
 import webb8.wathub.models.Parsable;
 import webb8.wathub.models.Post;
@@ -111,13 +112,33 @@ public class PostFragment extends HubFragment {
             @Override
             public void done(List<ParseObject> objects, ParseException e) {
                 if (e == null) {
-                    final List<PostCard> postCards = new ArrayList<>();
-                    for (ParseObject object : objects) {
-                        Post post = Post.getInstance(object);
-                        postCards.add(new PostCard(mHubActivity, post));
+                    for (final ParseObject object : objects) {
+                        final Post post = Post.getInstance(object);
+                        ParseQuery<ParseObject> doneQuery = Done.getQuery();
+                        doneQuery.whereEqualTo(Done.KEY_POST, post);
+                        doneQuery.countInBackground(new CountCallback() {
+                            @Override
+                            public void done(int count, ParseException e) {
+                                if (e == null) {
+                                    if (count == 0) {
+                                        ParseQuery<ParseObject> favoriteQuery = Favorite.getQuery();
+                                        favoriteQuery.whereEqualTo(Favorite.KEY_POST, post);
+                                        favoriteQuery.countInBackground(new CountCallback() {
+                                            @Override
+                                            public void done(int count, ParseException e) {
+                                                if (e == null) {
+                                                    if (count == 0) {
+                                                        mPostAdapter.addPostCard(new PostCard(mHubActivity, post));
+                                                    }
+                                                }
+                                            }
+                                        });
+                                    }
+                                }
+                            }
+                        });
                     }
                     mProgressBar.setVisibility(View.GONE);
-                    mPostAdapter.setPostCards(postCards);
                 } else {
                     Toast.makeText(mHubActivity.getApplicationContext(), R.string.error_loading_posts, Toast.LENGTH_SHORT).show();
                 }

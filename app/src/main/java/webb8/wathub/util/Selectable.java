@@ -1,4 +1,4 @@
-package webb8.wathub.hub;
+package webb8.wathub.util;
 
 /**
  * Created by mismayil on 25/02/16.

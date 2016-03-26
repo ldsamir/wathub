@@ -14,7 +14,7 @@ import android.widget.FrameLayout;
 import android.widget.Spinner;
 
 import webb8.wathub.R;
-import webb8.wathub.hub.NavItem;
+import webb8.wathub.util.NavItem;
 import webb8.wathub.util.Util;
 
 /**

@@ -1,4 +1,4 @@
-package webb8.wathub.hub;
+package webb8.wathub.util;
 
 import webb8.wathub.R;
 
@@ -13,8 +13,8 @@ public enum NavItem implements Selectable {
     CARPOOL_POSTS(4, R.string.title_carpool_posts),
     GROUP_STUDY_POSTS(5, R.string.title_group_study_posts),
     FAVORITES(6, R.string.title_favorites),
-    DONE(16, R.string.title_done),
-    LOG_OUT(7, R.string.title_log_out);
+    DONE(7, R.string.title_done),
+    LOG_OUT(8, R.string.title_log_out);
 
     private int id;
     private int nameId;

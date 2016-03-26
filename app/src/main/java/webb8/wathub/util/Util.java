@@ -15,7 +15,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import webb8.wathub.R;
-import webb8.wathub.hub.PostAdapter;
 import webb8.wathub.models.Course;
 
 /**
@@ -89,7 +88,7 @@ public class Util {
                             @Override
                             public void onDismissedBySwipeLeft(RecyclerView recyclerView, int[] reverseSortedPositions) {
                                 for (int position : reverseSortedPositions) {
-                                    adapter.removePostCard(position);
+                                    adapter.removePostCard(position, PostState.DONE);
                                 }
                                 adapter.notifyDataSetChanged();
                             }
@@ -97,7 +96,7 @@ public class Util {
                             @Override
                             public void onDismissedBySwipeRight(RecyclerView recyclerView, int[] reverseSortedPositions) {
                                 for (int position : reverseSortedPositions) {
-                                    adapter.removePostCard(position);
+                                    adapter.removePostCard(position, PostState.FAVORITED);
                                 }
                                 adapter.notifyDataSetChanged();
                             }

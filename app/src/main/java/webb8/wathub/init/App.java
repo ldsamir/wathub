@@ -12,6 +12,7 @@ import java.io.File;
 import webb8.wathub.models.BookExchange;
 import webb8.wathub.models.Carpool;
 import webb8.wathub.models.Course;
+import webb8.wathub.models.Done;
 import webb8.wathub.models.Favorite;
 import webb8.wathub.models.GroupStudy;
 import webb8.wathub.models.Message;
@@ -38,6 +39,7 @@ public class App extends Application {
         ParseObject.registerSubclass(GroupStudy.class);
         ParseObject.registerSubclass(Message.class);
         ParseObject.registerSubclass(PostType.class);
+        ParseObject.registerSubclass(Done.class);
         Parse.enableLocalDatastore(this);
         Parse.initialize(this);
     }

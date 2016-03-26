@@ -1,7 +1,7 @@
 package webb8.wathub.models;
 
 import webb8.wathub.R;
-import webb8.wathub.hub.Selectable;
+import webb8.wathub.util.Selectable;
 
 /**
  * Created by mismayil on 25/02/16.

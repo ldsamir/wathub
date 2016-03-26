@@ -90,6 +90,10 @@ public class PostCard {
         }
     }
 
+    public Post getPost() {
+        return mPost;
+    }
+
     public View getView() {
         View view = mActivity.getLayoutInflater().inflate(R.layout.card_post, null, false);
         CardView mPostView = (CardView) view.findViewById(R.id.post_card);

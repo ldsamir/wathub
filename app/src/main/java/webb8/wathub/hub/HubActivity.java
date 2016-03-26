@@ -22,6 +22,8 @@ import webb8.wathub.hub.fragments.navigation.NavigationDrawerFragment;
 import webb8.wathub.init.MainActivity;
 import webb8.wathub.hub.fragments.HubFragment;
 import webb8.wathub.search.AdvancedSearchActivity;
+import webb8.wathub.util.Action;
+import webb8.wathub.util.NavItem;
 
 public class HubActivity extends AppCompatActivity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks {

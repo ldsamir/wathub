@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import webb8.wathub.R;
-import webb8.wathub.hub.PostAdapter;
+import webb8.wathub.util.PostAdapter;
 import webb8.wathub.util.PostCard;
 
 /**

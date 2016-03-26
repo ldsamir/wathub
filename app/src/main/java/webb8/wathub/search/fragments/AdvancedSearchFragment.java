@@ -23,7 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import webb8.wathub.R;
-import webb8.wathub.hub.NavItem;
+import webb8.wathub.util.NavItem;
 import webb8.wathub.hub.fragments.PostFeedFragment;
 import webb8.wathub.models.Post;
 import webb8.wathub.util.PostCard;
