@@ -6,10 +6,19 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.parse.GetCallback;
 import com.parse.ParseException;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
 import org.json.JSONArray;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.widget.Toast;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import webb8.wathub.R;
 import webb8.wathub.models.Course;
@@ -23,27 +32,24 @@ public class GroupStudyCard extends PostCard {
     private GroupStudy mGroupStudy;
     TextView mGroupName, mGroupCourse, mGroupWhere, mGroupStartTime, mGroupEndTime, mGroupNumJoined, mGroupMaxPeople;
     private Button mBtnJoin;
-    private Course mCourse;
+    private JSONArray mStudentsJoined;          // to avoid too many requests
+
 
     public GroupStudyCard(Activity activity, GroupStudy groupStudy) {
         mActivity = activity;
         mGroupStudy = groupStudy;
-        mCourse = mGroupStudy.getCourse();
-        refresh();
     }
 
     private boolean haveJoined (){
         String curObjectid = ParseUser.getCurrentUser().getObjectId();
-        JSONArray StudentSet = mGroupStudy.getStudents();
-        if (StudentSet != null) {
-            for (int i = 0; i < StudentSet.length(); i++) {
+        if (mStudentsJoined != null) {
+            for (int i = 0; i < mStudentsJoined.length(); i++) {
                 try {
-                    if (StudentSet.getJSONObject(i).get(Parsable.KEY_OBJECT_ID).equals(curObjectid)) {
+                    if (mStudentsJoined.getJSONObject(i).get(Parsable.KEY_OBJECT_ID).equals(curObjectid)) {
                         return true;
                     }
                 }
                 catch (org.json.JSONException e){
-                    return false;
                 }
             }
         }
@@ -72,6 +78,91 @@ public class GroupStudyCard extends PostCard {
         mGroupStudy.saveInBackground();
     }
 
+    private void joinButtonAction (){
+        mStudentsJoined = mGroupStudy.getStudents();
+        // if the student is in the list, then remove the student
+        if (haveJoined()) {
+            // remove the student. TODO: add remove after wrapper to parse::remove is defined
+            removeFromStudents (mStudentsJoined);
+
+            // update the copy of the Students set
+            mStudentsJoined = mGroupStudy.getStudents();
+
+            // update the num of students joined in the textview
+            mGroupNumJoined.setText(String.valueOf(mStudentsJoined == null ? 0 : "" + mStudentsJoined.length()));
+
+            // update the text from "Joined" to "Join"
+            mBtnJoin.setText(String.valueOf("Join"));
+            mBtnJoin.setBackgroundColor(Color.WHITE);
+        }
+
+        // if the student has not beed added to the list AND there is an available seat,then add
+        else if (((mStudentsJoined == null) && (mGroupStudy.getMaxPeople() != 0)) ||
+                ((mStudentsJoined != null) && (mStudentsJoined.length() < mGroupStudy.getMaxPeople()))) {
+            // add the user
+            mGroupStudy.addStudent(ParseUser.getCurrentUser());
+            mGroupStudy.saveInBackground();
+
+            // update the copy of the Students set
+            mStudentsJoined = mGroupStudy.getStudents();
+
+            // update the num of students joined in the textview
+            mGroupNumJoined.setText(String.valueOf(mStudentsJoined == null ? 0 : "" + mStudentsJoined.length()));
+
+            // update the text from "Join" to "Joined"
+            mBtnJoin.setText(String.valueOf("Joined"));
+            mBtnJoin.setBackgroundColor(Color.GREEN);
+        }
+        else {
+            Toast.makeText(mActivity.getApplicationContext(), "Sorry, this group is full.", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void mStudentsJoinedUpdate (){
+        mStudentsJoined = mGroupStudy.getStudents();
+        mGroupNumJoined.setText(String.valueOf(mStudentsJoined == null ? 0 : "" + mStudentsJoined.length()));
+        if (haveJoined()){
+            mBtnJoin.setText(String.valueOf("Joined"));
+            mBtnJoin.setBackgroundColor(Color.GREEN);
+        }
+        else {
+            mBtnJoin.setText(String.valueOf("Join"));
+            mBtnJoin.setBackgroundColor(Color.WHITE);
+        }
+    }
+
+    private void joinedStudentsButtonAction (){
+        mStudentsJoinedUpdate();
+        AlertDialog.Builder builder = new AlertDialog.Builder(mActivity);
+        builder.setTitle("Users joined the activity");
+        final List<String> mListOfJoinedStudents = new ArrayList<String>();
+        if (mStudentsJoined != null) {
+            for (int i = 0; i < mStudentsJoined.length(); i++) {
+                try {
+                    ParseQuery<ParseUser> query = ParseUser.getQuery();
+                    mListOfJoinedStudents.add(query.get(mStudentsJoined.getJSONObject(i).get(Parsable.KEY_OBJECT_ID).toString()).getUsername());
+                }
+                catch (org.json.JSONException e){
+                    mListOfJoinedStudents.add("an unknown student".toString());
+                    Toast.makeText(mActivity.getApplicationContext(), "EXCEPTION OCCURED", Toast.LENGTH_SHORT).show();
+                } catch (ParseException e) {
+                    mListOfJoinedStudents.add("an unknown student".toString());
+                    Toast.makeText(mActivity.getApplicationContext(), "EXCEPTION OCCURED", Toast.LENGTH_SHORT).show();
+                }
+            }
+        }
+        final CharSequence[] charListOfStudents = mListOfJoinedStudents.toArray(new CharSequence[mListOfJoinedStudents.size()]);
+        builder.setItems(charListOfStudents, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int item) {
+                Toast.makeText(mActivity.getApplicationContext(), "TODO:" + "go to " + charListOfStudents[item] + "'s profile...", Toast.LENGTH_SHORT).show();
+            }
+        });
+        AlertDialog alert = builder.create();
+        alert.setCancelable(true);
+        alert.setCanceledOnTouchOutside(true);
+        alert.show();
+    }
+
     @Override
     public View getView() {
         View view = mActivity.getLayoutInflater().inflate(R.layout.card_groupstudy, null, false);
@@ -86,75 +177,37 @@ public class GroupStudyCard extends PostCard {
         mBtnJoin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // store all of the students joined in the jsonarray
-                JSONArray StudentSet = mGroupStudy.getStudents();
-                // if the student is in the list, then remove the student
-                if (haveJoined()) {
-                    // remove the student. TODO: add remove after wrapper to parse::remove is defined
-                    removeFromStudents (StudentSet);
-
-                    // update the copy of the Students set
-                    StudentSet = mGroupStudy.getStudents();
-
-                    // update the num of students joined in the textview
-                    mGroupNumJoined.setText(String.valueOf(StudentSet == null ? 0 : "" + StudentSet.length()));
-
-                    // update the text from "Joined" to "Join"
-                    mBtnJoin.setText(String.valueOf("Join"));
-                    mBtnJoin.setBackgroundColor(Color.WHITE);
-
-                    // update the color to default
-                    //mBtnJoin.setBackgroundResource(android.R.drawable.btn_default);
-                }
-
-                // if the student has not beed added to the list AND there is an available seat,then add
-                else if (((StudentSet == null) && (mGroupStudy.getMaxPeople() != 0)) ||
-                         ((StudentSet != null) && (StudentSet.length() < mGroupStudy.getMaxPeople()))) {
-                    // add the user
-                    mGroupStudy.addStudent(ParseUser.getCurrentUser());
-                    mGroupStudy.saveInBackground();
-
-                    // update the copy of the Students set
-                    StudentSet = mGroupStudy.getStudents();
-
-                    // update the num of students joined in the textview
-                    mGroupNumJoined.setText(String.valueOf(StudentSet == null ? 0 : "" + StudentSet.length()));
-
-                    // update the text from "Join" to "Joined"
-                    mBtnJoin.setText(String.valueOf("Joined"));
-                    mBtnJoin.setBackgroundColor(Color.GREEN);
+                switch (v.getId()){
+                    case R.id.group_study_btn_join:
+                        joinButtonAction();
+                        joinedStudentsButtonAction ();
+                        break;
+                    default:
+                        break;
                 }
             }
         });
 
+        Course course = mGroupStudy.getCourse();
+        try {
+            course.fetch();
+        } catch (ParseException e) {
+
+        }
+
         mGroupName.setText(mGroupStudy.getGroupName());
-        mGroupCourse.setText(mCourse.getSubject() + " " + mCourse.getNumber());
+        mGroupCourse.setText(course.getSubject() + " " + course.getNumber());
         mGroupWhere.setText(mGroupStudy.getWhere());
         String startTime = mGroupStudy.getStartTime().toString();
         startTime = startTime.substring(4, startTime.length()-12);
         mGroupStartTime.setText(startTime);
         String endTime = mGroupStudy.getEndTime().toString();
-        endTime = endTime.substring(4, endTime.length()-12);
+        endTime = endTime.substring(4, endTime.length() - 12);
         mGroupEndTime.setText(endTime);
-        mGroupNumJoined.setText(String.valueOf(mGroupStudy.getStudents() == null ? 0 : "" + mGroupStudy.getStudents().length()));
         mGroupMaxPeople.setText(String.valueOf(mGroupStudy.getMaxPeople()));
-        if (haveJoined()){
-            mBtnJoin.setText(String.valueOf("Joined"));
-            mBtnJoin.setBackgroundColor(Color.GREEN);
-        }
-        else {
-            mBtnJoin.setText(String.valueOf("Join"));
-            mBtnJoin.setBackgroundColor(Color.WHITE);
-        }
+
+        mStudentsJoinedUpdate ();
 
         return view;
-    }
-
-    public void refresh() {
-        try {
-            mCourse.fetch();
-        } catch (ParseException e) {
-
-        }
     }
 }
