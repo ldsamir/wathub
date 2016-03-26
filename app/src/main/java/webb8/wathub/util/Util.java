@@ -1,9 +1,11 @@
 package webb8.wathub.util;
 
 import android.app.Activity;
+import android.support.v7.widget.RecyclerView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
+import com.github.brnunes.swipeablerecyclerview.SwipeableRecyclerViewTouchListener;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
@@ -13,6 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import webb8.wathub.R;
+import webb8.wathub.hub.PostAdapter;
 import webb8.wathub.models.Course;
 
 /**
@@ -67,5 +70,39 @@ public class Util {
                 spinner.setAdapter(subjectAdapter);
             }
         });
+    }
+
+    public static SwipeableRecyclerViewTouchListener getSwipeTouchListener(RecyclerView recyclerView, final PostAdapter adapter) {
+        SwipeableRecyclerViewTouchListener swipeTouchListener =
+                new SwipeableRecyclerViewTouchListener(recyclerView,
+                        new SwipeableRecyclerViewTouchListener.SwipeListener() {
+                            @Override
+                            public boolean canSwipeLeft(int position) {
+                                return true;
+                            }
+
+                            @Override
+                            public boolean canSwipeRight(int position) {
+                                return true;
+                            }
+
+                            @Override
+                            public void onDismissedBySwipeLeft(RecyclerView recyclerView, int[] reverseSortedPositions) {
+                                for (int position : reverseSortedPositions) {
+                                    adapter.removePostCard(position);
+                                }
+                                adapter.notifyDataSetChanged();
+                            }
+
+                            @Override
+                            public void onDismissedBySwipeRight(RecyclerView recyclerView, int[] reverseSortedPositions) {
+                                for (int position : reverseSortedPositions) {
+                                    adapter.removePostCard(position);
+                                }
+                                adapter.notifyDataSetChanged();
+                            }
+                        });
+
+        return swipeTouchListener;
     }
 }

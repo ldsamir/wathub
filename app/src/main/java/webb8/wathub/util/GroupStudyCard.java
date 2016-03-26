@@ -23,10 +23,13 @@ public class GroupStudyCard extends PostCard {
     private GroupStudy mGroupStudy;
     TextView mGroupName, mGroupCourse, mGroupWhere, mGroupStartTime, mGroupEndTime, mGroupNumJoined, mGroupMaxPeople;
     private Button mBtnJoin;
+    private Course mCourse;
 
     public GroupStudyCard(Activity activity, GroupStudy groupStudy) {
         mActivity = activity;
         mGroupStudy = groupStudy;
+        mCourse = mGroupStudy.getCourse();
+        refresh();
     }
 
     private boolean haveJoined (){
@@ -124,16 +127,8 @@ public class GroupStudyCard extends PostCard {
             }
         });
 
-        Course course = mGroupStudy.getCourse();
-
-        try {
-            course.fetch();
-        } catch (ParseException e) {
-
-        }
-
         mGroupName.setText(mGroupStudy.getGroupName());
-        mGroupCourse.setText(course.getSubject() + " " + course.getNumber());
+        mGroupCourse.setText(mCourse.getSubject() + " " + mCourse.getNumber());
         mGroupWhere.setText(mGroupStudy.getWhere());
         String startTime = mGroupStudy.getStartTime().toString();
         startTime = startTime.substring(4, startTime.length()-12);
@@ -153,5 +148,13 @@ public class GroupStudyCard extends PostCard {
         }
 
         return view;
+    }
+
+    public void refresh() {
+        try {
+            mCourse.fetch();
+        } catch (ParseException e) {
+
+        }
     }
 }

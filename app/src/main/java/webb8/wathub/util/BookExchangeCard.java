@@ -20,10 +20,13 @@ import webb8.wathub.models.Parsable;
 public class BookExchangeCard extends PostCard {
 
     private BookExchange mBookExchange;
+    private Course mCourse;
 
     public BookExchangeCard(Activity activity, BookExchange bookExchange) {
         mActivity = activity;
         mBookExchange = bookExchange;
+        mCourse = mBookExchange.getCourse();
+        refresh();
     }
 
     @Override
@@ -33,15 +36,7 @@ public class BookExchangeCard extends PostCard {
         TextView bookTitle = (TextView) view.findViewById(R.id.book_exchange_bookTitle);
         TextView bookCondition = (TextView) view.findViewById(R.id.book_exchange_bookCondition);
         TextView bookPrice = (TextView) view.findViewById(R.id.book_exchange_bookPrice);
-        Course course = mBookExchange.getCourse();
-
-        try {
-            course.fetch();
-        } catch (ParseException e) {
-
-        }
-
-        bookCourse.setText(course.getSubject() + course.getNumber());
+        bookCourse.setText(mCourse.getSubject() + mCourse.getNumber());
         bookTitle.setText(mBookExchange.getTitle());
         int condition = mBookExchange.getCondition();
         if (condition == BookConditions.BAD.getId()) bookCondition.setText(mActivity.getString(BookConditions.BAD.getNameId()));
@@ -51,5 +46,13 @@ public class BookExchangeCard extends PostCard {
         bookPrice.setText(String.valueOf(mBookExchange.getPrice()));
 
         return view;
+    }
+
+    public void refresh() {
+        try {
+            mCourse.fetch();
+        } catch (ParseException e) {
+
+        }
     }
 }

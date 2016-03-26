@@ -47,6 +47,27 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostCardViewHo
         super.onAttachedToRecyclerView(recyclerView);
     }
 
+    public void addPostCard(int position, PostCard postCard) {
+        mPostCards.add(position, postCard);
+        notifyItemInserted(position);
+    }
+
+    public void removePostCard(int position) {
+        mPostCards.remove(position);
+        notifyItemRemoved(position);
+    }
+
+    public void refreshPostCards() {
+        for (PostCard postCard : mPostCards) {
+            postCard.refresh();
+        }
+    }
+
+    public void setPostCards(List<PostCard> postCards) {
+        mPostCards = postCards;
+        notifyDataSetChanged();
+    }
+
     @Override
     public int getItemCount() {
         return mPostCards.size();

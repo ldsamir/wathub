@@ -11,7 +11,7 @@ import webb8.wathub.hub.fragments.HubFragment;
 /**
  * Created by mismayil on 25/02/16.
  */
-public class FavoriteFragment extends HubFragment {
+public class FavoriteFragment extends PostFragment {
 
     public FavoriteFragment() {}
 

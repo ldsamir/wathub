@@ -58,6 +58,7 @@ public class HubActivity extends AppCompatActivity
     private HubFragment mActionBookExchangePostFragment;
     private HubFragment mActionGroupStudyPostFragment;
     private HubFragment mActionCarpoolFragment;
+    private HubFragment mDoneFragment;
 
     /**
      * FAB states
@@ -235,6 +236,11 @@ public class HubActivity extends AppCompatActivity
         if (position == NavItem.FAVORITES.getId()) {
             if (mFavoriteFragment == null) mFavoriteFragment = HubFragment.newInstance(NavItem.FAVORITES.getId());
             fragment = mFavoriteFragment;
+        } else
+
+        if (position == NavItem.DONE.getId()) {
+            if (mDoneFragment == null) mDoneFragment = HubFragment.newInstance(NavItem.DONE.getId());
+            fragment = mDoneFragment;
         }
 
         fragmentManager.beginTransaction()
@@ -278,6 +284,11 @@ public class HubActivity extends AppCompatActivity
 
         if (section == NavItem.FAVORITES.getId()) {
             mTitle = getString(NavItem.FAVORITES.getNameId());
+            mContainerPostFab.setVisibility(View.VISIBLE);
+        } else
+
+        if (section == NavItem.DONE.getId()) {
+            mTitle = getString(NavItem.DONE.getNameId());
             mContainerPostFab.setVisibility(View.VISIBLE);
         } else
 

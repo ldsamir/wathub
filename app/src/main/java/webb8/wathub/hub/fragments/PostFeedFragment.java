@@ -37,7 +37,7 @@ public class PostFeedFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         final View postFeedView = inflater.inflate(R.layout.fragment_post, container, false);
-        mPostContainerView = (RecyclerView) postFeedView;
+        mPostContainerView = (RecyclerView) postFeedView.findViewById(R.id.post_container);
         LinearLayoutManager llm = new LinearLayoutManager(getActivity());
         mPostContainerView.setLayoutManager(llm);
         mPostContainerView.setAdapter(new PostAdapter(new ArrayList<PostCard>()));

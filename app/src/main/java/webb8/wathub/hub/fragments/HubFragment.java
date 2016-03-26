@@ -34,16 +34,14 @@ public class HubFragment extends Fragment {
         if (action == NavItem.ALL_POSTS.getId() ||
             action == NavItem.BOOK_EXCHANGE_POSTS.getId() ||
             action == NavItem.GROUP_STUDY_POSTS.getId() ||
-            action == NavItem.CARPOOL_POSTS.getId()) {
+            action == NavItem.CARPOOL_POSTS.getId() ||
+            action == NavItem.FAVORITES.getId() ||
+            action == NavItem.DONE.getId()) {
             fragment = PostFragment.newInstance(action);
         } else
 
         if (action == NavItem.MESSAGES.getId()) {
             fragment = new MessageFragment();
-        } else
-
-        if (action == NavItem.FAVORITES.getId()) {
-            fragment = new FavoriteFragment();
         } else
 
         if (action == Action.ACTION_POST_GENERAL.getId() ||
