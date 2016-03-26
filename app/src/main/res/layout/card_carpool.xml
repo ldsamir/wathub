@@ -31,16 +31,17 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/card_carpool_from_default_value"
-                    android:labelFor="@id/card_carpool_from"/>
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/card_carpool_from"
                     android:text="Waterloo" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/card_carpool_from_default_value"
+                    android:labelFor="@id/card_carpool_from"/>
 
             </LinearLayout>
 
@@ -48,18 +49,17 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/card_carpool_to_default_value"
-                    android:labelFor="@id/card_carpool_to"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/card_carpool_to"
                     android:text="Toronto"/>
-
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/card_carpool_to_default_value"
+                    android:labelFor="@id/card_carpool_to"/>
             </LinearLayout>
 
 
@@ -75,17 +75,19 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="end">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="price"
+                android:id="@+id/card_carpool_price"/>
+
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/card_carpool_dollarIcon"
                 android:src="@drawable/ic_attach_money_black_24dp"
                 android:layout_toStartOf="@id/card_carpool_price"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="price"
-                android:id="@+id/card_carpool_price"/>
         </RelativeLayout>
 
     </android.support.v7.widget.CardView>
