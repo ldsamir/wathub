@@ -374,4 +374,11 @@ public class HubActivity extends AppCompatActivity
 
         return super.onOptionsItemSelected(item);
     }
+
+    @Override
+    public void onBackPressed() {
+        getFragmentManager().beginTransaction()
+                .replace(R.id.container, HubFragment.newInstance(NavItem.ALL_POSTS.getId()))
+                .commit();
+    }
 }

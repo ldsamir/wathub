@@ -100,4 +100,7 @@
     <string name="card_carpool_from_default_value">From:    </string>
     <string name="card_carpool_to_default_value">To:    </string>
 
+    <string name="info_moved_to_done">Moved to Done</string>
+    <string name="info_moved_to_favorite">Moved to Favorites</string>
+
 </resources>

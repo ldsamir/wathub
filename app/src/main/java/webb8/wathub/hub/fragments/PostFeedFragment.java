@@ -27,11 +27,11 @@ public class PostFeedFragment extends Fragment {
 
     public static PostFeedFragment newInstance(List<PostCard> postCards) {
         PostFeedFragment postFeedFragment = new PostFeedFragment();
-        postFeedFragment.setmPostCards(postCards);
+        postFeedFragment.setPostCards(postCards);
         return postFeedFragment;
     }
 
-    public void setmPostCards(List<PostCard> postCards) { mPostCards = postCards; }
+    public void setPostCards(List<PostCard> postCards) { mPostCards = postCards; }
 
     @Nullable
     @Override
@@ -40,14 +40,14 @@ public class PostFeedFragment extends Fragment {
         mPostContainerView = (RecyclerView) postFeedView.findViewById(R.id.post_container);
         LinearLayoutManager llm = new LinearLayoutManager(getActivity());
         mPostContainerView.setLayoutManager(llm);
-        mPostContainerView.setAdapter(new PostAdapter(new ArrayList<PostCard>()));
+        mPostContainerView.setAdapter(new PostAdapter(getActivity(), new ArrayList<PostCard>()));
         return postFeedView;
     }
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        PostAdapter postAdapter = new PostAdapter(mPostCards);
+        PostAdapter postAdapter = new PostAdapter(getActivity(), mPostCards);
         mPostContainerView.setAdapter(postAdapter);
     }
 }

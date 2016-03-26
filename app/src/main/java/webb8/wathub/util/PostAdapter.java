@@ -1,10 +1,12 @@
 package webb8.wathub.util;
 
+import android.app.Activity;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.parse.FindCallback;
 import com.parse.ParseException;
@@ -23,7 +25,8 @@ import webb8.wathub.models.Post;
  * Created by mismayil on 20/02/16.
  */
 public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostCardViewHolder> {
-    List<PostCard> mPostCards;
+    private List<PostCard> mPostCards;
+    private Activity mActivity;
 
     class PostCardViewHolder extends RecyclerView.ViewHolder {
 
@@ -32,7 +35,8 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostCardViewHo
         }
     }
 
-    public PostAdapter(List<PostCard> postCards) {
+    public PostAdapter(Activity activity, List<PostCard> postCards) {
+        mActivity = activity;
         mPostCards = postCards;
     }
 
@@ -87,6 +91,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostCardViewHo
                         favorite.setUser(ParseUser.getCurrentUser());
                         favorite.setPost(post);
                         favorite.saveInBackground();
+                        Toast.makeText(mActivity, R.string.info_moved_to_favorite, Toast.LENGTH_SHORT).show();
                     }
 
                 }
@@ -107,6 +112,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostCardViewHo
                         done.setUser(ParseUser.getCurrentUser());
                         done.setPost(post);
                         done.saveInBackground();
+                        Toast.makeText(mActivity, R.string.info_moved_to_done, Toast.LENGTH_SHORT).show();
                     }
 
                 }

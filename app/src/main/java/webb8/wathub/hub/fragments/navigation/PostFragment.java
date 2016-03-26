@@ -89,7 +89,7 @@ public class PostFragment extends HubFragment {
         mPostContainerView = (RecyclerView) rootView.findViewById(R.id.post_container);
         LinearLayoutManager llm = new LinearLayoutManager(mHubActivity);
         mPostContainerView.setLayoutManager(llm);
-        mPostAdapter = new PostAdapter(new ArrayList<PostCard>());
+        mPostAdapter = new PostAdapter(mHubActivity, new ArrayList<PostCard>());
         mPostContainerView.setAdapter(mPostAdapter);
         mPostContainerView.addOnItemTouchListener(Util.getSwipeTouchListener(mPostContainerView, mPostAdapter));
         mProgressBar.setVisibility(View.VISIBLE);
