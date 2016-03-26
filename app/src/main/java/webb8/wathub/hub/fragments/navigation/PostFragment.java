@@ -112,6 +112,7 @@ public class PostFragment extends HubFragment {
             @Override
             public void done(List<ParseObject> objects, ParseException e) {
                 if (e == null) {
+                    mPostAdapter.setPostCards(new ArrayList<PostCard>());
                     for (final ParseObject object : objects) {
                         final Post post = Post.getInstance(object);
                         ParseQuery<ParseObject> doneQuery = Done.getQuery();
