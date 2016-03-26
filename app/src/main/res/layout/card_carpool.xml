@@ -27,40 +27,41 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
-            <LinearLayout
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/card_carpool_label_from"
+                    android:text="@string/card_carpool_from_default_value"/>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/card_carpool_from"
-                    android:text="Waterloo" />
+                    android:text="Waterloo"
+                    android:layout_toEndOf="@id/card_carpool_label_from"/>
+
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/card_carpool_from_default_value"
-                    android:labelFor="@id/card_carpool_from"/>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
+                    android:id="@+id/card_carpool_label_to"
+                    android:text="@string/card_carpool_to_default_value"/>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/card_carpool_to"
+                    android:layout_toEndOf="@id/card_carpool_label_to"
                     android:text="Toronto"/>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/card_carpool_to_default_value"
-                    android:labelFor="@id/card_carpool_to"/>
-            </LinearLayout>
+            </RelativeLayout>
 
 
             <TextView

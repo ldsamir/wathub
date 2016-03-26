@@ -108,15 +108,15 @@ public class PostCard {
         Date postDate = mPost.getUpdatedAt();
         LinearLayout innerPostCard = (LinearLayout) view.findViewById(R.id.inner_postCard);
 
-        mPostIconView.setImageResource(R.drawable.ic_lens_black_24dp);
+        mPostIconView.setImageResource(R.drawable.ic_create_white_24dp);
 
         if (postType == PostTypes.BOOK_EXCHANGE.getType()) {
-            mPostIconView.setImageResource(R.drawable.ic_book_black_24dp);
+            mPostIconView.setImageResource(R.drawable.ic_book_white_24dp);
             innerPostCard.addView(mBookExchangeCard.getView());
         }
 
         if (postType == PostTypes.GROUP_STUDY.getType()) {
-            mPostIconView.setImageResource(R.drawable.ic_group_black_24dp);
+            mPostIconView.setImageResource(R.drawable.ic_group_white_24dp);
             innerPostCard.addView(mGroupStudyCard.getView());
         }
 

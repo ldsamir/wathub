@@ -33,7 +33,6 @@ public class ActionPostFragment extends HubFragment {
 
     public static ActionPostFragment newInstance(int action) {
         ActionPostFragment fragment = null;
-
         if (action == Action.ACTION_POST_GENERAL.getId()) {
             fragment = new ActionPostFragment();
         } else

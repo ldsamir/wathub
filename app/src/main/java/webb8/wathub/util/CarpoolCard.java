@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.view.View;
 import android.widget.TextView;
 
+import com.parse.ParseException;
+
 import webb8.wathub.R;
 import webb8.wathub.models.Carpool;
 
@@ -37,6 +39,5 @@ public class CarpoolCard extends PostCard {
 
         return view;
     }
-
 }
 
