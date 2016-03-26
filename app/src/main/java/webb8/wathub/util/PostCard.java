@@ -6,20 +6,13 @@ import android.support.v7.widget.CardView;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.TextView;
 
-import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
-import com.parse.ParseUser;
-
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
-import java.util.Locale;
-import java.util.Objects;
 
 import webb8.wathub.models.BookExchange;
 import webb8.wathub.models.Carpool;
@@ -41,6 +34,7 @@ public class PostCard {
     private Profile mProfile;
     private BookExchangeCard mBookExchangeCard;
     private GroupStudyCard mGroupStudyCard;
+    private CarpoolCard mCarpoolCard;
 
     public PostCard() {}
 
@@ -86,7 +80,14 @@ public class PostCard {
         }
 
         if (mPost.getPostType() == PostTypes.CARPOOL.getType()) {
+            ParseQuery<ParseObject> postQuery = Carpool.getQuery();
+            postQuery.whereEqualTo(Carpool.KEY_POST, mPost);
+            try {
+                List<ParseObject> objects = postQuery.find();
+                mCarpoolCard = new CarpoolCard(mActivity, Carpool.getInstance(objects.get(0)));
+            } catch(ParseException e) {
 
+            }
         }
     }
 
@@ -120,7 +121,8 @@ public class PostCard {
         }
 
         if (postType == PostTypes.CARPOOL.getType()) {
-
+            mPostIconView.setImageResource(R.drawable.ic_directions_car_white_24dp);
+            innerPostCard.addView(mCarpoolCard.getView());
         }
 
         mPostAvatarView.setImageResource(R.drawable.no_avatar);

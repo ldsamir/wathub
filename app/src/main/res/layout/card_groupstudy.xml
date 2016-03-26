@@ -19,7 +19,6 @@
         card_view:cardCornerRadius="4dp"
         card_view:cardElevation="5dp"
         card_view:cardBackgroundColor="@color/switch_thumb_material_light">
-
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"

@@ -97,7 +97,7 @@
 
 
     <string name="card_carpool_arrow">-------></string>
-    <string name="card_carpool_from_default_value">FROM</string>
-    <string name="card_carpool_to_default_value">TO</string>
+    <string name="card_carpool_from_default_value">From:    </string>
+    <string name="card_carpool_to_default_value">To:    </string>
 
 </resources>

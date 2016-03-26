@@ -12,7 +12,7 @@ import webb8.wathub.models.PostTypes;
  * Created by mismayil on 23/02/16.
  */
 public class BookExchangeFragment extends PostFragment {
-
+z
     public BookExchangeFragment() {}
 
     @Override

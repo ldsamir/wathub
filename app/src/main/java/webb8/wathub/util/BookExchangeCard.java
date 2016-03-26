@@ -5,14 +5,11 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.parse.ParseException;
-import com.parse.ParseObject;
-import com.parse.ParseQuery;
 
 import webb8.wathub.R;
 import webb8.wathub.models.BookConditions;
 import webb8.wathub.models.BookExchange;
 import webb8.wathub.models.Course;
-import webb8.wathub.models.Parsable;
 
 /**
  * Created by mismayil on 23/02/16.
