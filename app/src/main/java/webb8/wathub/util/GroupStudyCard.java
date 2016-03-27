@@ -30,7 +30,7 @@ import webb8.wathub.models.Parsable;
  */
 public class GroupStudyCard extends PostCard {
     private GroupStudy mGroupStudy;
-    TextView mGroupName, mGroupCourse, mGroupWhere, mGroupStartTime, mGroupEndTime, mGroupNumJoined, mGroupMaxPeople;
+    TextView mGroupName, mGroupCourse, mGroupWhere, mGroupStartTime, mGroupEndTime, mGroupNumJoined, mGroupMaxPeople, mGroupSeparatorSlash;
     private Button mBtnJoin;
     private JSONArray mStudentsJoined;          // to avoid too many requests
 
@@ -69,7 +69,6 @@ public class GroupStudyCard extends PostCard {
                     }
                 }
                 catch (org.json.JSONException e){
-                    break;
                 }
             }
         }
@@ -143,18 +142,18 @@ public class GroupStudyCard extends PostCard {
                     mListOfJoinedStudents.add(query.get(mStudentsJoined.getJSONObject(i).get(Parsable.KEY_OBJECT_ID).toString()).getUsername());
                 }
                 catch (org.json.JSONException e){
-                    mListOfJoinedStudents.add("an unknown student".toString());
-                    Toast.makeText(mActivity.getApplicationContext(), "EXCEPTION OCCURED", Toast.LENGTH_SHORT).show();
+                    /*mListOfJoinedStudents.add("an unknown student".toString());
+                    Toast.makeText(mActivity.getApplicationContext(), "EXCEPTION OCCURED", Toast.LENGTH_SHORT).show();*/
                 } catch (ParseException e) {
-                    mListOfJoinedStudents.add("an unknown student".toString());
-                    Toast.makeText(mActivity.getApplicationContext(), "EXCEPTION OCCURED", Toast.LENGTH_SHORT).show();
+                    /*mListOfJoinedStudents.add("an unknown student".toString());
+                    Toast.makeText(mActivity.getApplicationContext(), "EXCEPTION OCCURED", Toast.LENGTH_SHORT).show();*/
                 }
             }
         }
         final CharSequence[] charListOfStudents = mListOfJoinedStudents.toArray(new CharSequence[mListOfJoinedStudents.size()]);
         builder.setItems(charListOfStudents, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int item) {
-                Toast.makeText(mActivity.getApplicationContext(), "TODO:" + "go to " + charListOfStudents[item] + "'s profile...", Toast.LENGTH_SHORT).show();
+                Toast.makeText(mActivity.getApplicationContext(), "TODO: " + "go to " + charListOfStudents[item] + "'s profile...", Toast.LENGTH_SHORT).show();
             }
         });
         AlertDialog alert = builder.create();
@@ -173,17 +172,38 @@ public class GroupStudyCard extends PostCard {
         mGroupEndTime = (TextView) view.findViewById(R.id.group_study_end_time);
         mGroupNumJoined = (TextView) view.findViewById(R.id.group_study_num_joined);
         mGroupMaxPeople = (TextView) view.findViewById(R.id.group_study_max_people);
+        mGroupSeparatorSlash = (TextView) view.findViewById(R.id.group_study_separator_slash);
         mBtnJoin = (Button) view.findViewById(R.id.group_study_btn_join);
+
         mBtnJoin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                switch (v.getId()){
-                    case R.id.group_study_btn_join:
-                        joinButtonAction();
-                        joinedStudentsButtonAction ();
-                        break;
-                    default:
-                        break;
+                if (v.getId() == R.id.group_study_btn_join) {
+                    joinButtonAction();
+                }
+            }
+        });
+        mGroupNumJoined.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                if (v.getId() == R.id.group_study_num_joined){
+                    joinedStudentsButtonAction();
+                }
+            }
+        });
+        mGroupMaxPeople.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                if (v.getId() == R.id.group_study_max_people){
+                    joinedStudentsButtonAction();
+                }
+            }
+        });
+        mGroupSeparatorSlash.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v){
+                if (v.getId() == R.id.group_study_separator_slash){
+                    joinedStudentsButtonAction();
                 }
             }
         });

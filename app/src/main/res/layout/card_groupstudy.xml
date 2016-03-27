@@ -121,20 +121,23 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/group_study_num_joined"
-                    android:text="hello"/>
+                    android:text="hello"
+                    android:clickable="true"/>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/group_study_separator_slash"
                     android:layout_toEndOf="@id/group_study_num_joined"
-                    android:text="/"/>
+                    android:text="/"
+                    android:clickable="true"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/group_study_max_people"
                     android:layout_toEndOf="@id/group_study_separator_slash"
-                    android:text="hello"/>
+                    android:text="hello"
+                    android:clickable="true"/>
                 <Button
                     style="@style/Widget.AppCompat.Button.Borderless"
                     android:layout_width="60dp"
