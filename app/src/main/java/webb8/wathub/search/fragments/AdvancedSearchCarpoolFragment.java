@@ -11,10 +11,28 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
 
+import com.parse.FindCallback;
+import com.parse.ParseException;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
+
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Collection;
+import java.util.Date;
+import java.util.List;
+import java.util.Locale;
+
 import webb8.wathub.R;
+import webb8.wathub.hub.fragments.PostFeedFragment;
+import webb8.wathub.models.Carpool;
+import webb8.wathub.models.Post;
 import webb8.wathub.util.NavItem;
+import webb8.wathub.util.PostCard;
 
 /**
  * Created by mismayil on 3/24/16.
@@ -29,6 +47,7 @@ public class AdvancedSearchCarpoolFragment extends AdvancedSearchFragment {
     private EditText mCarpoolMaxPassengerView;
     private EditText mCarpoolMinPriceView;
     private EditText mCarpoolMaxPriceView;
+    private RelativeLayout mProgressBar;
 
     @Nullable
     @Override
@@ -38,6 +57,7 @@ public class AdvancedSearchCarpoolFragment extends AdvancedSearchFragment {
         mActionSearchContainer = (FrameLayout) actionSearchView.findViewById(R.id.advanced_search_container);
 
         mActionSearchContainer.addView(actionSearchCarpoolView);
+        mProgressBar = (RelativeLayout) actionSearchView.findViewById(R.id.progress_bar);
 
         mContentView = (EditText) actionSearchView.findViewById(R.id.edit_search_content);
         mSearchTypeView = (Spinner) actionSearchView.findViewById(R.id.select_search_type);
@@ -88,6 +108,91 @@ public class AdvancedSearchCarpoolFragment extends AdvancedSearchFragment {
         mSearchBtnView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // Should start while clicking the search button:
+                mProgressBar.setVisibility(View.VISIBLE);
+
+                // Input data and verification of the inputs:
+                String From = mCarpoolFromView.getText().toString();
+                Boolean CheckFrom = !(From.equals(""));
+                String To = mCarpoolToView.getText().toString();
+                Boolean CheckTo = !(To.equals(""));
+                // Reading date and time information in specific format:
+                SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.CANADA);
+                Calendar When = Calendar.getInstance();
+                String WhenStr = mCarpoolWhenView.getText().toString();
+                Boolean CheckWhen = !(WhenStr.equals(""));
+                if (CheckWhen) {
+                    try {
+                        When.setTime(format.parse(WhenStr));
+                    } catch (java.text.ParseException e) {
+                        // Currently, we do not have anything to do here;
+                        // I hope, we will never catch any exception here...
+                    }
+                }
+                String MinPassenger = mCarpoolMinPassengerView.getText().toString();
+                // For the case below we are going to ignore MinPassenger in the search:
+                Boolean CheckMinPass = !(MinPassenger.equals("") || Integer.parseInt(MinPassenger) < 0);
+                String MaxPassenger = mCarpoolMaxPassengerView.getText().toString();
+                // For the case below we are going to ignore MaxPassenger in the search:
+                Boolean CheckMaxPass = !(MaxPassenger.equals("") || Integer.parseInt(MaxPassenger) < 0);
+                String MinPrice = mCarpoolMinPriceView.getText().toString();
+                // For the case below we are going to ignore MinPrice in the search:
+                Boolean CheckMinPrice = !(MinPrice.equals("") || Integer.parseInt(MinPrice) < 0);
+                String MaxPrice = mCarpoolMaxPriceView.getText().toString();
+                // For the case below we are going to ignore MaxPrice in the search:
+                Boolean CheckMaxPrice = !(MaxPrice.equals("") || Integer.parseInt(MaxPrice) < 0);
+
+                // Searching through Carpool posts
+                // by taking each input into consideration:
+                ParseQuery<ParseObject> CarpoolPosts = ParseQuery.getQuery("Carpool");
+                final Collection<String> CarpoolPostPointers = new ArrayList<String>();
+                if (CheckFrom) CarpoolPosts.whereContains("from", From);
+                if (CheckTo) CarpoolPosts.whereContains("to", To);
+                if (CheckWhen) CarpoolPosts.whereEqualTo("when", When.getTime());
+                if (CheckMinPass) CarpoolPosts.whereGreaterThanOrEqualTo("maxPassengers", Integer.parseInt(MinPassenger));
+                if (CheckMaxPass) CarpoolPosts.whereLessThanOrEqualTo("maxPassengers", Integer.parseInt(MaxPassenger));
+                if (CheckMinPrice) CarpoolPosts.whereGreaterThanOrEqualTo("price", Integer.parseInt(MinPrice));
+                if (CheckMaxPrice) CarpoolPosts.whereLessThanOrEqualTo("price", Integer.parseInt(MaxPrice));
+                // Getting Post IDs of the found Carpool Posts:
+                CarpoolPosts.findInBackground(new FindCallback<ParseObject>() {
+                    @Override
+                    public void done(List<ParseObject> objects, ParseException e) {
+                        if (e == null) {
+                            for (ParseObject object : objects) {
+                                CarpoolPostPointers.add(object.get("post").toString());
+                            }
+                        }
+                        // We do not need else case...
+                    }
+                });
+
+                // Main search:
+                ParseQuery<ParseObject> postQuery = ParseQuery.getQuery("Post");
+                postQuery.whereContainsAll("objectId", CarpoolPostPointers);
+
+                // Post-search-process:
+                postQuery.findInBackground(new FindCallback<ParseObject>() {
+                    @Override
+                    public void done(List<ParseObject> objects, ParseException e) {
+                        List<PostCard> postCards = new ArrayList<>();
+
+                        for (ParseObject object : objects) {
+                            Post post = Post.getInstance(object);
+                            postCards.add(new PostCard(getActivity(), post));
+                        }
+
+                        PostFeedFragment postFeedFragment = PostFeedFragment.newInstance(postCards);
+                        mProgressBar.setVisibility(View.GONE);
+
+                        FragmentManager fragmentManager = getFragmentManager();
+
+                        fragmentManager.beginTransaction()
+                                .replace(R.id.search_container, postFeedFragment)
+                                .commit();
+
+                    }
+                });
+
             }
         });
 

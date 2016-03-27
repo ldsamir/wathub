@@ -1,5 +1,6 @@
 package webb8.wathub.search.fragments;
 
+import android.app.Activity;
 import android.app.FragmentManager;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -11,10 +12,23 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
 
+import com.parse.FindCallback;
+import com.parse.ParseException;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
 import webb8.wathub.R;
+import webb8.wathub.hub.fragments.PostFeedFragment;
+import webb8.wathub.models.Post;
 import webb8.wathub.util.NavItem;
+import webb8.wathub.util.PostCard;
 import webb8.wathub.util.Util;
 
 /**
@@ -29,6 +43,7 @@ public class AdvancedSearchBookExchangeFragment extends AdvancedSearchFragment {
     private EditText mBookMinPriceView;
     private EditText mBookMaxPriceView;
     private Spinner mBookConditionView;
+    private RelativeLayout mProgressBar;
 
     @Nullable
     @Override
@@ -37,6 +52,7 @@ public class AdvancedSearchBookExchangeFragment extends AdvancedSearchFragment {
         final View actionSearchBookExchangeView = inflater.inflate(R.layout.fragment_advanced_search_bookexchange, container, false);
         mActionSearchContainer = (FrameLayout) actionSearchView.findViewById(R.id.advanced_search_container);
 
+        mProgressBar = (RelativeLayout) actionSearchView.findViewById(R.id.progress_bar);
         mActionSearchContainer.addView(actionSearchBookExchangeView);
 
         mContentView = (EditText) actionSearchView.findViewById(R.id.edit_search_content);
@@ -76,7 +92,7 @@ public class AdvancedSearchBookExchangeFragment extends AdvancedSearchFragment {
                     fragmentManager.beginTransaction()
                             .replace(R.id.search_fragment_container, new AdvancedSearchFragment())
                             .commit();
-                } else  if (parent.getItemAtPosition(position).toString().equalsIgnoreCase(getString(NavItem.GROUP_STUDY_POSTS.getNameId()))) {
+                } else if (parent.getItemAtPosition(position).toString().equalsIgnoreCase(getString(NavItem.GROUP_STUDY_POSTS.getNameId()))) {
                     fragmentManager.beginTransaction()
                             .replace(R.id.search_fragment_container, new AdvancedSearchGroupStudyFragment())
                             .commit();
@@ -115,9 +131,104 @@ public class AdvancedSearchBookExchangeFragment extends AdvancedSearchFragment {
         mSearchBtnView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // Should start while clicking the search button:
+                mProgressBar.setVisibility(View.VISIBLE);
+
+                // Input data and verification of the inputs:
+                String Title = mBookTitleView.getText().toString();
+                Boolean CheckTitle = !(Title.equals(""));
+                String CourseSubject = mBookCourseSubjectView.getSelectedItem().toString();
+                Boolean CheckCourseSubject = !(CourseSubject.equals(""));
+                String CourseNumber = mBookCourseNumberView.getSelectedItem().toString();
+                Boolean CheckCourseNumber = !(CourseNumber.equals(""));
+                String MinPrice = mBookMinPriceView.getText().toString();
+                // For the case below we are going to ignore MinPrice in the search:
+                Boolean CheckMinPrice = !(MinPrice.equals("") || Integer.parseInt(MinPrice) < 0);
+                String MaxPrice = mBookMaxPriceView.getText().toString();
+                // For the case below we are going to ignore MaxPrice in the search:
+                Boolean CheckMaxPrice = !(MaxPrice.equals("") || Integer.parseInt(MaxPrice) < 0);
+                String Condition = mBookConditionView.getSelectedItem().toString();
+                Boolean CheckCondition = !(Condition.equals(""));
+
+                /* First, we have to search through the courses
+                 * to obtain the course IDs for being able to use them
+                 * in the main search:
+                 */
+                ParseQuery<ParseObject> courses = ParseQuery.getQuery("Course");
+                final Collection<String> courseObjectIds = new ArrayList<String>();
+                if (CheckCourseSubject) {
+                    courses.whereEqualTo("subject", CourseSubject);
+                    // Since we can select the number after selecting the subject:
+                    if (CheckCourseNumber) courses.whereEqualTo("number", CourseNumber);
+                    courses.findInBackground(new FindCallback<ParseObject>() {
+                        public void done(List<ParseObject> objects, ParseException e) {
+                            if (e == null) {
+                                for (ParseObject object : objects) {
+                                    courseObjectIds.add(object.get("objectId").toString());
+                                }
+                            }
+                            // We do not need else case...
+                        }
+                    });
+                }
+
+                // Searching through BookExchange posts
+                // by taking each input into consideration:
+                ParseQuery<ParseObject> BookExchangePosts = ParseQuery.getQuery("BookExchange");
+                final Collection<String> BookExchangePostPointers = new ArrayList<String>();
+                if (CheckTitle) BookExchangePosts.whereContains("title", Title);
+                if (CheckCourseSubject)
+                    BookExchangePosts.whereContainsAll("course", courseObjectIds);
+                if (CheckMinPrice)
+                    BookExchangePosts.whereGreaterThanOrEqualTo("price", Integer.parseInt(MinPrice));
+                if (CheckMaxPrice)
+                    BookExchangePosts.whereLessThanOrEqualTo("price", Integer.parseInt(MaxPrice));
+                if (CheckCondition)
+                    BookExchangePosts.whereEqualTo("condition", Integer.parseInt(Condition));
+                // Getting Post IDs of the found BookExchange Posts:
+                BookExchangePosts.findInBackground(new FindCallback<ParseObject>() {
+                    @Override
+                    public void done(List<ParseObject> objects, ParseException e) {
+                        if (e == null) {
+                            for (ParseObject object : objects) {
+                                BookExchangePostPointers.add(object.get("post").toString());
+                            }
+                        }
+                        // We do not need else case...
+                    }
+                });
+
+                // Main search:
+                ParseQuery<ParseObject> postQuery = ParseQuery.getQuery("Post");
+                postQuery.whereContainsAll("objectId", BookExchangePostPointers);
+
+                // Post-search-process:
+                postQuery.findInBackground(new FindCallback<ParseObject>() {
+                    @Override
+                    public void done(List<ParseObject> objects, ParseException e) {
+                        List<PostCard> postCards = new ArrayList<>();
+
+                        for (ParseObject object : objects) {
+                            Post post = Post.getInstance(object);
+                            postCards.add(new PostCard(getActivity(), post));
+                        }
+
+                        PostFeedFragment postFeedFragment = PostFeedFragment.newInstance(postCards);
+
+                        mProgressBar.setVisibility(View.GONE);
+
+                        FragmentManager fragmentManager = getFragmentManager();
+
+                        fragmentManager.beginTransaction()
+                                .replace(R.id.search_container, postFeedFragment)
+                                .commit();
+
+                    }
+                });
             }
         });
 
         return actionSearchView;
     }
+
 }
