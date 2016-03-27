@@ -3,6 +3,14 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/progress_bar"
+        android:visibility="gone">
+        <include layout="@layout/progress_bar" />
+    </RelativeLayout>
+
     <EditText
         android:id="@+id/edit_search_content"
         android:layout_width="match_parent"
