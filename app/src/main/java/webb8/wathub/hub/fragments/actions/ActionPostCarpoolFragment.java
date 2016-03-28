@@ -140,7 +140,7 @@ public class ActionPostCarpoolFragment extends ActionPostFragment {
         public void onDateSet(DatePicker view, int year, int month, int day) {
             EditText mWhenView = (EditText) mHubActivity.findViewById(R.id.edit_carpool_when);
             mWhenView.setText(new StringBuilder().append(day).append("/")
-                    .append(month).append("/").append(year));
+                    .append(month+1).append("/").append(year));
         }
     }
 

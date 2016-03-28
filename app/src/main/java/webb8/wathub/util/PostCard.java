@@ -2,6 +2,7 @@ package webb8.wathub.util;
 
 import android.app.Activity;
 import webb8.wathub.R;
+
 import android.support.v7.widget.CardView;
 import android.view.View;
 import android.widget.ImageView;
@@ -111,12 +112,12 @@ public class PostCard {
         mPostIconView.setImageResource(R.drawable.ic_create_white_24dp);
 
         if (postType == PostTypes.BOOK_EXCHANGE.getType()) {
-            mPostIconView.setImageResource(R.drawable.ic_book_white_24dp);
+            mPostIconView.setImageResource(R.drawable.ic_book_black_24dp);
             innerPostCard.addView(mBookExchangeCard.getView());
         }
 
         if (postType == PostTypes.GROUP_STUDY.getType()) {
-            mPostIconView.setImageResource(R.drawable.ic_group_white_24dp);
+            mPostIconView.setImageResource(R.drawable.ic_group_black_24dp);
             innerPostCard.addView(mGroupStudyCard.getView());
         }
 
@@ -126,7 +127,9 @@ public class PostCard {
         }
 
         mPostAvatarView.setImageResource(R.drawable.no_avatar);
-        if (mProfile != null) mPostUserView.setText(mProfile.getFirstName() + " " + mProfile.getLastName());
+        if (mProfile != null){
+            mPostUserView.setText(mProfile.getFirstName() + " " + mProfile.getLastName());
+        }
 //        SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy HH:mm a", Locale.CANADA);
 //        mPostDateView.setText(format.format(postDate));
         mPostContentView.setText(content);

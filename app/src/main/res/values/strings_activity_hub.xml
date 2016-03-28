@@ -103,4 +103,5 @@
     <string name="info_moved_to_done">Moved to Done</string>
     <string name="info_moved_to_favorite">Moved to Favorites</string>
 
+    <string name="card_groupstudy_join_button">Join</string>
 </resources>

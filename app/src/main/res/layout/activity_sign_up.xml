@@ -68,10 +68,10 @@
         android:text="@string/action_sign_up"
         android:textSize="8pt"
         android:textStyle="bold"
-        android:textColor="@color/black"
+        android:textColor="#424242"
         android:paddingEnd="12dp"
         android:paddingStart="12dp"
         android:layout_gravity="center_horizontal"
-        android:background="@color/uw_yellow"
+        android:background="@color/yellow_300"
         />
 </LinearLayout>

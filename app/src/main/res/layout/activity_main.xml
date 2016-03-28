@@ -78,7 +78,7 @@
         android:layout_gravity="center_horizontal|top"
         android:layout_marginTop="120dp"
         android:layout_marginLeft="60dp"
-
+        android:alpha="223"
         android:textColor="@color/black"
         android:typeface="sans"/>
 
@@ -90,7 +90,8 @@
         android:layout_marginTop="195dp"
         android:layout_marginLeft="120dp"
         android:textColor="@color/black"
-        android:textStyle="bold"/>
+        android:textStyle="bold"
+        android:alpha="149"/>
 
     <ImageView
         android:layout_width="100dp"
