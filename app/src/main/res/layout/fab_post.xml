@@ -12,6 +12,7 @@
         android:layout_margin="16dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
+        android:background="@color/accent"
         android:src="@drawable/ic_add_white_24dp"/>
 
     <android.support.design.widget.FloatingActionButton
@@ -23,6 +24,8 @@
         android:layout_alignParentEnd="true"
         android:layout_above="@id/fab_post"
         app:fabSize="mini"
+        android:background="@color/accent"
+
         android:src="@drawable/ic_create_white_24dp"
         android:visibility="gone"/>
 
@@ -35,6 +38,8 @@
         android:layout_alignParentEnd="true"
         android:layout_above="@id/fab_general_post"
         app:fabSize="mini"
+        android:background="@color/accent"
+
         android:src="@drawable/ic_book_white_24dp"
         android:visibility="gone" />
 
@@ -47,6 +52,8 @@
         android:layout_alignParentEnd="true"
         android:layout_above="@id/fab_book_exchange"
         app:fabSize="mini"
+        android:background="@color/accent"
+
         android:src="@drawable/ic_group_white_24dp"
         android:visibility="gone"/>
 
@@ -59,6 +66,7 @@
         android:layout_alignParentEnd="true"
         android:layout_above="@id/fab_group_study"
         app:fabSize="mini"
+        android:background="@color/accent"
         android:src="@drawable/ic_directions_car_white_24dp"
         android:visibility="gone"/>
 

@@ -92,7 +92,7 @@ public class GroupStudyCard extends PostCard {
 
             // update the text from "Joined" to "Join"
             mBtnJoin.setText(String.valueOf("Join"));
-            mBtnJoin.setBackgroundColor(Color.WHITE);
+            mBtnJoin.setBackgroundColor(Color.TRANSPARENT);
         }
 
         // if the student has not beed added to the list AND there is an available seat,then add
@@ -126,7 +126,7 @@ public class GroupStudyCard extends PostCard {
         }
         else {
             mBtnJoin.setText(String.valueOf("Join"));
-            mBtnJoin.setBackgroundColor(Color.WHITE);
+            mBtnJoin.setBackgroundColor(Color.TRANSPARENT);
         }
     }
 
@@ -226,7 +226,16 @@ public class GroupStudyCard extends PostCard {
         mGroupEndTime.setText(endTime);
         mGroupMaxPeople.setText(String.valueOf(mGroupStudy.getMaxPeople()));
 
-        mStudentsJoinedUpdate ();
+        if (haveJoined()){
+            mBtnJoin.setText(String.valueOf("Joined"));
+            mBtnJoin.setBackgroundColor(Color.GREEN);
+        }
+        else {
+            mBtnJoin.setText(String.valueOf("Join"));
+            mBtnJoin.setBackgroundColor(Color.TRANSPARENT);
+        }
+
+        mStudentsJoinedUpdate();
 
         return view;
     }

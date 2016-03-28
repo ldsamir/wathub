@@ -4,8 +4,6 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginStart="@dimen/activity_horizontal_margin"
-    android:layout_marginEnd="@dimen/activity_horizontal_margin"
     android:layout_marginTop="@dimen/activity_vertical_margin"
     android:layout_marginBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/padding"
@@ -15,11 +13,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_margin="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="3dp"
         android:id="@+id/post_card"
-        card_view:cardCornerRadius="4dp"
         card_view:cardElevation="2dp"
-        card_view:cardBackgroundColor="@color/uw_yellow">
+        card_view:cardBackgroundColor="@color/yellow_300">
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -44,7 +42,8 @@
                 android:layout_toEndOf="@id/post_avatar"
                 android:layout_alignParentTop="true"
                 android:textStyle="bold"
-                android:textSize="17sp"/>
+                android:textSize="17sp"
+                android:alpha="222"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -58,7 +57,8 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/post_content"
                 android:layout_below="@id/post_user"
-                android:layout_toEndOf="@id/post_avatar"/>
+                android:layout_toEndOf="@id/post_avatar"
+                android:alpha="138"/>
 
             <ImageView
                 android:layout_width="20dp"

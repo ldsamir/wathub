@@ -44,13 +44,13 @@
         android:text="@string/action_sign_in"
         android:textSize="8pt"
         android:textStyle="bold"
-        android:textColor="@color/black"
+        android:textColor="#424242"
         android:paddingEnd="12dp"
         android:paddingStart="12dp"
         android:layout_below="@+id/forgot_password_button"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="5dp"
-        android:background="@color/uw_yellow"/>
+        android:background="@color/yellow_300" />
 
     <TextView
         style="@style/AppTheme"

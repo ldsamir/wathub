@@ -241,7 +241,7 @@ public class ActionPostGroupStudyFragment extends ActionPostFragment {
         public void onDateSet(DatePicker view, int year, int month, int day) {
             EditText mDateView = (EditText) mHubActivity.findViewById(R.id.edit_group_start_when);
             mDateView.setText(new StringBuilder().append(day).append("/")
-                    .append(month).append("/").append(year));
+                    .append(month+1).append("/").append(year));
         }
     }
 
