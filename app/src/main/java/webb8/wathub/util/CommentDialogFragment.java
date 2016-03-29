@@ -23,6 +23,7 @@ import java.util.List;
 
 import webb8.wathub.R;
 import webb8.wathub.models.Comment;
+import webb8.wathub.models.Parsable;
 
 /**
  * Created by mismayil on 3/28/16.
@@ -57,6 +58,7 @@ public class CommentDialogFragment extends DialogFragment {
 
         ParseQuery<ParseObject> commentQuery = Comment.getQuery();
         commentQuery.whereEqualTo(Comment.KEY_POST, mPostCard.getPost());
+        commentQuery.orderByDescending(Parsable.KEY_UPDATED_AT);
         commentQuery.findInBackground(new FindCallback<ParseObject>() {
             @Override
             public void done(List<ParseObject> objects, ParseException e) {

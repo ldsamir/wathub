@@ -9,7 +9,7 @@ import webb8.wathub.util.Action;
 import webb8.wathub.util.NavItem;
 import webb8.wathub.hub.HubActivity;
 import webb8.wathub.hub.fragments.actions.ActionPostFragment;
-import webb8.wathub.hub.fragments.navigation.MessageFragment;
+import webb8.wathub.hub.fragments.navigation.MyPostFragment;
 import webb8.wathub.hub.fragments.navigation.PostFragment;
 import webb8.wathub.hub.fragments.navigation.ProfileFragment;
 
@@ -39,8 +39,8 @@ public class HubFragment extends Fragment {
             fragment = PostFragment.newInstance(action);
         } else
 
-        if (action == NavItem.MESSAGES.getId()) {
-            fragment = new MessageFragment();
+        if (action == NavItem.MY_POSTS.getId()) {
+            fragment = new MyPostFragment();
         } else
 
         if (action == Action.ACTION_POST_GENERAL.getId() ||

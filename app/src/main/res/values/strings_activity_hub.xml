@@ -3,7 +3,7 @@
     <string name="title_activity_post">WAThub</string>
 
     <string name="title_profile">Profile</string>
-    <string name="title_messaging">Messages</string>
+    <string name="title_my_posts">My Posts</string>
     <string name="title_all_posts">All Posts</string>
     <string name="title_book_exchange_posts">Book Exchange</string>
     <string name="title_carpool_posts">Carpool</string>

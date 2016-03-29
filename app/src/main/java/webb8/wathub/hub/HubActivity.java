@@ -51,7 +51,7 @@ public class HubActivity extends AppCompatActivity
      */
     private HubFragment mPostFragment;
     private HubFragment mProfileFragment;
-    private HubFragment mMessageFragment;
+    private HubFragment mMyPostFragment;
     private HubFragment mBookExchangeFragment;
     private HubFragment mGroupStudyFragment;
     private HubFragment mCarpoolFragment;
@@ -210,9 +210,9 @@ public class HubActivity extends AppCompatActivity
             fragment = mProfileFragment;
         } else
 
-        if (position == NavItem.MESSAGES.getId()) {
-            if (mMessageFragment == null) mMessageFragment = HubFragment.newInstance(NavItem.MESSAGES.getId());
-            fragment = mMessageFragment;
+        if (position == NavItem.MY_POSTS.getId()) {
+            if (mMyPostFragment == null) mMyPostFragment = HubFragment.newInstance(NavItem.MY_POSTS.getId());
+            fragment = mMyPostFragment;
         } else
 
         if (position == NavItem.ALL_POSTS.getId()) {
@@ -259,8 +259,8 @@ public class HubActivity extends AppCompatActivity
             mContainerPostFab.setVisibility(View.GONE);
         } else
 
-        if (section == NavItem.MESSAGES.getId()) {
-            mTitle = getString(NavItem.MESSAGES.getNameId());
+        if (section == NavItem.MY_POSTS.getId()) {
+            mTitle = getString(NavItem.MY_POSTS.getNameId());
             mContainerPostFab.setVisibility(View.GONE);
         } else
 

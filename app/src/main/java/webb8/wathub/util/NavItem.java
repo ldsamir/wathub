@@ -7,7 +7,7 @@ import webb8.wathub.R;
  */
 public enum NavItem implements Selectable {
     PROFILE(0, R.string.title_profile),
-    MESSAGES(1, R.string.title_messaging),
+    MY_POSTS(1, R.string.title_my_posts),
     ALL_POSTS(2, R.string.title_all_posts),
     BOOK_EXCHANGE_POSTS(3, R.string.title_book_exchange_posts),
     CARPOOL_POSTS(4, R.string.title_carpool_posts),
