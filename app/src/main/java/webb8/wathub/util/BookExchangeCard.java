@@ -26,8 +26,7 @@ public class BookExchangeCard extends PostCard {
         refresh();
     }
 
-    @Override
-    public View getView() {
+    public View getView(View postCardView) {
         View view = mActivity.getLayoutInflater().inflate(R.layout.card_bookexchange, null, false);
         TextView bookCourse = (TextView) view.findViewById(R.id.book_exchange_course);
         TextView bookTitle = (TextView) view.findViewById(R.id.book_exchange_bookTitle);

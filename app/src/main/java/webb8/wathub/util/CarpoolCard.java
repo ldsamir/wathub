@@ -4,8 +4,6 @@ import android.app.Activity;
 import android.view.View;
 import android.widget.TextView;
 
-import com.parse.ParseException;
-
 import webb8.wathub.R;
 import webb8.wathub.models.Carpool;
 
@@ -23,8 +21,7 @@ public class CarpoolCard extends PostCard {
         mCarpool = carpool;
     }
 
-    @Override
-    public View getView() {
+    public View getView(View postCardView) {
         View view = mActivity.getLayoutInflater().inflate(R.layout.card_carpool, null, false);
         TextView carpoolFrom = (TextView) view.findViewById(R.id.card_carpool_from);
         TextView carpoolTo = (TextView) view.findViewById(R.id.card_carpool_to);
@@ -38,6 +35,10 @@ public class CarpoolCard extends PostCard {
         carpoolPrice.setText(String.valueOf(mCarpool.getPrice()));
 
         return view;
+    }
+
+    public void refresh() {
+
     }
 }
 

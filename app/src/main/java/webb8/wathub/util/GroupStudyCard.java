@@ -1,14 +1,11 @@
 package webb8.wathub.util;
 
 import android.app.Activity;
-import android.graphics.Color;
 import android.view.View;
-import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.parse.GetCallback;
 import com.parse.ParseException;
-import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
@@ -30,8 +27,7 @@ import webb8.wathub.models.Parsable;
  */
 public class GroupStudyCard extends PostCard {
     private GroupStudy mGroupStudy;
-    TextView mGroupName, mGroupCourse, mGroupWhere, mGroupStartTime, mGroupEndTime, mGroupNumJoined, mGroupMaxPeople, mGroupSeparatorSlash;
-    private Button mBtnJoin;
+    private TextView mGroupName, mGroupCourse, mGroupWhere, mGroupStartTime, mGroupEndTime, mGroupNumJoined, mGroupMaxPeople;
     private JSONArray mStudentsJoined;          // to avoid too many requests
 
 
@@ -91,8 +87,7 @@ public class GroupStudyCard extends PostCard {
             mGroupNumJoined.setText(String.valueOf(mStudentsJoined == null ? 0 : "" + mStudentsJoined.length()));
 
             // update the text from "Joined" to "Join"
-            mBtnJoin.setText(String.valueOf("Join"));
-            mBtnJoin.setBackgroundColor(Color.TRANSPARENT);
+            mPostActionJoinView.setText(mActivity.getString(R.string.action_join));
         }
 
         // if the student has not beed added to the list AND there is an available seat,then add
@@ -109,11 +104,10 @@ public class GroupStudyCard extends PostCard {
             mGroupNumJoined.setText(String.valueOf(mStudentsJoined == null ? 0 : "" + mStudentsJoined.length()));
 
             // update the text from "Join" to "Joined"
-            mBtnJoin.setText(String.valueOf("Joined"));
-            mBtnJoin.setBackgroundColor(Color.GREEN);
+            mPostActionJoinView.setText(mActivity.getString(R.string.action_joined));
         }
         else {
-            Toast.makeText(mActivity.getApplicationContext(), "Sorry, this group is full.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(mActivity.getApplicationContext(), mActivity.getString(R.string.warning_group_full), Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -121,19 +115,17 @@ public class GroupStudyCard extends PostCard {
         mStudentsJoined = mGroupStudy.getStudents();
         mGroupNumJoined.setText(String.valueOf(mStudentsJoined == null ? 0 : "" + mStudentsJoined.length()));
         if (haveJoined()){
-            mBtnJoin.setText(String.valueOf("Joined"));
-            mBtnJoin.setBackgroundColor(Color.GREEN);
+            mPostActionJoinView.setText(mActivity.getString(R.string.action_joined));
         }
         else {
-            mBtnJoin.setText(String.valueOf("Join"));
-            mBtnJoin.setBackgroundColor(Color.TRANSPARENT);
+            mPostActionJoinView.setText(mActivity.getString(R.string.action_join));
         }
     }
 
     private void joinedStudentsButtonAction (){
         mStudentsJoinedUpdate();
         AlertDialog.Builder builder = new AlertDialog.Builder(mActivity);
-        builder.setTitle("Users joined the activity");
+        builder.setTitle(mActivity.getString(R.string.title_users_joined));
         final List<String> mListOfJoinedStudents = new ArrayList<String>();
         if (mStudentsJoined != null) {
             for (int i = 0; i < mStudentsJoined.length(); i++) {
@@ -162,49 +154,32 @@ public class GroupStudyCard extends PostCard {
         alert.show();
     }
 
-    @Override
-    public View getView() {
+    public View getView(View postCardView) {
         View view = mActivity.getLayoutInflater().inflate(R.layout.card_groupstudy, null, false);
         mGroupName = (TextView) view.findViewById(R.id.group_study_group_name);
         mGroupCourse = (TextView) view.findViewById(R.id.group_study_course);
         mGroupWhere = (TextView) view.findViewById(R.id.group_study_where);
         mGroupStartTime = (TextView) view.findViewById(R.id.group_study_start_time);
         mGroupEndTime = (TextView) view.findViewById(R.id.group_study_end_time);
-        mGroupNumJoined = (TextView) view.findViewById(R.id.group_study_num_joined);
-        mGroupMaxPeople = (TextView) view.findViewById(R.id.group_study_max_people);
-        mGroupSeparatorSlash = (TextView) view.findViewById(R.id.group_study_separator_slash);
-        mBtnJoin = (Button) view.findViewById(R.id.group_study_btn_join);
+        mPostActionJoinBarView = (LinearLayout) postCardView.findViewById(R.id.post_action_bar_join);
+        mPostActionJoinNumBarView = (LinearLayout) postCardView.findViewById(R.id.post_action_join_num_bar);
+        mPostActionJoinView = (TextView) postCardView.findViewById(R.id.post_action_join);
+        mGroupNumJoined = (TextView) postCardView.findViewById(R.id.post_action_join_num);
+        mGroupMaxPeople = (TextView) postCardView.findViewById(R.id.post_action_join_max_num);
 
-        mBtnJoin.setOnClickListener(new View.OnClickListener() {
+        mPostActionJoinBarView.setVisibility(View.VISIBLE);
+
+        mPostActionJoinView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (v.getId() == R.id.group_study_btn_join) {
-                    joinButtonAction();
-                }
+                joinButtonAction();
             }
         });
-        mGroupNumJoined.setOnClickListener(new View.OnClickListener(){
+
+        mPostActionJoinNumBarView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (v.getId() == R.id.group_study_num_joined){
-                    joinedStudentsButtonAction();
-                }
-            }
-        });
-        mGroupMaxPeople.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v) {
-                if (v.getId() == R.id.group_study_max_people){
-                    joinedStudentsButtonAction();
-                }
-            }
-        });
-        mGroupSeparatorSlash.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v){
-                if (v.getId() == R.id.group_study_separator_slash){
-                    joinedStudentsButtonAction();
-                }
+                joinedStudentsButtonAction();
             }
         });
 
@@ -227,16 +202,18 @@ public class GroupStudyCard extends PostCard {
         mGroupMaxPeople.setText(String.valueOf(mGroupStudy.getMaxPeople()));
 
         if (haveJoined()){
-            mBtnJoin.setText(String.valueOf("Joined"));
-            mBtnJoin.setBackgroundColor(Color.GREEN);
+            mPostActionJoinView.setText(mActivity.getString(R.string.action_joined));
         }
         else {
-            mBtnJoin.setText(String.valueOf("Join"));
-            mBtnJoin.setBackgroundColor(Color.TRANSPARENT);
+            mPostActionJoinView.setText(mActivity.getString(R.string.action_join));
         }
 
         mStudentsJoinedUpdate();
 
         return view;
+    }
+
+    public void refresh() {
+
     }
 }

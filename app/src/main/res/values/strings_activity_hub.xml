@@ -103,5 +103,21 @@
     <string name="info_moved_to_done">Moved to Done</string>
     <string name="info_moved_to_favorite">Moved to Favorites</string>
 
-    <string name="card_groupstudy_join_button">Join</string>
+    <string name="action_join">Join</string>
+    <string name="action_joined">Joined</string>
+    <string name="action_vote">Like</string>
+    <string name="action_voted">Liked</string>
+    <string name="action_comment">Comment</string>
+    <string name="action_commented">Commented</string>
+
+    <string name="title_users_joined">People who joined</string>
+    <string name="title_users_liked">People who liked</string>
+    <string name="title_comment">Comments</string>
+
+    <string name="warning_group_full">Group is full</string>
+    <string name="dialog_hint_comment">Enter a comment</string>
+    <string name="action_ok">OK</string>
+    <string name="action_cancel">Cancel</string>
+
+    <string name="slash">/</string>
 </resources>

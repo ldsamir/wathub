@@ -144,10 +144,10 @@ public class PostFragment extends HubFragment {
                             }
                         });
                     }
-                    mProgressBar.setVisibility(View.GONE);
                 } else {
                     Toast.makeText(mHubActivity.getApplicationContext(), R.string.error_loading_posts, Toast.LENGTH_SHORT).show();
                 }
+                mProgressBar.setVisibility(View.GONE);
             }
         });
     }

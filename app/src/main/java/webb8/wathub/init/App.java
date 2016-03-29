@@ -11,6 +11,7 @@ import java.io.File;
 
 import webb8.wathub.models.BookExchange;
 import webb8.wathub.models.Carpool;
+import webb8.wathub.models.Comment;
 import webb8.wathub.models.Course;
 import webb8.wathub.models.Done;
 import webb8.wathub.models.Favorite;
@@ -19,6 +20,7 @@ import webb8.wathub.models.Message;
 import webb8.wathub.models.Post;
 import webb8.wathub.models.PostType;
 import webb8.wathub.models.Profile;
+import webb8.wathub.models.Vote;
 
 /**
  * Created by mismayil on 08/02/16.
@@ -40,6 +42,8 @@ public class App extends Application {
         ParseObject.registerSubclass(Message.class);
         ParseObject.registerSubclass(PostType.class);
         ParseObject.registerSubclass(Done.class);
+        ParseObject.registerSubclass(Vote.class);
+        ParseObject.registerSubclass(Comment.class);
         Parse.enableLocalDatastore(this);
         Parse.initialize(this);
     }
