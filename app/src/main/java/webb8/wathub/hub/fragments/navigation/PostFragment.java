@@ -92,7 +92,6 @@ public class PostFragment extends HubFragment {
         mPostAdapter = new PostAdapter(mHubActivity, new ArrayList<PostCard>());
         mPostContainerView.setAdapter(mPostAdapter);
         mPostContainerView.addOnItemTouchListener(Util.getSwipeTouchListener(mPostContainerView, mPostAdapter));
-        mProgressBar.setVisibility(View.VISIBLE);
         final SwipeRefreshLayout refreshLayout = (SwipeRefreshLayout) rootView;
         refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -111,6 +110,7 @@ public class PostFragment extends HubFragment {
     }
 
     public void refresh() {
+        mProgressBar.setVisibility(View.VISIBLE);
         mPostQuery.findInBackground(new FindCallback<ParseObject>() {
             @Override
             public void done(List<ParseObject> objects, ParseException e) {

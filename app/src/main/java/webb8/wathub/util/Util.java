@@ -12,6 +12,8 @@ import com.parse.ParseObject;
 import com.parse.ParseQuery;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 import webb8.wathub.R;
@@ -22,28 +24,33 @@ import webb8.wathub.models.Course;
  */
 public class Util {
     public static void updateCourseSubjectsAdapter(final Activity activity, final Spinner spinner) {
-        ParseQuery<ParseObject> courseQuery = Course.getQuery();
-        courseQuery.orderByAscending(Course.KEY_SUBJECT);
-        courseQuery.setLimit(5200);
-        courseQuery.findInBackground(new FindCallback<ParseObject>() {
-            @Override
-            public void done(List<ParseObject> objects, ParseException e) {
-                ArrayList<CharSequence> courseSubjects = new ArrayList<>();
+        final String alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        final ArrayList<String> courseSubjects = new ArrayList<>();
+        courseSubjects.add(activity.getString(R.string.post_hint_select_course_subject));
 
-                courseSubjects.add(activity.getString(R.string.post_hint_select_course_subject));
+        for (int i = 0; i < alphabet.length(); i++) {
+            String letter = alphabet.substring(i, i + 1);
+            ParseQuery<ParseObject> courseQuery = Course.getQuery();
+            courseQuery.orderByAscending(Course.KEY_SUBJECT);
+            courseQuery.setLimit(1000);
+            courseQuery.whereStartsWith(Course.KEY_SUBJECT, letter);
+            courseQuery.findInBackground(new FindCallback<ParseObject>() {
+                @Override
+                public void done(List<ParseObject> objects, ParseException e) {
+                    for (ParseObject object : objects) {
+                        Course c = Course.getInstance(object);
+                        String subject = c.getSubject();
+                        if (!courseSubjects.contains(subject)) courseSubjects.add(c.getSubject());
+                    }
 
-                for (ParseObject object : objects) {
-                    Course c = Course.getInstance(object);
-                    String subject = c.getSubject();
-                    if (!courseSubjects.contains(subject)) courseSubjects.add(c.getSubject());
+                    Collections.sort(courseSubjects.subList(1, courseSubjects.size()));
+                    ArrayAdapter<String> subjectAdapter = new ArrayAdapter<>(activity,
+                            R.layout.simple_spinner_item, courseSubjects);
+                    subjectAdapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
+                    spinner.setAdapter(subjectAdapter);
                 }
-
-                ArrayAdapter<CharSequence> subjectAdapter = new ArrayAdapter<>(activity,
-                        R.layout.simple_spinner_item, courseSubjects);
-                subjectAdapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
-                spinner.setAdapter(subjectAdapter);
-            }
-        });
+            });
+        }
     }
 
     public static void updateCourseNumbersAdapter(final Activity activity, final Spinner spinner, String courseSubject) {

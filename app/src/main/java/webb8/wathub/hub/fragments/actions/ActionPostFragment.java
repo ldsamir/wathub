@@ -81,6 +81,7 @@ public class ActionPostFragment extends HubFragment {
                                 FragmentManager fragmentManager = getFragmentManager();
                                 Toast.makeText(mHubActivity.getApplicationContext(), R.string.info_post_published, Toast.LENGTH_SHORT).show();
                                 fragmentManager.beginTransaction().replace(R.id.container, HubFragment.newInstance(NavItem.ALL_POSTS.getId())).commit();
+                                mHubActivity.setTitle(mHubActivity.getString(NavItem.ALL_POSTS.getNameId()));
                             } else {
                                 Toast.makeText(mHubActivity.getApplicationContext(), R.string.error_publishing_post, Toast.LENGTH_SHORT).show();
                             }
