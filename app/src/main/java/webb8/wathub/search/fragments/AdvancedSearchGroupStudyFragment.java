@@ -28,6 +28,7 @@ import java.util.Locale;
 
 import webb8.wathub.R;
 import webb8.wathub.hub.fragments.PostFeedFragment;
+import webb8.wathub.models.Course;
 import webb8.wathub.models.GroupStudy;
 import webb8.wathub.models.Post;
 import webb8.wathub.util.NavItem;
@@ -137,54 +138,55 @@ public class AdvancedSearchGroupStudyFragment extends AdvancedSearchFragment {
             public void onClick(View v) {
                 // Should start while clicking the search button:
                 mProgressBar.setVisibility(View.VISIBLE);
+                final String selectStr = "select", emptyStr = "";
 
                 // Input data and verification of the inputs:
-                String Name = mGroupNameView.getText().toString();
-                Boolean CheckName = !(Name.equals(""));
-                String Where = mGroupWhereView.getText().toString();
-                Boolean CheckWhere = !(Where.equals(""));
-                String WhenStr = mGroupWhenView.getText().toString();
-                Boolean CheckWhen = !(WhenStr.equals(""));
-                String StartTimeStr = mGroupStartTimeView.getText().toString();
-                Boolean CheckStart = !(StartTimeStr.equals(""));
-                String EndTimeStr = mGroupEndTimeView.getText().toString();
-                Boolean CheckEnd = !(EndTimeStr.equals(""));
+                final String name = mGroupNameView.getText().toString();
+                final Boolean checkName = !(name.equals(emptyStr));
+                final String where = mGroupWhereView.getText().toString();
+                final Boolean checkWhere = !(where.equals(emptyStr));
+                final String whenStr = mGroupWhenView.getText().toString();
+                Boolean checkWhenBuf = !(whenStr.equals(emptyStr));
+                final String startTimeStr = mGroupStartTimeView.getText().toString();
+                Boolean checkStartBuf = !(startTimeStr.equals(emptyStr));
+                final String endTimeStr = mGroupEndTimeView.getText().toString();
+                Boolean checkEndBuf = !(endTimeStr.equals(emptyStr));
                 // Reading date and time information in specific format:
                 SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.CANADA);
-                Calendar startTime = Calendar.getInstance();
-                Calendar endTime = Calendar.getInstance();
-                Calendar today = Calendar.getInstance();
+                final Calendar startTime = Calendar.getInstance();
+                final Calendar endTime = Calendar.getInstance();
+                final Calendar today = Calendar.getInstance();
                 // Need to if at least one of them was given as input:
-                Boolean CheckDate = CheckWhen || CheckStart || CheckEnd;
-                if (CheckDate) {
+                Boolean checkDateBuf = checkWhenBuf || checkStartBuf || checkEndBuf;
+                if (checkDateBuf) {
                     // If so, ...
-                    if (!CheckWhen) {
+                    if (!checkWhenBuf) {
                         // If date is not specified,
                         // Today's date is set by default:
-                        if (CheckStart) {
+                        if (checkStartBuf) {
                             try {
-                                startTime.setTime(format.parse(today.getTime().toString() + " " + StartTimeStr));
+                                startTime.setTime(format.parse(today.getTime().toString() + " " + startTimeStr));
                             } catch (java.text.ParseException e) {
                                 // Currently, we do not have anything to do here;
                                 // I hope, we will never catch any exception here...
                             }
                         }
-                        if (CheckEnd) {
+                        if (checkEndBuf) {
                             try {
-                                endTime.setTime(format.parse(today.getTime().toString() + " " + EndTimeStr));
+                                endTime.setTime(format.parse(today.getTime().toString() + " " + endTimeStr));
                             } catch (java.text.ParseException e) {
                                 // Currently, we do not have anything to do here;
                                 // I hope, we will never catch any exception here...
                             }
                         }
                         // After assigning today's date, need to change the situation:
-                        CheckWhen = true;
+                        checkWhenBuf = true;
                     } else {
                         // But if the date is given:
-                        if (CheckStart) {
+                        if (checkStartBuf) {
 
                             try {
-                                startTime.setTime(format.parse(WhenStr + " " + StartTimeStr));
+                                startTime.setTime(format.parse(whenStr + " " + startTimeStr));
                             } catch (java.text.ParseException e) {
                                 // Currently, we do not have anything to do here;
                                 // I hope, we will never catch any exception here...
@@ -193,16 +195,16 @@ public class AdvancedSearchGroupStudyFragment extends AdvancedSearchFragment {
                             // If the start time is not given as input,
                             // 00:00 is set by default:
                             try {
-                                startTime.setTime(format.parse(WhenStr + " 00:00"));
+                                startTime.setTime(format.parse(whenStr + " 00:00"));
                             } catch (java.text.ParseException e) {
                                 // Currently, we do not have anything to do here;
                                 // I hope, we will never catch any exception here...
                             }
-                            CheckStart = true;
+                            checkStartBuf = true;
                         }
-                        if (CheckEnd) {
+                        if (checkEndBuf) {
                             try {
-                                endTime.setTime(format.parse(WhenStr + " " + EndTimeStr));
+                                endTime.setTime(format.parse(whenStr + " " + endTimeStr));
                             } catch (java.text.ParseException e) {
                                 // Currently, we do not have anything to do here;
                                 // I hope, we will never catch any exception here...
@@ -211,99 +213,137 @@ public class AdvancedSearchGroupStudyFragment extends AdvancedSearchFragment {
                             // if the end time is not given as input,
                             // 23:59 is set by default:
                             try {
-                                endTime.setTime(format.parse(WhenStr + " 23:59"));
+                                endTime.setTime(format.parse(whenStr + " 23:59"));
                             } catch (java.text.ParseException e) {
                                 // Currently, we do not have anything to do here;
                                 // I hope, we will never catch any exception here...
                             }
-                            CheckEnd = true;
+                            checkEndBuf = true;
                         }
                     }
                 }
-                String CourseSubject = mGroupCourseSubjectView.getSelectedItem().toString();
-                Boolean CheckCourseSubject = !(CourseSubject.equals(""));
-                String CourseNumber = mGroupCourseNumberView.getSelectedItem().toString();
-                Boolean CheckCourseNumber = !(CourseNumber.equals(""));
-                String MinPeople = mGroupMinPeopleView.getText().toString();
+                final Boolean checkDate = checkDateBuf;
+                final Boolean checkWhen = checkWhenBuf;
+                final Boolean checkStart = checkStartBuf;
+                final Boolean checkEnd = checkEndBuf;
+                final String courseSubject = mGroupCourseSubjectView.getSelectedItem().toString();
+                final Boolean checkCourseSubject = !(courseSubject.toLowerCase().contains(selectStr));
+                String courseNumberBuf = emptyStr;
+                Boolean checkCourseNumberBuf = false;
+                if (checkCourseSubject) {
+                    courseNumberBuf += mGroupCourseNumberView.getSelectedItem().toString();
+                    checkCourseNumberBuf = checkCourseNumberBuf || !(courseNumberBuf.toLowerCase().contains(selectStr));
+                }
+                final String courseNumber = courseNumberBuf;
+                final Boolean checkCourseNumber = checkCourseNumberBuf;
+                final String minPeople = mGroupMinPeopleView.getText().toString();
                 // For the case below we are going to ignore MinPeople in the search:
-                Boolean CheckMinPeople = !(MinPeople.equals("") || Integer.parseInt(MinPeople) < 0);
-                String MaxPeople = mGroupMaxPeopleView.getText().toString();
+                final Boolean checkMinPeople = !(minPeople.equals(emptyStr));
+                final String maxPeople = mGroupMaxPeopleView.getText().toString();
                 // For the case below we are going to ignore MaxPeople in the search:
-                Boolean CheckMaxPeople = !(MaxPeople.equals("") || Integer.parseInt(MaxPeople) < 0);
+                final Boolean checkMaxPeople = !(maxPeople.equals(emptyStr));
 
                 /* First, we have to search through the courses
                  * to obtain the course IDs for being able to use them
                  * in the main search:
                  */
-                ParseQuery<ParseObject> courses = ParseQuery.getQuery("Course");
-                final Collection<String> courseObjectIds = new ArrayList<String>();
-                if (CheckCourseSubject) {
-                    courses.whereEqualTo("subject", CourseSubject);
+                ParseQuery<ParseObject> courseQuery = Course.getQuery();
+                final Collection<Course> courses = new ArrayList<Course>();
+                if (checkCourseSubject) {
+                    courseQuery.whereEqualTo(Course.KEY_SUBJECT, courseSubject);
                     // Since we can select the number after selecting the subject:
-                    if (CheckCourseNumber) courses.whereEqualTo("number", CourseNumber);
-                    courses.findInBackground(new FindCallback<ParseObject>() {
+                    if (checkCourseNumber)
+                        courseQuery.whereEqualTo(Course.KEY_NUMBER, courseNumber);
+                    courseQuery.findInBackground(new FindCallback<ParseObject>() {
                         public void done(List<ParseObject> objects, ParseException e) {
                             if (e == null) {
                                 for (ParseObject object : objects) {
-                                    courseObjectIds.add(object.get("objectId").toString());
+                                    courses.add(Course.getInstance(object));
                                 }
+                                // Searching through GroupStudy posts
+                                // by taking each input into consideration:
+                                ParseQuery<ParseObject> groupStudyPostQuery = GroupStudy.getQuery();
+                                if (checkName)
+                                    groupStudyPostQuery.whereContains(GroupStudy.KEY_GROUP_NAME, name);
+                                groupStudyPostQuery.whereContainedIn(GroupStudy.KEY_COURSE, courses);
+                                if (checkWhen && checkStart)
+                                    groupStudyPostQuery.whereEqualTo(GroupStudy.KEY_START_TIME, startTime.getTime());
+                                System.out.println(startTime.getTime().toString());
+                                System.out.println(endTime.getTime().toString());
+                                if (checkWhen && checkEnd)
+                                    groupStudyPostQuery.whereEqualTo(GroupStudy.KEY_END_TIME, endTime.getTime());
+                                if (checkWhere)
+                                    groupStudyPostQuery.whereContains(GroupStudy.KEY_WHERE, where);
+                                if (checkMinPeople)
+                                    groupStudyPostQuery.whereGreaterThanOrEqualTo(GroupStudy.KEY_MAX_PEOPLE, Integer.parseInt(minPeople));
+                                if (checkMaxPeople)
+                                    groupStudyPostQuery.whereLessThanOrEqualTo(GroupStudy.KEY_MAX_PEOPLE, Integer.parseInt(maxPeople));
+                                // Getting Post IDs of the found Group Study Posts:
+                                groupStudyPostQuery.findInBackground(new FindCallback<ParseObject>() {
+                                    @Override
+                                    public void done(List<ParseObject> objects, ParseException e) {
+                                        if (e == null) {
+                                            List<PostCard> postCards = new ArrayList<>();
+                                            for (ParseObject object : objects) {
+                                                Post post = GroupStudy.getInstance(object).getPost();
+                                                postCards.add(new PostCard(getActivity(), post));
+                                            }
+                                            PostFeedFragment postFeedFragment = PostFeedFragment.newInstance(postCards);
+                                            mProgressBar.setVisibility(View.GONE);
+
+                                            FragmentManager fragmentManager = getFragmentManager();
+
+                                            fragmentManager.beginTransaction()
+                                                    .replace(R.id.advanced_search_container, postFeedFragment)
+                                                    .commit();
+                                        }
+                                        // We do not need else case...
+                                    }
+                                });
+                            }
+                            // We do not need else case...
+                        }
+                    });
+                } else {
+                    // Searching through GroupStudy posts
+                    // by taking each input into consideration:
+                    ParseQuery<ParseObject> groupStudyPostQuery = GroupStudy.getQuery();
+                    if (checkName)
+                        groupStudyPostQuery.whereContains(GroupStudy.KEY_GROUP_NAME, name);
+                    if (checkWhen && checkStart)
+                        groupStudyPostQuery.whereEqualTo(GroupStudy.KEY_START_TIME, startTime.getTime());
+                    System.out.println(startTime.getTime().toString());
+                    System.out.println(endTime.getTime().toString());
+                    if (checkWhen && checkEnd)
+                        groupStudyPostQuery.whereEqualTo(GroupStudy.KEY_END_TIME, endTime.getTime());
+                    if (checkWhere) groupStudyPostQuery.whereContains(GroupStudy.KEY_WHERE, where);
+                    if (checkMinPeople)
+                        groupStudyPostQuery.whereGreaterThanOrEqualTo(GroupStudy.KEY_MAX_PEOPLE, Integer.parseInt(minPeople));
+                    if (checkMaxPeople)
+                        groupStudyPostQuery.whereLessThanOrEqualTo(GroupStudy.KEY_MAX_PEOPLE, Integer.parseInt(maxPeople));
+                    // Getting Post IDs of the found Group Study Posts:
+                    groupStudyPostQuery.findInBackground(new FindCallback<ParseObject>() {
+                        @Override
+                        public void done(List<ParseObject> objects, ParseException e) {
+                            if (e == null) {
+                                List<PostCard> postCards = new ArrayList<>();
+                                for (ParseObject object : objects) {
+                                    Post post = GroupStudy.getInstance(object).getPost();
+                                    postCards.add(new PostCard(getActivity(), post));
+                                }
+                                PostFeedFragment postFeedFragment = PostFeedFragment.newInstance(postCards);
+                                mProgressBar.setVisibility(View.GONE);
+
+                                FragmentManager fragmentManager = getFragmentManager();
+
+                                fragmentManager.beginTransaction()
+                                        .replace(R.id.advanced_search_container, postFeedFragment)
+                                        .commit();
                             }
                             // We do not need else case...
                         }
                     });
                 }
-
-                // Searching through GroupStudy posts
-                // by taking each input into consideration:
-                ParseQuery<ParseObject> GroupStudyPosts = ParseQuery.getQuery("GroupStudy");
-                final Collection<String> GroupStudyPostPointers = new ArrayList<String>();
-                if (CheckName) GroupStudyPosts.whereContains("groupName", Name);
-                if (CheckCourseSubject)
-                    GroupStudyPosts.whereContainsAll("course", courseObjectIds);
-                if (CheckWhen && CheckStart) GroupStudyPosts.whereEqualTo("startTime", startTime.getTime());
-                if (CheckWhen && CheckEnd) GroupStudyPosts.whereEqualTo("endTime", endTime.getTime());
-                if (CheckWhere) GroupStudyPosts.whereContains("where", Where);
-                if (CheckMinPeople) GroupStudyPosts.whereGreaterThanOrEqualTo("maxPeople", Integer.parseInt(MinPeople));
-                if (CheckMaxPeople) GroupStudyPosts.whereLessThanOrEqualTo("maxPeople", Integer.parseInt(MaxPeople));
-                // Getting Post IDs of the found Group Study Posts:
-                GroupStudyPosts.findInBackground(new FindCallback<ParseObject>() {
-                    @Override
-                    public void done(List<ParseObject> objects, ParseException e) {
-                        if (e == null) {
-                            for (ParseObject object : objects) {
-                                GroupStudyPostPointers.add(object.get("post").toString());
-                            }
-                        }
-                        // We do not need else case...
-                    }
-                });
-
-                // Main search:
-                ParseQuery<ParseObject> postQuery = ParseQuery.getQuery("Post");
-                postQuery.whereContainsAll("objectId", GroupStudyPostPointers);
-
-                // Post-search-process:
-                postQuery.findInBackground(new FindCallback<ParseObject>() {
-                    @Override
-                    public void done(List<ParseObject> objects, ParseException e) {
-                        List<PostCard> postCards = new ArrayList<>();
-
-                        for (ParseObject object : objects) {
-                            Post post = Post.getInstance(object);
-                            postCards.add(new PostCard(getActivity(), post));
-                        }
-
-                        PostFeedFragment postFeedFragment = PostFeedFragment.newInstance(postCards);
-                        mProgressBar.setVisibility(View.GONE);
-
-                        FragmentManager fragmentManager = getFragmentManager();
-
-                        fragmentManager.beginTransaction()
-                                .replace(R.id.search_container, postFeedFragment)
-                                .commit();
-
-                    }
-                });
             }
         });
 

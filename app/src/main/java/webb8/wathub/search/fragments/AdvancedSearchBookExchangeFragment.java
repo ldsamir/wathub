@@ -22,10 +22,14 @@ import com.parse.ParseQuery;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import webb8.wathub.R;
 import webb8.wathub.hub.fragments.PostFeedFragment;
+import webb8.wathub.models.BookExchange;
+import webb8.wathub.models.Course;
 import webb8.wathub.models.Post;
 import webb8.wathub.util.NavItem;
 import webb8.wathub.util.PostCard;
@@ -133,98 +137,123 @@ public class AdvancedSearchBookExchangeFragment extends AdvancedSearchFragment {
             public void onClick(View v) {
                 // Should start while clicking the search button:
                 mProgressBar.setVisibility(View.VISIBLE);
+                final String selectStr = "select", emptyStr = "";
+                final Map<String, Integer> conditionMap = new HashMap<String, Integer>();
+                conditionMap.put("BAD", 0);
+                conditionMap.put("MODERATE", 1);
+                conditionMap.put("GOOD", 2);
+                conditionMap.put("EXCELLENT", 3);
 
                 // Input data and verification of the inputs:
-                String Title = mBookTitleView.getText().toString();
-                Boolean CheckTitle = !(Title.equals(""));
-                String CourseSubject = mBookCourseSubjectView.getSelectedItem().toString();
-                Boolean CheckCourseSubject = !(CourseSubject.equals(""));
-                String CourseNumber = mBookCourseNumberView.getSelectedItem().toString();
-                Boolean CheckCourseNumber = !(CourseNumber.equals(""));
-                String MinPrice = mBookMinPriceView.getText().toString();
+                final String title = mBookTitleView.getText().toString();
+                final Boolean checkTitle = !(title.equals(emptyStr));
+                final String courseSubject = mBookCourseSubjectView.getSelectedItem().toString();
+                final Boolean checkCourseSubject = !(courseSubject.toLowerCase().contains(selectStr));
+                String courseNumberBuf = emptyStr;
+                Boolean checkCourseNumberBuf = false;
+                if (checkCourseSubject) {
+                    courseNumberBuf += mBookCourseNumberView.getSelectedItem().toString();
+                    checkCourseNumberBuf = checkCourseNumberBuf || !(courseNumberBuf.toLowerCase().contains(selectStr));
+                }
+                final String courseNumber = courseNumberBuf;
+                final Boolean checkCourseNumber = checkCourseNumberBuf;
+                final String minPrice = mBookMinPriceView.getText().toString();
                 // For the case below we are going to ignore MinPrice in the search:
-                Boolean CheckMinPrice = !(MinPrice.equals("") || Integer.parseInt(MinPrice) < 0);
-                String MaxPrice = mBookMaxPriceView.getText().toString();
+                final Boolean checkMinPrice = !(minPrice.equals(emptyStr));
+                final String maxPrice = mBookMaxPriceView.getText().toString();
                 // For the case below we are going to ignore MaxPrice in the search:
-                Boolean CheckMaxPrice = !(MaxPrice.equals("") || Integer.parseInt(MaxPrice) < 0);
-                String Condition = mBookConditionView.getSelectedItem().toString();
-                Boolean CheckCondition = !(Condition.equals(""));
+                final Boolean checkMaxPrice = !(maxPrice.equals(emptyStr));
+                final String conditionStr = mBookConditionView.getSelectedItem().toString();
+                final Boolean checkCondition = !(conditionStr.toLowerCase().contains(selectStr));
 
                 /* First, we have to search through the courses
                  * to obtain the course IDs for being able to use them
                  * in the main search:
                  */
-                ParseQuery<ParseObject> courses = ParseQuery.getQuery("Course");
-                final Collection<String> courseObjectIds = new ArrayList<String>();
-                if (CheckCourseSubject) {
-                    courses.whereEqualTo("subject", CourseSubject);
+                ParseQuery<ParseObject> courseQuery = Course.getQuery();
+                final Collection<Course> courses = new ArrayList<Course>();
+                if (checkCourseSubject) {
+                    courseQuery.whereEqualTo(Course.KEY_SUBJECT, courseSubject);
+                    System.out.println(courseSubject);
                     // Since we can select the number after selecting the subject:
-                    if (CheckCourseNumber) courses.whereEqualTo("number", CourseNumber);
-                    courses.findInBackground(new FindCallback<ParseObject>() {
+                    if (checkCourseNumber) {
+                        System.out.println(courseNumber);
+                        courseQuery.whereEqualTo(Course.KEY_NUMBER, courseNumber);
+                    }
+                    courseQuery.findInBackground(new FindCallback<ParseObject>() {
                         public void done(List<ParseObject> objects, ParseException e) {
                             if (e == null) {
+                                System.out.println(objects.size());
                                 for (ParseObject object : objects) {
-                                    courseObjectIds.add(object.get("objectId").toString());
+                                    courses.add(Course.getInstance(object));
                                 }
+                                System.out.println(courses.size());
+                                // Searching through BookExchange posts
+                                // by taking each input into consideration:
+                                ParseQuery<ParseObject> bookExchangePostQuery = BookExchange.getQuery();
+                                if (checkTitle)
+                                    bookExchangePostQuery.whereContains(BookExchange.KEY_TITLE, title);
+                                bookExchangePostQuery.whereContainedIn(BookExchange.KEY_COURSE, courses);
+                                if (checkMinPrice)
+                                    bookExchangePostQuery.whereGreaterThanOrEqualTo(BookExchange.KEY_PRICE, Integer.parseInt(minPrice));
+                                if (checkMaxPrice)
+                                    bookExchangePostQuery.whereLessThanOrEqualTo(BookExchange.KEY_PRICE, Integer.parseInt(maxPrice));
+                                if (checkCondition)
+                                    bookExchangePostQuery.whereEqualTo(BookExchange.KEY_CONDITION, conditionMap.get(conditionStr));
+                                bookExchangePostQuery.findInBackground(new FindCallback<ParseObject>() {
+                                    @Override
+                                    public void done(List<ParseObject> objects, ParseException e) {
+                                        if (e == null) {
+                                            List<PostCard> postCards = new ArrayList<>();
+                                            System.out.println(objects.size());
+                                            for (ParseObject object : objects) {
+                                                Post post = Post.getInstance((ParseObject) BookExchange.getInstance(object).getPost());
+                                                postCards.add(new PostCard(getActivity(), post));
+                                            }
+                                            PostFeedFragment postFeedFragment = PostFeedFragment.newInstance(postCards);
+                                            mProgressBar.setVisibility(View.GONE);
+                                            FragmentManager fragmentManager = getFragmentManager();
+                                            fragmentManager.beginTransaction()
+                                                    .replace(R.id.advanced_search_container, postFeedFragment)
+                                                    .commit();
+                                        }
+                                    }
+                                });
                             }
-                            // We do not need else case...
+                        }
+                    });
+                } else {
+                    // Searching through BookExchange posts
+                    // by taking each input into consideration:
+                    ParseQuery<ParseObject> bookExchangePostQuery = BookExchange.getQuery();
+                    if (checkTitle)
+                        bookExchangePostQuery.whereContains(BookExchange.KEY_TITLE, title);
+                    if (checkMinPrice)
+                        bookExchangePostQuery.whereGreaterThanOrEqualTo(BookExchange.KEY_PRICE, Integer.parseInt(minPrice));
+                    if (checkMaxPrice)
+                        bookExchangePostQuery.whereLessThanOrEqualTo(BookExchange.KEY_PRICE, Integer.parseInt(maxPrice));
+                    if (checkCondition)
+                        bookExchangePostQuery.whereEqualTo(BookExchange.KEY_CONDITION, conditionMap.get(conditionStr));
+                    bookExchangePostQuery.findInBackground(new FindCallback<ParseObject>() {
+                        @Override
+                        public void done(List<ParseObject> objects, ParseException e) {
+                            if (e == null) {
+                                List<PostCard> postCards = new ArrayList<>();
+                                System.out.println(objects.size());
+                                for (ParseObject object : objects) {
+                                    Post post = Post.getInstance((ParseObject) BookExchange.getInstance(object).getPost());
+                                    postCards.add(new PostCard(getActivity(), post));
+                                }
+                                PostFeedFragment postFeedFragment = PostFeedFragment.newInstance(postCards);
+                                mProgressBar.setVisibility(View.GONE);
+                                FragmentManager fragmentManager = getFragmentManager();
+                                fragmentManager.beginTransaction()
+                                        .replace(R.id.advanced_search_container, postFeedFragment)
+                                        .commit();
+                            }
                         }
                     });
                 }
-
-                // Searching through BookExchange posts
-                // by taking each input into consideration:
-                ParseQuery<ParseObject> BookExchangePosts = ParseQuery.getQuery("BookExchange");
-                final Collection<String> BookExchangePostPointers = new ArrayList<String>();
-                if (CheckTitle) BookExchangePosts.whereContains("title", Title);
-                if (CheckCourseSubject)
-                    BookExchangePosts.whereContainsAll("course", courseObjectIds);
-                if (CheckMinPrice)
-                    BookExchangePosts.whereGreaterThanOrEqualTo("price", Integer.parseInt(MinPrice));
-                if (CheckMaxPrice)
-                    BookExchangePosts.whereLessThanOrEqualTo("price", Integer.parseInt(MaxPrice));
-                if (CheckCondition)
-                    BookExchangePosts.whereEqualTo("condition", Integer.parseInt(Condition));
-                // Getting Post IDs of the found BookExchange Posts:
-                BookExchangePosts.findInBackground(new FindCallback<ParseObject>() {
-                    @Override
-                    public void done(List<ParseObject> objects, ParseException e) {
-                        if (e == null) {
-                            for (ParseObject object : objects) {
-                                BookExchangePostPointers.add(object.get("post").toString());
-                            }
-                        }
-                        // We do not need else case...
-                    }
-                });
-
-                // Main search:
-                ParseQuery<ParseObject> postQuery = ParseQuery.getQuery("Post");
-                postQuery.whereContainsAll("objectId", BookExchangePostPointers);
-
-                // Post-search-process:
-                postQuery.findInBackground(new FindCallback<ParseObject>() {
-                    @Override
-                    public void done(List<ParseObject> objects, ParseException e) {
-                        List<PostCard> postCards = new ArrayList<>();
-
-                        for (ParseObject object : objects) {
-                            Post post = Post.getInstance(object);
-                            postCards.add(new PostCard(getActivity(), post));
-                        }
-
-                        PostFeedFragment postFeedFragment = PostFeedFragment.newInstance(postCards);
-
-                        mProgressBar.setVisibility(View.GONE);
-
-                        FragmentManager fragmentManager = getFragmentManager();
-
-                        fragmentManager.beginTransaction()
-                                .replace(R.id.search_container, postFeedFragment)
-                                .commit();
-
-                    }
-                });
             }
         });
 
