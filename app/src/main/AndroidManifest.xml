@@ -77,8 +77,14 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".hub.HubActivity" />
         </activity>
-        <activity android:name=".search.AdvancedSearchActivity"
+        <activity
+            android:name=".search.AdvancedSearchActivity"
             android:label="@string/action_advanced_search">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".hub.HubActivity" />
+        </activity>
+        <activity android:name=".hub.ProfileActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".hub.HubActivity" />

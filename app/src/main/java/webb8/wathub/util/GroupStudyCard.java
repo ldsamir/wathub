@@ -1,6 +1,7 @@
 package webb8.wathub.util;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -18,6 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import webb8.wathub.R;
+import webb8.wathub.hub.ProfileActivity;
 import webb8.wathub.models.Course;
 import webb8.wathub.models.GroupStudy;
 import webb8.wathub.models.Parsable;
@@ -133,19 +135,15 @@ public class GroupStudyCard extends PostCard {
                     ParseQuery<ParseUser> query = ParseUser.getQuery();
                     mListOfJoinedStudents.add(query.get(mStudentsJoined.getJSONObject(i).get(Parsable.KEY_OBJECT_ID).toString()).getUsername());
                 }
-                catch (org.json.JSONException e){
-                    /*mListOfJoinedStudents.add("an unknown student".toString());
-                    Toast.makeText(mActivity.getApplicationContext(), "EXCEPTION OCCURED", Toast.LENGTH_SHORT).show();*/
-                } catch (ParseException e) {
-                    /*mListOfJoinedStudents.add("an unknown student".toString());
-                    Toast.makeText(mActivity.getApplicationContext(), "EXCEPTION OCCURED", Toast.LENGTH_SHORT).show();*/
-                }
+                catch (org.json.JSONException e){} catch (ParseException e) {}
             }
         }
         final CharSequence[] charListOfStudents = mListOfJoinedStudents.toArray(new CharSequence[mListOfJoinedStudents.size()]);
         builder.setItems(charListOfStudents, new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int item) {
-                Toast.makeText(mActivity.getApplicationContext(), "TODO: " + "go to " + charListOfStudents[item] + "'s profile...", Toast.LENGTH_SHORT).show();
+            public void onClick(DialogInterface dialog, int which) {
+                Intent intent = new Intent(mActivity, ProfileActivity.class);
+                intent.putExtra(ProfileActivity.EXTRA_USER_NAME, charListOfStudents[which]);
+                mActivity.startActivity(intent);
             }
         });
         AlertDialog alert = builder.create();

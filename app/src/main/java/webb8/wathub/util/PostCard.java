@@ -5,6 +5,7 @@ import webb8.wathub.R;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,6 +23,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import webb8.wathub.hub.ProfileActivity;
 import webb8.wathub.models.BookExchange;
 import webb8.wathub.models.Carpool;
 import webb8.wathub.models.Comment;
@@ -176,6 +178,21 @@ public class PostCard {
         updateVoteCount(0);
         updateCommentCount(0);
 
+        mPostUserView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ParseUser user = mProfile.getOwner();
+                try {
+                    user.fetch();
+                    Intent intent = new Intent(mActivity, ProfileActivity.class);
+                    intent.putExtra(ProfileActivity.EXTRA_USER_NAME, user.getUsername());
+                    mActivity.startActivity(intent);
+                } catch (ParseException p) {
+
+                }
+            }
+        });
+
         mPostActionVoteView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -210,7 +227,7 @@ public class PostCard {
                 voteQuery.findInBackground(new FindCallback<ParseObject>() {
                     @Override
                     public void done(List<ParseObject> objects, ParseException e) {
-                        String[] userNames = new String[objects.size()];
+                        final String[] userNames = new String[objects.size()];
                         int i = 0;
 
                         for (ParseObject object : objects) {
@@ -229,7 +246,9 @@ public class PostCard {
                         builder.setItems(userNames, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-
+                                Intent intent = new Intent(mActivity, ProfileActivity.class);
+                                intent.putExtra(ProfileActivity.EXTRA_USER_NAME, userNames[which]);
+                                mActivity.startActivity(intent);
                             }
                         });
                         AlertDialog dialog = builder.create();

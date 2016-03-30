@@ -115,6 +115,7 @@ public class PostFragment extends HubFragment {
             @Override
             public void done(List<ParseObject> objects, ParseException e) {
                 if (e == null) {
+                    if (objects.size() == 0) mProgressBar.setVisibility(View.GONE);
                     mPostAdapter.setPostCards(new ArrayList<PostCard>());
                     for (final ParseObject object : objects) {
                         final Post post = Post.getInstance(object);
@@ -135,6 +136,7 @@ public class PostFragment extends HubFragment {
                                                 if (e == null) {
                                                     if (count == 0) {
                                                         mPostAdapter.addPostCard(new PostCard(mHubActivity, post));
+                                                        mProgressBar.setVisibility(View.GONE);
                                                     }
                                                 }
                                             }
@@ -146,8 +148,8 @@ public class PostFragment extends HubFragment {
                     }
                 } else {
                     Toast.makeText(mHubActivity.getApplicationContext(), R.string.error_loading_posts, Toast.LENGTH_SHORT).show();
+                    mProgressBar.setVisibility(View.GONE);
                 }
-                mProgressBar.setVisibility(View.GONE);
             }
         });
     }

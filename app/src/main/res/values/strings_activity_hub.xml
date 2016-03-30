@@ -119,5 +119,9 @@
     <string name="action_ok">OK</string>
     <string name="action_cancel">Cancel</string>
 
+    <string name="info_no_photo_available">No photo available</string>
+    <string name="error_no_user_found">No user found</string>
+    <string name="error_no_user_profile_found">No user profile found</string>
+
     <string name="slash">/</string>
 </resources>
