@@ -11,6 +11,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -53,6 +54,7 @@ public class ActionPostBookExchangeFragment extends ActionPostFragment {
     protected EditText mBookPriceView;
     protected Spinner mBookConditionView;
     protected TextView mCourseTitleView;
+    protected LinearLayout mCourseTitleContainerView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -71,6 +73,7 @@ public class ActionPostBookExchangeFragment extends ActionPostFragment {
         mBookPriceView = (EditText) bookExchangeSectionView.findViewById(R.id.edit_book_price);
         mBookConditionView = (Spinner) bookExchangeSectionView.findViewById(R.id.select_book_condition);
         mCourseTitleView = (TextView) bookExchangeSectionView.findViewById(R.id.text_course_title);
+        mCourseTitleContainerView = (LinearLayout) bookExchangeSectionView.findViewById(R.id.text_course_title_container);
 
         final Post post = new Post();
         final BookExchange bookExchangePost = new BookExchange();
@@ -80,7 +83,7 @@ public class ActionPostBookExchangeFragment extends ActionPostFragment {
         courseSubjectAdapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
         mCourseSubjectView.setAdapter(courseSubjectAdapter);
 
-        ArrayAdapter<CharSequence> courseNumberAdapter = ArrayAdapter.createFromResource(getActivity(),
+        final ArrayAdapter<CharSequence> courseNumberAdapter = ArrayAdapter.createFromResource(getActivity(),
                 R.array.book_course_number_list, R.layout.simple_spinner_item);
         courseNumberAdapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
         mCourseNumberView.setAdapter(courseNumberAdapter);
@@ -99,7 +102,8 @@ public class ActionPostBookExchangeFragment extends ActionPostFragment {
                     String subject = parent.getItemAtPosition(position).toString();
                     Util.updateCourseNumbersAdapter(getActivity(), mCourseNumberView, subject);
                 } else {
-                    mCourseTitleView.setVisibility(View.GONE);
+                    mCourseTitleContainerView.setVisibility(View.GONE);
+                    mCourseNumberView.setAdapter(courseNumberAdapter);
                 }
             }
 
@@ -123,12 +127,12 @@ public class ActionPostBookExchangeFragment extends ActionPostFragment {
                                 Course selectedCourse = Course.getInstance(objects.get(0));
                                 bookExchangePost.setCourse(selectedCourse);
                                 mCourseTitleView.setText(selectedCourse.getTitle());
-                                mCourseTitleView.setVisibility(View.VISIBLE);
+                                mCourseTitleContainerView.setVisibility(View.VISIBLE);
                             }
                         }
                     });
                 } else {
-                    mCourseTitleView.setVisibility(View.GONE);
+                    mCourseTitleContainerView.setVisibility(View.GONE);
                 }
             }
 

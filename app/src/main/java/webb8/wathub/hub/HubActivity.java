@@ -108,13 +108,13 @@ public class HubActivity extends AppCompatActivity
 //        mGeneralPostFabTextView = (TextView) findViewById(R.id.fab_text_general);
 //        mBookExchangeFabTextView = (TextView) findViewById(R.id.fab_text_book_exchange);
 //        mGroupStudyFabTextView = (TextView) findViewById(R.id.fab_text_group_study);
-        mPostFab.setTag(R.drawable.ic_add_white_24dp);
+        mPostFab.setTag(R.drawable.ic_add_black_24dp);
 
         mPostFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 int drawableId = (Integer) mPostFab.getTag();
-                if (drawableId == R.drawable.ic_add_white_24dp) {
+                if (drawableId == R.drawable.ic_add_black_24dp) {
                     togglePostFab(FAB_CANCEL);
                 } else {
                     togglePostFab(FAB_ADD);
@@ -171,11 +171,11 @@ public class HubActivity extends AppCompatActivity
     // toggle post FAB
     private void togglePostFab(int state) {
         // state FAB_ADD
-        int drawable = R.drawable.ic_add_white_24dp;
+        int drawable = R.drawable.ic_add_black_24dp;
         int optionsVisibility = View.GONE;
 
         if (state == FAB_CANCEL) {
-            drawable = R.drawable.ic_clear_white_24dp;
+            drawable = R.drawable.ic_clear_black_24dp;
             optionsVisibility = View.VISIBLE;
         }
 
@@ -261,7 +261,7 @@ public class HubActivity extends AppCompatActivity
 
         if (section == NavItem.MY_POSTS.getId()) {
             mTitle = getString(NavItem.MY_POSTS.getNameId());
-            mContainerPostFab.setVisibility(View.GONE);
+            mContainerPostFab.setVisibility(View.VISIBLE);
         } else
 
         if (section == NavItem.ALL_POSTS.getId()) {

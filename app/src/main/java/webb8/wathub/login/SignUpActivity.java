@@ -27,7 +27,7 @@ import webb8.wathub.models.Profile;
 public class SignUpActivity extends AppCompatActivity {
 
     // UI references.
-    private AutoCompleteTextView mEmailView;
+    private EditText mEmailView;
     private EditText mFirstNameView;
     private EditText mLastNameView;
     private EditText mPasswordView;
@@ -39,7 +39,7 @@ public class SignUpActivity extends AppCompatActivity {
         setContentView(R.layout.activity_sign_up);
 
         // Set up the sign up form.
-        mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
+        mEmailView = (EditText) findViewById(R.id.email);
         mFirstNameView = (EditText) findViewById(R.id.first_name);
         mLastNameView = (EditText) findViewById(R.id.last_name);
 

@@ -3,68 +3,168 @@
     android:id="@+id/section_group_study"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:clickable="true">
-
-    <EditText
-        android:id="@+id/edit_group_name"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/post_hint_group_name"/>
+    android:padding="@dimen/padding">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:layout_marginBottom="@dimen/margin">
+        <ImageView
+            android:contentDescription="@string/icon"
+            android:layout_width="@dimen/ic_width"
+            android:layout_height="@dimen/ic_height"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/ic_group_black_24dp" />
+        <EditText
+            android:theme="@style/EditTextStyle"
+            android:id="@+id/edit_group_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/post_hint_group_name"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/margin">
+        <ImageView
+            android:contentDescription="@string/icon"
+            android:layout_width="@dimen/ic_width"
+            android:layout_height="@dimen/ic_height"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/ic_subject_black_24dp" />
         <Spinner
+            android:theme="@style/SpinnerStyle"
             android:id="@+id/select_group_course_subject"
-            android:layout_width="200dp"
-            android:layout_height="wrap_content">
-        </Spinner>
-        <Spinner
-            android:id="@+id/select_group_course_number"
-            android:layout_width="150dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content">
         </Spinner>
     </LinearLayout>
 
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/group_course_title"
-        android:visibility="gone" />
+        android:layout_marginBottom="@dimen/margin">
+        <ImageView
+            android:contentDescription="@string/icon"
+            android:layout_width="@dimen/ic_width"
+            android:layout_height="@dimen/ic_height"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/ic_subject_black_24dp" />
+        <Spinner
+            android:id="@+id/select_group_course_number"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        </Spinner>
+    </LinearLayout>
 
-    <EditText
+    <LinearLayout
+        android:id="@+id/text_course_title_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/edit_group_where"
-        android:hint="@string/post_hint_group_where" />
-
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/edit_group_start_when"
-        android:hint="@string/post_hint_group_when" />
+        android:layout_marginBottom="@dimen/margin"
+        android:visibility="gone">
+        <ImageView
+            android:contentDescription="@string/icon"
+            android:layout_width="@dimen/ic_width"
+            android:layout_height="@dimen/ic_height"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/ic_subject_black_24dp" />
+        <TextView
+            android:id="@+id/text_course_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:layout_marginBottom="@dimen/margin">
+        <ImageView
+            android:contentDescription="@string/icon"
+            android:layout_width="@dimen/ic_width"
+            android:layout_height="@dimen/ic_height"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/ic_place_black_24dp" />
         <EditText
-            android:layout_width="180dp"
+            android:theme="@style/EditTextStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/edit_group_where"
+            android:hint="@string/post_hint_group_where" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/margin">
+        <ImageView
+            android:contentDescription="@string/icon"
+            android:layout_width="@dimen/ic_width"
+            android:layout_height="@dimen/ic_height"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/ic_today_black_24dp" />
+        <EditText
+            android:theme="@style/EditTextStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/edit_group_start_when"
+            android:hint="@string/post_hint_group_when" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/margin">
+        <ImageView
+            android:contentDescription="@string/icon"
+            android:layout_width="@dimen/ic_width"
+            android:layout_height="@dimen/ic_height"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/ic_schedule_black_24dp" />
+        <EditText
+            android:theme="@style/EditTextStyle"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/edit_group_start_time"
             android:hint="@string/post_hint_group_start_time" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/margin">
+        <ImageView
+            android:contentDescription="@string/icon"
+            android:layout_width="@dimen/ic_width"
+            android:layout_height="@dimen/ic_height"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/ic_schedule_black_24dp" />
         <EditText
-            android:layout_width="180dp"
+            android:theme="@style/EditTextStyle"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/edit_group_end_time"
             android:hint="@string/post_hint_group_end_time" />
     </LinearLayout>
 
-    <EditText
-        android:id="@+id/edit_group_max_people"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/post_hint_group_max_people"
-        android:inputType="number"/>
+        android:layout_marginBottom="@dimen/margin">
+        <ImageView
+            android:contentDescription="@string/icon"
+            android:layout_width="@dimen/ic_width"
+            android:layout_height="@dimen/ic_height"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/ic_person_black_24dp" />
+        <EditText
+            android:theme="@style/EditTextStyle"
+            android:id="@+id/edit_group_max_people"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/post_hint_group_max_people"
+            android:inputType="number"/>
+    </LinearLayout>
+
 </LinearLayout>

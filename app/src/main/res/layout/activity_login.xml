@@ -14,55 +14,67 @@
         <include layout="@layout/progress_bar" />
     </RelativeLayout>
 
-    <AutoCompleteTextView
-        style="@style/AppTheme"
-        android:id="@+id/email" android:layout_width="match_parent"
-        android:layout_height="wrap_content" android:hint="@string/prompt_email"
-        android:inputType="textEmailAddress" android:maxLines="1"
-        android:singleLine="true"
+    <LinearLayout
+        android:id="@+id/email_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="10dp"/>
+        android:layout_marginBottom="@dimen/margin">
+        <ImageView
+            android:contentDescription="@string/icon"
+            android:layout_width="@dimen/ic_width"
+            android:layout_height="@dimen/ic_height"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/ic_mail_black_24dp" />
+        <EditText
+            android:theme="@style/EditTextStyle"
+            android:id="@+id/email" android:layout_width="match_parent"
+            android:layout_height="wrap_content" android:hint="@string/prompt_email"
+            android:inputType="textEmailAddress" android:maxLines="1"
+            android:singleLine="true" />
+    </LinearLayout>
 
-    <EditText
-        style="@style/AppTheme"
-        android:id="@+id/password" android:layout_width="match_parent"
-        android:layout_height="wrap_content" android:hint="@string/prompt_password"
-        android:imeActionId="0"
-        android:imeActionLabel="@string/action_sign_in"
-        android:imeOptions="actionUnspecified" android:inputType="textPassword"
-        android:maxLines="1" android:singleLine="true"
-        android:layout_below="@+id/email"
+    <LinearLayout
+        android:id="@+id/password_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/email_container"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="10dp"/>
+        android:layout_marginBottom="@dimen/margin">
+        <ImageView
+            android:contentDescription="@string/icon"
+            android:layout_width="@dimen/ic_width"
+            android:layout_height="@dimen/ic_height"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/ic_lock_black_24dp" />
+        <EditText
+            android:theme="@style/EditTextStyle"
+            android:id="@+id/password" android:layout_width="match_parent"
+            android:layout_height="wrap_content" android:hint="@string/prompt_password"
+            android:imeActionId="0"
+            android:imeActionLabel="@string/action_sign_in"
+            android:imeOptions="actionUnspecified" android:inputType="textPassword"
+            android:maxLines="1" android:singleLine="true" />
+    </LinearLayout>
 
     <Button
-        style="@style/AppTheme"
+        android:theme="@style/ButtonStyle"
         android:id="@+id/sign_in_button"
         android:layout_width="wrap_content"
-        android:layout_height="44dp"
+        android:layout_height="wrap_content"
         android:text="@string/action_sign_in"
-        android:textSize="8pt"
-        android:textStyle="bold"
-        android:textColor="#424242"
-        android:paddingEnd="12dp"
-        android:paddingStart="12dp"
         android:layout_below="@+id/forgot_password_button"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="5dp"
-        android:background="@color/yellow_300" />
+        android:layout_centerHorizontal="true" />
 
     <TextView
-        style="@style/AppTheme"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/action_forgot_password"
-        android:layout_below="@+id/password"
-        android:layout_alignParentStart="true"
+        android:layout_below="@+id/password_container"
+        android:layout_alignParentEnd="true"
         android:id="@+id/forgot_password_button"
-        android:textColor="@color/blue"
-        android:layout_marginStart="5dp"
-        android:layout_marginTop="3dp"/>
+        android:textColor="@color/blue" />
 
 
 </RelativeLayout>

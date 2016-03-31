@@ -78,6 +78,10 @@ public class Profile extends ParseObject implements Parsable {
         return getJSONArray(KEY_CONTACT_LINKS);
     }
 
+    public void setContactLinks(JSONArray contactLinks) {
+        put(KEY_CONTACT_LINKS, contactLinks);
+    }
+
     public void addContactLink(String contactLink) {
         addUnique(KEY_CONTACT_LINKS, contactLink);
     }

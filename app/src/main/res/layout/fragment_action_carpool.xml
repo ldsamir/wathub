@@ -2,39 +2,101 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/section_carpool">
+    android:id="@+id/section_carpool"
+    android:padding="@dimen/padding">
 
-    <EditText
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/edit_carpool_from"
-        android:hint="From"/>
+        android:layout_marginBottom="@dimen/margin">
+        <ImageView
+            android:contentDescription="@string/icon"
+            android:layout_width="@dimen/ic_width"
+            android:layout_height="@dimen/ic_height"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/ic_edit_location_black_24dp" />
+        <EditText
+            android:theme="@style/EditTextStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/edit_carpool_from"
+            android:hint="@string/post_hint_carpool_from"/>
+    </LinearLayout>
 
-    <EditText
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/edit_carpool_to"
-        android:hint="To"/>
+        android:layout_marginBottom="@dimen/margin">
+        <ImageView
+            android:contentDescription="@string/icon"
+            android:layout_width="@dimen/ic_width"
+            android:layout_height="@dimen/ic_height"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/ic_edit_location_black_24dp" />
+        <EditText
+            android:theme="@style/EditTextStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/edit_carpool_to"
+            android:hint="@string/post_hint_carpool_to"/>
+    </LinearLayout>
 
-    <EditText
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/edit_carpool_when"
-        android:hint="When" />
+        android:layout_marginBottom="@dimen/margin">
+        <ImageView
+            android:contentDescription="@string/icon"
+            android:layout_width="@dimen/ic_width"
+            android:layout_height="@dimen/ic_height"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/ic_today_black_24dp" />
+        <EditText
+            android:theme="@style/EditTextStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/edit_carpool_when"
+            android:hint="@string/post_hint_carpool_when" />
+    </LinearLayout>
 
-    <EditText
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/edit_carpool_price"
-        android:hint="Price"
-        android:inputType="number"/>
+        android:layout_marginBottom="@dimen/margin">
+        <ImageView
+            android:contentDescription="@string/icon"
+            android:layout_width="@dimen/ic_width"
+            android:layout_height="@dimen/ic_height"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/ic_attach_money_black_24dp" />
+        <EditText
+            android:theme="@style/EditTextStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/edit_carpool_price"
+            android:hint="@string/post_hint_carpool_price"
+            android:inputType="number"/>
+    </LinearLayout>
 
-    <EditText
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/edit_carpool_max_passengers"
-        android:hint="Max passengers"
-        android:inputType="number"/>
+        android:layout_marginBottom="@dimen/margin">
+        <ImageView
+            android:contentDescription="@string/icon"
+            android:layout_width="@dimen/ic_width"
+            android:layout_height="@dimen/ic_height"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/ic_person_black_24dp" />
+        <EditText
+            android:theme="@style/EditTextStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/edit_carpool_max_passengers"
+            android:hint="@string/post_hint_carpool_max_passengers"
+            android:inputType="number"/>
+    </LinearLayout>
+
 
 
 </LinearLayout>

@@ -2,47 +2,114 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/section_book_exchange"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-    <EditText
-        android:id="@+id/edit_book_title"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/post_hint_book_title"
-        android:inputType="textMultiLine"/>
+    android:layout_height="match_parent"
+    android:padding="@dimen/padding">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:layout_marginBottom="@dimen/margin">
+        <ImageView
+            android:contentDescription="@string/icon"
+            android:layout_width="@dimen/ic_width"
+            android:layout_height="@dimen/ic_height"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/ic_title_black_24dp" />
+        <EditText
+            android:theme="@style/EditTextStyle"
+            android:id="@+id/edit_book_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/post_hint_book_title" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/margin">
+        <ImageView
+            android:contentDescription="@string/icon"
+            android:layout_width="@dimen/ic_width"
+            android:layout_height="@dimen/ic_height"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/ic_subject_black_24dp" />
         <Spinner
+            android:theme="@style/SpinnerStyle"
             android:id="@+id/select_book_course_subject"
-            android:layout_width="200dp"
-            android:layout_height="wrap_content">
-        </Spinner>
-        <Spinner
-            android:id="@+id/select_book_course_number"
-            android:layout_width="150dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content">
         </Spinner>
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/text_course_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:visibility="gone"/>
-
-    <EditText
-        android:id="@+id/edit_book_price"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/post_hint_book_price"
-        android:inputType="numberDecimal" />
+        android:layout_marginBottom="@dimen/margin">
+        <ImageView
+            android:contentDescription="@string/icon"
+            android:layout_width="@dimen/ic_width"
+            android:layout_height="@dimen/ic_height"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/ic_subject_black_24dp" />
+        <Spinner
+            android:id="@+id/select_book_course_number"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        </Spinner>
+    </LinearLayout>
 
-    <Spinner
-        android:id="@+id/select_book_condition"
+    <LinearLayout
+        android:id="@+id/text_course_title_container"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-    </Spinner>
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/margin"
+        android:visibility="gone">
+        <ImageView
+            android:contentDescription="@string/icon"
+            android:layout_width="@dimen/ic_width"
+            android:layout_height="@dimen/ic_height"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/ic_subject_black_24dp" />
+        <TextView
+            android:id="@+id/text_course_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/margin">
+        <ImageView
+            android:contentDescription="@string/icon"
+            android:layout_width="@dimen/ic_width"
+            android:layout_height="@dimen/ic_height"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/ic_attach_money_black_24dp" />
+        <EditText
+            android:theme="@style/EditTextStyle"
+            android:id="@+id/edit_book_price"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/post_hint_book_price"
+            android:inputType="numberDecimal" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/margin">
+        <ImageView
+            android:contentDescription="@string/icon"
+            android:layout_width="@dimen/ic_width"
+            android:layout_height="@dimen/ic_height"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/ic_star_black_24dp" />
+        <Spinner
+            android:theme="@style/SpinnerStyle"
+            android:id="@+id/select_book_condition"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        </Spinner>
+    </LinearLayout>
 </LinearLayout>

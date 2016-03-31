@@ -33,7 +33,7 @@ import webb8.wathub.models.Parsable;
 public class LoginActivity extends AppCompatActivity {
 
     // UI references.
-    private AutoCompleteTextView mEmailView;
+    private EditText mEmailView;
     private EditText mPasswordView;
     private RelativeLayout mProgressBar;
 
@@ -43,7 +43,7 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         // Set up the login form.
-        mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
+        mEmailView = (EditText) findViewById(R.id.email);
         //populateAutoComplete();
 
         mPasswordView = (EditText) findViewById(R.id.password);

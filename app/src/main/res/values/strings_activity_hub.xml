@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="title_activity_post">WAThub</string>
-
     <string name="title_profile">Profile</string>
     <string name="title_my_posts">My Posts</string>
     <string name="title_all_posts">All Posts</string>
@@ -22,7 +21,6 @@
 
     <string name="error_loading_posts">Error loading posts</string>
 
-
     <string name="book_condition_bad">BAD</string>
     <string name="book_condition_moderate">MODERATE</string>
     <string name="book_condition_good">GOOD</string>
@@ -34,6 +32,12 @@
     <string name="profile_hint_program">Program of Study</string>
     <string name="profile_hint_phone">Phone Number</string>
     <string name="profile_photo_content_description">No photo available</string>
+    <string name="profile_btn_add_contact_link">Add contact link</string>
+    <string name="profile_btn_save">Save</string>
+    <string name="profile_hint_contact_link">Link</string>
+    <string name="profile_contact_link_tag">LinkTag</string>
+    <string name="profile_delete_contact_link_tag">DeleteLinkTag</string>
+    <string name="info_profile_saving">Saving profile</string>
 
     <string name="post_hint_content">What\'s happening?</string>
     <string name="post_button_go">Post</string>
@@ -64,6 +68,12 @@
     <string name="post_hint_group_start_time">Start time</string>
     <string name="post_hint_group_end_time">End time</string>
 
+    <string name="post_hint_carpool_from">From</string>
+    <string name="post_hint_carpool_to">To</string>
+    <string name="post_hint_carpool_when">When</string>
+    <string name="post_hint_carpool_price">Price</string>
+    <string name="post_hint_carpool_max_passengers">Capacity</string>
+
     <string name="error_groupstudy_empty_groupname">Please, enter the group name</string>
     <string name="error_groupstudy_empty_numberpeople">Please, enter the number of people</string>
     <string name="error_groupstudy_empty_where">Please, enter the location</string>
@@ -76,9 +86,11 @@
     <string name="error_post_empty_book_title">Please, enter the book title</string>
     <string name="error_post_empty_book_price">Please, enter the book price</string>
     <string name="error_publishing_post">Error posting</string>
+    <string name="error_loading_profile">Error loading profile</string>
+    <string name="error_updating_profile">Error updating profile</string>
 
     <string name="info_post_published">Posted</string>
-    <string name="profile_save">Profile updated</string>
+    <string name="info_profile_updated">Profile updated</string>
     <string name="book_exchange_bookTitle">Book Title</string>
     <string name="book_exchange_Condition">Book Condition</string>
     <string name="book_exchange_courseNumber">Course Number</string>
@@ -124,4 +136,5 @@
     <string name="error_no_user_profile_found">No user profile found</string>
 
     <string name="slash">/</string>
+    <string name="icon">icon</string>
 </resources>

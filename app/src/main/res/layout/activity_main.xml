@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/uw_yellow"
+    android:background="@color/yellow_uw"
     tools:context=".init.MainActivity">
 
     <!-- The primary full-screen view. This can be replaced with whatever view

@@ -1,38 +1,56 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
+<ScrollView
     android:layout_height="match_parent"
-    tools:context=".hub.fragments.actions.ActionPostFragment"
-    android:orientation="vertical">
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/progress_bar"
-        android:visibility="gone">
-        <include layout="@layout/progress_bar" />
-    </RelativeLayout>
-
-    <EditText
-        android:id="@+id/edit_post_content"
+    android:layout_width="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android" >
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/post_hint_content"
-        android:inputType="textMultiLine"
-        android:lines="5"/>
+        tools:context=".hub.fragments.actions.ActionPostFragment"
+        android:orientation="vertical">
 
-    <FrameLayout
-        android:id="@+id/post_action_container"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-    </FrameLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/progress_bar"
+            android:visibility="gone">
+            <include layout="@layout/progress_bar" />
+        </RelativeLayout>
 
-    <Button
-        android:id="@+id/action_post_go"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:textStyle="bold"
-        android:background="@color/uw_yellow"
-        android:text="@string/post_button_go" />
-</LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/margin">
+            <ImageView
+                android:contentDescription="@string/icon"
+                android:layout_width="@dimen/ic_width"
+                android:layout_height="@dimen/ic_height"
+                android:layout_gravity="center_vertical"
+                android:src="@drawable/ic_comment_black_24dp" />
+            <EditText
+                android:theme="@style/EditTextStyle"
+                android:id="@+id/edit_post_content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/post_hint_content"
+                android:inputType="textMultiLine"
+                android:lines="3"
+                android:layout_marginBottom="@dimen/margin"/>
+        </LinearLayout>
+
+        <FrameLayout
+            android:id="@+id/post_action_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        </FrameLayout>
+
+        <Button
+            android:theme="@style/ButtonStyle"
+            android:id="@+id/action_post_go"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/post_button_go" />
+    </LinearLayout>
+</ScrollView>
+

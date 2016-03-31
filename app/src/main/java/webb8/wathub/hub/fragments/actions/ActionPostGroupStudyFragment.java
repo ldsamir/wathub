@@ -18,6 +18,7 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -66,6 +67,7 @@ public class ActionPostGroupStudyFragment extends ActionPostFragment {
     protected EditText mEndTimeView;
     protected EditText mWhereView;
     protected EditText mNumberPeopleView;
+    protected LinearLayout mCourseTitleContainerView;
 
 
     @Override
@@ -82,12 +84,13 @@ public class ActionPostGroupStudyFragment extends ActionPostFragment {
         mGroupNameView = (EditText) groupStudySectionView.findViewById(R.id.edit_group_name);
         mCourseSubjectView = (Spinner) groupStudySectionView.findViewById(R.id.select_group_course_subject);
         mCourseNumberView = (Spinner) groupStudySectionView.findViewById(R.id.select_group_course_number);
-        mCourseTitleView = (TextView) groupStudySectionView.findViewById(R.id.group_course_title);
+        mCourseTitleView = (TextView) groupStudySectionView.findViewById(R.id.text_course_title);
         mWhenView = (EditText) groupStudySectionView.findViewById(R.id.edit_group_start_when);
         mStartTimeView = (EditText) groupStudySectionView.findViewById(R.id.edit_group_start_time);
         mEndTimeView = (EditText) groupStudySectionView.findViewById(R.id.edit_group_end_time);
         mWhereView = (EditText) groupStudySectionView.findViewById(R.id.edit_group_where);
         mNumberPeopleView = (EditText) groupStudySectionView.findViewById(R.id.edit_group_max_people);
+        mCourseTitleContainerView = (LinearLayout) groupStudySectionView.findViewById(R.id.text_course_title_container);
 
         final Post post = new Post();
         final GroupStudy groupStudyPost = new GroupStudy();
@@ -124,7 +127,7 @@ public class ActionPostGroupStudyFragment extends ActionPostFragment {
         courseSubjectAdapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
         mCourseSubjectView.setAdapter(courseSubjectAdapter);
 
-        ArrayAdapter<CharSequence> courseNumberAdapter = ArrayAdapter.createFromResource(getActivity(),
+        final ArrayAdapter<CharSequence> courseNumberAdapter = ArrayAdapter.createFromResource(getActivity(),
                 R.array.book_course_number_list, R.layout.simple_spinner_item);
         courseNumberAdapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
         mCourseNumberView.setAdapter(courseNumberAdapter);
@@ -138,7 +141,8 @@ public class ActionPostGroupStudyFragment extends ActionPostFragment {
                     String subject = parent.getItemAtPosition(position).toString();
                     Util.updateCourseNumbersAdapter(getActivity(), mCourseNumberView, subject);
                 } else {
-                    mCourseTitleView.setVisibility(View.GONE);
+                    mCourseTitleContainerView.setVisibility(View.GONE);
+                    mCourseNumberView.setAdapter(courseNumberAdapter);
                 }
 
             }
@@ -162,12 +166,12 @@ public class ActionPostGroupStudyFragment extends ActionPostFragment {
                                 Course selectedCourse = Course.getInstance(objects.get(0));
                                 groupStudyPost.setCourse(selectedCourse);
                                 mCourseTitleView.setText(selectedCourse.getTitle());
-                                mCourseTitleView.setVisibility(View.VISIBLE);
+                                mCourseTitleContainerView.setVisibility(View.VISIBLE);
                             }
                         }
                     });
                 } else {
-                    mCourseTitleView.setVisibility(View.GONE);
+                    mCourseTitleContainerView.setVisibility(View.GONE);
                 }
             }
 

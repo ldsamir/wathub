@@ -17,7 +17,7 @@
         android:layout_marginBottom="3dp"
         android:id="@+id/post_card"
         card_view:cardElevation="2dp"
-        card_view:cardBackgroundColor="@color/yellow_300">
+        card_view:cardBackgroundColor="@color/yellow">
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
