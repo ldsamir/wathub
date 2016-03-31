@@ -3,12 +3,12 @@
     xmlns:tools="http://schemas.android.com/tools" tools:context=".hub.HubActivity">
     <item android:id="@+id/action_search" android:title="@string/action_search"
         app:showAsAction="collapseActionView|ifRoom"
-        android:icon="@drawable/ic_search_black_24dp"
+        android:icon="@drawable/ic_search_black_18dp"
         app:actionViewClass="android.widget.SearchView"/>
     <item android:id="@+id/action_advanced_search"
         android:title="@string/action_advanced_search"
         app:showAsAction="collapseActionView|ifRoom"
-        android:icon="@drawable/ic_filter_list_black_24dp" />
+        android:icon="@drawable/ic_filter_list_black_18dp" />
     <item android:id="@+id/action_settings" android:title="@string/action_settings"
         android:orderInCategory="100" app:showAsAction="never" />
 </menu>

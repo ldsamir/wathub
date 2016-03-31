@@ -20,6 +20,7 @@ import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -51,9 +52,9 @@ public class PostCard {
     protected TextView mPostDateView;
     protected TextView mPostContentView;
     protected ImageView mPostIconView;
-    protected TextView mPostActionJoinView;
-    protected TextView mPostActionVoteView;
-    protected TextView mPostActionCommentView;
+    protected ImageView mPostActionJoinView;
+    protected ImageView mPostActionVoteView;
+    protected ImageView mPostActionCommentView;
     protected LinearLayout mPostActionJoinBarView;
     protected LinearLayout mPostActionJoinNumBarView;
     protected TextView mPostActionVoteNumView;
@@ -145,16 +146,15 @@ public class PostCard {
         mPostDateView = (TextView) mPostCardView.findViewById(R.id.post_date);
         mPostContentView = (TextView) mPostCardView.findViewById(R.id.post_content);
         mPostIconView = (ImageView) mPostCardView.findViewById(R.id.post_type_icon);
-        mPostActionVoteView = (TextView) mPostCardView.findViewById(R.id.post_action_vote);
-        mPostActionCommentView = (TextView) mPostCardView.findViewById(R.id.post_action_comment);
+        mPostActionVoteView = (ImageView) mPostCardView.findViewById(R.id.post_action_vote);
+        mPostActionCommentView = (ImageView) mPostCardView.findViewById(R.id.post_action_comment);
         mPostActionVoteNumView = (TextView) mPostCardView.findViewById(R.id.post_action_vote_num);
         mPostActionCommentNumView = (TextView) mPostCardView.findViewById(R.id.post_action_comment_num);
 
         String content = mPost.getContent();
         PostType postType = mPost.getPostType();
-        Date postDate = mPost.getUpdatedAt();
 
-        mPostIconView.setImageResource(R.drawable.ic_create_white_24dp);
+        mPostIconView.setImageResource(R.drawable.ic_event_black_24dp);
 
         if (postType == PostTypes.BOOK_EXCHANGE.getType()) {
             mPostIconView.setImageResource(R.drawable.ic_book_black_24dp);
@@ -167,7 +167,7 @@ public class PostCard {
         } else
 
         if (postType == PostTypes.CARPOOL.getType()) {
-            mPostIconView.setImageResource(R.drawable.ic_directions_car_white_24dp);
+            mPostIconView.setImageResource(R.drawable.ic_directions_car_black_24dp);
             mInnerPostCardView.addView(mCarpoolCard.getView(mPostCardView));
         }
 
@@ -267,8 +267,10 @@ public class PostCard {
             }
         });
 
-//      SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy HH:mm a", Locale.CANADA);
-//      mPostDateView.setText(format.format(postDate));
+        Calendar today = Calendar.getInstance();
+        Calendar postDate = Calendar.getInstance();
+        postDate.setTime(mPost.getUpdatedAt());
+        mPostDateView.setText(Util.getTimeDiff(today, postDate));
 
         return mPostCardView;
     }
@@ -325,8 +327,8 @@ public class PostCard {
     public void updateVoteCount(int count) {
         if (count > 0) mCurUserVoted = true;
         if (count < 0) mCurUserVoted = false;
-        if (mCurUserVoted) mPostActionVoteView.setText(mActivity.getString(R.string.action_voted));
-        else mPostActionVoteView.setText(mActivity.getString(R.string.action_vote));
+        if (mCurUserVoted) mPostActionVoteView.setImageResource(R.drawable.ic_favorite_black_24dp);
+        else mPostActionVoteView.setImageResource(R.drawable.ic_favorite_border_black_24dp);
         mVoteCount += count;
         if (mVoteCount > 0) mPostActionVoteNumView.setText(String.valueOf(mVoteCount));
         else mPostActionVoteNumView.setText("");
@@ -335,8 +337,8 @@ public class PostCard {
     public void updateCommentCount(int count) {
         if (count > 0) mCurUserCommented = true;
         if (count < 0) mCurUserCommented = false;
-        if (mCurUserCommented) mPostActionCommentView.setText(mActivity.getString(R.string.action_commented));
-        else mPostActionCommentView.setText(mActivity.getString(R.string.action_comment));
+        if (mCurUserCommented) mPostActionCommentView.setImageResource(R.drawable.ic_mode_comment_black_24dp);
+        else mPostActionCommentView.setImageResource(R.drawable.ic_comment_black_24dp);
         mCommentCount += count;
         if (mCommentCount > 0) mPostActionCommentNumView.setText(String.valueOf(mCommentCount));
         else mPostActionCommentNumView.setText("");

@@ -3,6 +3,7 @@ package webb8.wathub.util;
 import android.app.Activity;
 import android.content.Intent;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -89,7 +90,7 @@ public class GroupStudyCard extends PostCard {
             mGroupNumJoined.setText(String.valueOf(mStudentsJoined == null ? 0 : "" + mStudentsJoined.length()));
 
             // update the text from "Joined" to "Join"
-            mPostActionJoinView.setText(mActivity.getString(R.string.action_join));
+            mPostActionJoinView.setImageResource(R.drawable.ic_person_add_black_24dp);
         }
 
         // if the student has not beed added to the list AND there is an available seat,then add
@@ -106,7 +107,7 @@ public class GroupStudyCard extends PostCard {
             mGroupNumJoined.setText(String.valueOf(mStudentsJoined == null ? 0 : "" + mStudentsJoined.length()));
 
             // update the text from "Join" to "Joined"
-            mPostActionJoinView.setText(mActivity.getString(R.string.action_joined));
+            mPostActionJoinView.setImageResource(R.drawable.ic_person_black_24dp);
         }
         else {
             Toast.makeText(mActivity.getApplicationContext(), mActivity.getString(R.string.warning_group_full), Toast.LENGTH_SHORT).show();
@@ -117,10 +118,10 @@ public class GroupStudyCard extends PostCard {
         mStudentsJoined = mGroupStudy.getStudents();
         mGroupNumJoined.setText(String.valueOf(mStudentsJoined == null ? 0 : "" + mStudentsJoined.length()));
         if (haveJoined()){
-            mPostActionJoinView.setText(mActivity.getString(R.string.action_joined));
+            mPostActionJoinView.setImageResource(R.drawable.ic_person_black_24dp);
         }
         else {
-            mPostActionJoinView.setText(mActivity.getString(R.string.action_join));
+            mPostActionJoinView.setImageResource(R.drawable.ic_person_add_black_24dp);
         }
     }
 
@@ -161,7 +162,7 @@ public class GroupStudyCard extends PostCard {
         mGroupEndTime = (TextView) view.findViewById(R.id.group_study_end_time);
         mPostActionJoinBarView = (LinearLayout) postCardView.findViewById(R.id.post_action_bar_join);
         mPostActionJoinNumBarView = (LinearLayout) postCardView.findViewById(R.id.post_action_join_num_bar);
-        mPostActionJoinView = (TextView) postCardView.findViewById(R.id.post_action_join);
+        mPostActionJoinView = (ImageView) postCardView.findViewById(R.id.post_action_join);
         mGroupNumJoined = (TextView) postCardView.findViewById(R.id.post_action_join_num);
         mGroupMaxPeople = (TextView) postCardView.findViewById(R.id.post_action_join_max_num);
 
@@ -200,10 +201,10 @@ public class GroupStudyCard extends PostCard {
         mGroupMaxPeople.setText(String.valueOf(mGroupStudy.getMaxPeople()));
 
         if (haveJoined()){
-            mPostActionJoinView.setText(mActivity.getString(R.string.action_joined));
+            mPostActionJoinView.setImageResource(R.drawable.ic_person_black_24dp);
         }
         else {
-            mPostActionJoinView.setText(mActivity.getString(R.string.action_join));
+            mPostActionJoinView.setImageResource(R.drawable.ic_person_add_black_24dp);
         }
 
         mStudentsJoinedUpdate();

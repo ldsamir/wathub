@@ -49,6 +49,7 @@ public class DoneFragment extends PostFragment {
 
     @Override
     public void refresh() {
+        mProgressBar.setVisibility(View.VISIBLE);
         mDoneQuery.findInBackground(new FindCallback<ParseObject>() {
             @Override
             public void done(List<ParseObject> objects, ParseException e) {
@@ -59,14 +60,12 @@ public class DoneFragment extends PostFragment {
                         Post post = done.getPost();
                         try {
                             post.fetch();
-                            postCards.add(new PostCard(getActivity(), post));
+                            mPostAdapter.addPostCard(new PostCard(getActivity(), post));
                         } catch (ParseException p) {
 
                         }
                     }
-
                     mProgressBar.setVisibility(View.GONE);
-                    mPostAdapter.setPostCards(postCards);
                 } else {
                     Toast.makeText(mHubActivity, R.string.error_loading_posts, Toast.LENGTH_SHORT).show();
                 }

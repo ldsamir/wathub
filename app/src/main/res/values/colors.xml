@@ -3,8 +3,10 @@
     <color name="yellow">#FFEB3B</color>
     <color name="yellow_uw">#FFEB3B</color>
     <color name="yellow_dark">#F9A825</color>
-    <color name="yellow_accent">#F9A825</color>
+    <color name="yellow_accent">#FBC02D</color>
     <color name="teal">#009688</color>
     <color name="blue">#0000ff</color>
     <color name="teal_100">#B2DFDB</color>
+    <color name="yellow_100">#FFF9C4</color>
+    <color name="yellow_200">#FFF59D</color>
 </resources>

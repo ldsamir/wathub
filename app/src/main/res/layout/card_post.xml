@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_marginTop="@dimen/activity_vertical_margin"
     android:layout_marginBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/padding"
-    android:paddingRight="@dimen/padding">
+    android:paddingBottom="8dp">
 
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
@@ -16,24 +16,30 @@
         android:layout_marginTop="5dp"
         android:layout_marginBottom="3dp"
         android:id="@+id/post_card"
-        card_view:cardElevation="2dp"
+        card_view:cardCornerRadius="5dp"
+        card_view:cardElevation="8dp"
+        card_view:cardUseCompatPadding="true"
         card_view:cardBackgroundColor="@color/yellow">
+
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical">
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:padding="16dp">
 
-                <ImageView
+                <de.hdodenhof.circleimageview.CircleImageView
                     android:layout_width="@dimen/post_avatar_width"
                     android:layout_height="@dimen/post_avatar_height"
                     android:id="@+id/post_avatar"
                     android:layout_alignParentStart="true"
                     android:layout_alignParentTop="true"
                     android:layout_marginEnd="16dp"
-                    android:contentDescription="@string/content_avatar"/>
+                    android:contentDescription="@string/content_avatar"
+                    app:civ_border_width="2dp"
+                    app:civ_border_color="@color/teal"/>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -42,38 +48,59 @@
                     android:layout_toEndOf="@id/post_avatar"
                     android:layout_alignParentTop="true"
                     android:textStyle="bold"
-                    android:textSize="17sp"
-                    android:alpha="222"/>
+                    android:textSize="15sp"
+                    android:alpha="200"
+                    android:text="Mahammad Ismayilzada"/>
 
-                <TextView
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/post_date"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignParentTop="true"/>
+                    android:id="@+id/post_date_container"
+                    android:layout_below="@id/post_user"
+                    android:layout_alignStart="@id/post_user">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/post_date"
+                        android:textSize="10sp"
+                        android:textColor="@color/teal"
+                        android:layout_gravity="center_vertical"
+                        android:text="11m"/>
+                    <ImageView
+                        android:layout_width="10dp"
+                        android:layout_height="10dp"
+                        android:layout_marginStart="5dp"
+                        android:layout_gravity="center_vertical"
+                        android:src="@drawable/ic_public_black_24dp"/>
+                </LinearLayout>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/post_content"
-                    android:layout_below="@id/post_user"
+                    android:layout_below="@id/post_date_container"
                     android:layout_toEndOf="@id/post_avatar"
-                    android:alpha="138"/>
+                    android:alpha="130"
+                    android:textSize="20sp"
+                    android:text="hey guys how are you"/>
 
                 <ImageView
                     android:layout_width="20dp"
-                    android:layout_height="30dp"
-                    android:layout_alignParentRight="false"
+                    android:layout_height="20dp"
                     android:layout_alignParentTop="true"
                     android:layout_alignParentEnd="true"
                     android:id="@+id/post_type_icon"/>
             </RelativeLayout>
+
+            <View style="@style/dashLine"/>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/inner_postCard"
                 android:orientation="vertical">
             </LinearLayout>
+
             <LinearLayout
                 android:id="@+id/post_action_bar"
                 android:layout_width="match_parent"
@@ -84,35 +111,39 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:visibility="gone"
+                    android:visibility="invisible"
                     android:paddingLeft="@dimen/padding_action_bar"
                     android:paddingRight="@dimen/padding_action_bar">
-                    <TextView
+                    <ImageView
                         android:id="@+id/post_action_join"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:contentDescription="@string/action_join"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
                         android:paddingLeft="@dimen/padding"
                         android:paddingRight="@dimen/padding"
-                        android:text="@string/action_join"/>
+                        android:src="@drawable/ic_person_add_black_24dp"/>
                     <LinearLayout
                         android:id="@+id/post_action_join_num_bar"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:orientation="horizontal"
+                        android:layout_marginStart="@dimen/margin"
+                        android:layout_marginEnd="@dimen/margin">
                         <TextView
                             android:id="@+id/post_action_join_num"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:paddingLeft="@dimen/padding" />
+                            android:layout_gravity="center_vertical" />
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_gravity="center"
                             android:text="@string/slash"/>
                         <TextView
                             android:id="@+id/post_action_join_max_num"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:paddingRight="@dimen/padding" />
+                            android:layout_gravity="center_vertical" />
                     </LinearLayout>
                 </LinearLayout>
                 <LinearLayout
@@ -121,17 +152,21 @@
                     android:layout_height="wrap_content"
                     android:paddingLeft="@dimen/padding_action_bar"
                     android:paddingRight="@dimen/padding_action_bar">
-                    <TextView
+                    <ImageView
                         android:id="@+id/post_action_vote"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
                         android:paddingLeft="@dimen/padding"
                         android:paddingRight="@dimen/padding"
-                        android:text="@string/action_vote"/>
+                        android:src="@drawable/ic_favorite_border_black_24dp"
+                        android:contentDescription="@string/action_vote"/>
                     <TextView
                         android:id="@+id/post_action_vote_num"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/margin"
+                        android:layout_marginEnd="@dimen/margin"
+                        android:layout_gravity="center_vertical"
                         android:paddingLeft="@dimen/padding"
                         android:paddingRight="@dimen/padding" />
                 </LinearLayout>
@@ -141,17 +176,21 @@
                     android:layout_height="wrap_content"
                     android:paddingLeft="@dimen/padding_action_bar"
                     android:paddingRight="@dimen/padding_action_bar">
-                    <TextView
+                    <ImageView
                         android:id="@+id/post_action_comment"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
                         android:paddingLeft="@dimen/padding"
                         android:paddingRight="@dimen/padding"
-                        android:text="@string/action_comment"/>
+                        android:src="@drawable/ic_comment_black_24dp"
+                        android:contentDescription="@string/action_comment"/>
                     <TextView
                         android:id="@+id/post_action_comment_num"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/margin"
+                        android:layout_marginEnd="@dimen/margin"
+                        android:layout_gravity="center_vertical"
                         android:paddingLeft="@dimen/padding"
                         android:paddingRight="@dimen/padding" />
                 </LinearLayout>

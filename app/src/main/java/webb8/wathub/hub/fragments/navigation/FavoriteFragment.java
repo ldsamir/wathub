@@ -53,6 +53,7 @@ public class FavoriteFragment extends PostFragment {
 
     @Override
     public void refresh() {
+        mProgressBar.setVisibility(View.VISIBLE);
         mFavoriteQuery.findInBackground(new FindCallback<ParseObject>() {
             @Override
             public void done(List<ParseObject> objects, ParseException e) {
