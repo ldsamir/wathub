@@ -205,61 +205,73 @@ public class ProfileFragment extends HubFragment {
         mProfile.setContactLinks(contactLinks);
 
         if (mAvatar != null) {
-            Bitmap bitmap = null;
-            final ParseFile avatar = new ParseFile();
-
-            try {
-                InputStream is = mHubActivity.getContentResolver().openInputStream(mAvatar);
-                bitmap = BitmapFactory.decodeStream(is);
-                File avatarFile = new File(mHubActivity.getCacheDir(), "tmp");
-                avatarFile.createNewFile();
-                ByteArrayOutputStream bos = new ByteArrayOutputStream();
-                bitmap.compress(Bitmap.CompressFormat.PNG, 0, bos);
-                byte[] data = bos.toByteArray();
-                FileOutputStream fos = new FileOutputStream(avatarFile);
-                fos.write(data);
-                avatar = new ParseFile(bos.toByteArray());
-            } catch (FileNotFoundException fne) {
-
-            } catch (IOException ioe) {
-
-            }
-
-            Toast.makeText(mHubActivity.getApplicationContext(), R.string.info_profile_saving, Toast.LENGTH_LONG).show();
-//            avatar.saveInBackground(new SaveCallback() {
+//            Bitmap bitmap = null;
+////            final ParseFile avatar = new ParseFile();
+//
+//            try {
+//                InputStream is = mHubActivity.getContentResolver().openInputStream(mAvatar);
+//                bitmap = BitmapFactory.decodeStream(is);
+//                File avatarFile = new File(mHubActivity.getCacheDir(), "tmp");
+//                avatarFile.createNewFile();
+//                ByteArrayOutputStream bos = new ByteArrayOutputStream();
+//                bitmap.compress(Bitmap.CompressFormat.PNG, 0, bos);
+//                byte[] data = bos.toByteArray();
+//                FileOutputStream fos = new FileOutputStream(avatarFile);
+//                fos.write(data);
+////                avatar = new ParseFile(bos.toByteArray());
+//            } catch (FileNotFoundException fne) {
+//
+//            } catch (IOException ioe) {
+//
+//            }
+//
+//            Toast.makeText(mHubActivity.getApplicationContext(), R.string.info_profile_saving, Toast.LENGTH_LONG).show();
+////            avatar.saveInBackground(new SaveCallback() {
+////                @Override
+////                public void done(ParseException e) {
+////                    if (e == null) {
+////                        mProfile.setAvatar(avatar);
+////                        mProfile.saveInBackground(new SaveCallback() {
+////                            @Override
+////                            public void done(ParseException e) {
+////                                if (e == null) {
+////                                    Toast.makeText(mHubActivity.getApplicationContext(), R.string.info_profile_updated, Toast.LENGTH_SHORT).show();
+////                                } else {
+////                                    Toast.makeText(mHubActivity.getApplicationContext(), R.string.error_updating_profile, Toast.LENGTH_SHORT).show();
+////                                    System.out.println(e.getMessage());
+////                                }
+////                            }
+////                        });
+////                    } else {
+////                        System.out.println(e.getMessage());
+////                    }
+////                }
+////            });
+        } else {
+//            mProfile.saveInBackground(new SaveCallback() {
 //                @Override
 //                public void done(ParseException e) {
 //                    if (e == null) {
-//                        mProfile.setAvatar(avatar);
-//                        mProfile.saveInBackground(new SaveCallback() {
-//                            @Override
-//                            public void done(ParseException e) {
-//                                if (e == null) {
-//                                    Toast.makeText(mHubActivity.getApplicationContext(), R.string.info_profile_updated, Toast.LENGTH_SHORT).show();
-//                                } else {
-//                                    Toast.makeText(mHubActivity.getApplicationContext(), R.string.error_updating_profile, Toast.LENGTH_SHORT).show();
-//                                    System.out.println(e.getMessage());
-//                                }
-//                            }
-//                        });
+//                        Toast.makeText(mHubActivity.getApplicationContext(), R.string.info_profile_updated, Toast.LENGTH_SHORT).show();
 //                    } else {
+//                        Toast.makeText(mHubActivity.getApplicationContext(), R.string.error_updating_profile, Toast.LENGTH_SHORT).show();
 //                        System.out.println(e.getMessage());
 //                    }
 //                }
 //            });
-        } else {
-            mProfile.saveInBackground(new SaveCallback() {
-                @Override
-                public void done(ParseException e) {
-                    if (e == null) {
-                        Toast.makeText(mHubActivity.getApplicationContext(), R.string.info_profile_updated, Toast.LENGTH_SHORT).show();
-                    } else {
-                        Toast.makeText(mHubActivity.getApplicationContext(), R.string.error_updating_profile, Toast.LENGTH_SHORT).show();
-                        System.out.println(e.getMessage());
-                    }
-                }
-            });
         }
+
+        mProfile.saveInBackground(new SaveCallback() {
+            @Override
+            public void done(ParseException e) {
+                if (e == null) {
+                    Toast.makeText(mHubActivity.getApplicationContext(), R.string.info_profile_updated, Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(mHubActivity.getApplicationContext(), R.string.error_updating_profile, Toast.LENGTH_SHORT).show();
+                    System.out.println(e.getMessage());
+                }
+            }
+        });
     }
 
     public static class DatePickerFragment extends DialogFragment
