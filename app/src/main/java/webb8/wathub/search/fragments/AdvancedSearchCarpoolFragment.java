@@ -17,6 +17,7 @@ import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.parse.FindCallback;
 import com.parse.ParseException;
@@ -57,7 +58,7 @@ public class AdvancedSearchCarpoolFragment extends AdvancedSearchFragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View actionSearchView = inflater.inflate(R.layout.fragment_advanced_search, container, false);
+        final View actionSearchView = inflater.inflate(R.layout.fragment_advanced_search, container, false);
         final View actionSearchCarpoolView = inflater.inflate(R.layout.fragment_advanced_search_carpool, container, false);
         mActionSearchContainer = (FrameLayout) actionSearchView.findViewById(R.id.advanced_search_container);
 
@@ -93,6 +94,12 @@ public class AdvancedSearchCarpoolFragment extends AdvancedSearchFragment {
             }
         });
 
+        mCarpoolWhenView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showDatePickerDialog(v);
+            }
+        });
 
         mSearchTypeView.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -133,12 +140,11 @@ public class AdvancedSearchCarpoolFragment extends AdvancedSearchFragment {
                 Boolean checkFrom = !(from.equals(emptyStr));
                 String to = mCarpoolToView.getText().toString();
                 Boolean checkTo = !(to.equals(emptyStr));
-                // Reading date and time information in specific format:
-                SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.CANADA);
-                Calendar when = Calendar.getInstance();
                 String whenStr = mCarpoolWhenView.getText().toString();
                 Boolean checkWhen = !(whenStr.equals(emptyStr));
+                Calendar when = Calendar.getInstance();
                 if (checkWhen) {
+                    SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy", Locale.CANADA);
                     try {
                         when.setTime(format.parse(whenStr));
                         System.out.println(when);
@@ -163,9 +169,9 @@ public class AdvancedSearchCarpoolFragment extends AdvancedSearchFragment {
                 // Searching through Carpool posts
                 // by taking each input into consideration:
                 ParseQuery<ParseObject> CarpoolPosts = Carpool.getQuery();
-                if (checkFrom) CarpoolPosts.whereContains(Carpool.KEY_FROM, from);
-                if (checkTo) CarpoolPosts.whereContains(Carpool.KEY_TO, to);
-                if (checkWhen) CarpoolPosts.whereEqualTo(Carpool.KEY_WHEN, when.getTime());
+                if (checkFrom) CarpoolPosts.whereMatches(Carpool.KEY_FROM, from, "i");
+                if (checkTo) CarpoolPosts.whereMatches(Carpool.KEY_TO, to, "i");
+                if (checkWhen) CarpoolPosts.whereGreaterThanOrEqualTo(Carpool.KEY_WHEN, when.getTime());
                 if (checkMinPass) CarpoolPosts.whereGreaterThanOrEqualTo(Carpool.KEY_MAX_PASSENGERS, Integer.parseInt(minPassenger));
                 if (checkMaxPass) CarpoolPosts.whereLessThanOrEqualTo(Carpool.KEY_MAX_PASSENGERS, Integer.parseInt(maxPassenger));
                 if (checkMinPrice) CarpoolPosts.whereGreaterThanOrEqualTo(Carpool.KEY_PRICE, Integer.parseInt(minPrice));
@@ -174,7 +180,11 @@ public class AdvancedSearchCarpoolFragment extends AdvancedSearchFragment {
                 CarpoolPosts.findInBackground(new FindCallback<ParseObject>() {
                     @Override
                     public void done(List<ParseObject> objects, ParseException e) {
-                        if (e == null) {
+                        if (objects.size() == 0) {
+                            mProgressBar.setVisibility(View.GONE);
+                            Toast.makeText(actionSearchView.getContext(), "No result found", Toast.LENGTH_SHORT).show();
+                        }
+                        else if (e == null) {
                             List<PostCard> postCards = new ArrayList<PostCard>();
                             for (ParseObject object : objects) {
                                 Post post = Carpool.getInstance(object).getPost();

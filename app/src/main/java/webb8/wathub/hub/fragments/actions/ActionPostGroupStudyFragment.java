@@ -104,12 +104,26 @@ public class ActionPostGroupStudyFragment extends ActionPostFragment {
             }
         });
 
-        mStartTimeView.setOnFocusChangeListener(new View.OnFocusChangeListener(){
+        mWhenView.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onFocusChange(View v, boolean arg){
-                if(arg) {
+            public void onClick(View v) {
+                showDatePickerDialog(v);
+            }
+        });
+
+        mStartTimeView.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean arg) {
+                if (arg) {
                     showTimePickerDialog(v, 0);
                 }
+            }
+        });
+
+        mStartTimeView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showTimePickerDialog(v, 0);
             }
         });
 
@@ -119,6 +133,13 @@ public class ActionPostGroupStudyFragment extends ActionPostFragment {
                 if (arg) {
                     showTimePickerDialog(v, 1);
                 }
+            }
+        });
+
+        mEndTimeView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showTimePickerDialog(v, 1);
             }
         });
 

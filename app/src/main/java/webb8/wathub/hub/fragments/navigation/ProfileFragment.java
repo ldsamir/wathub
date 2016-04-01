@@ -201,7 +201,7 @@ public class ProfileFragment extends HubFragment {
 
         if (mAvatar != null) {
 //            Bitmap bitmap = null;
-////            final ParseFile avatar = new ParseFile();
+//            final ParseFile avatar = new ParseFile();
 //
 //            try {
 //                InputStream is = mHubActivity.getContentResolver().openInputStream(mAvatar);
@@ -213,7 +213,7 @@ public class ProfileFragment extends HubFragment {
 //                byte[] data = bos.toByteArray();
 //                FileOutputStream fos = new FileOutputStream(avatarFile);
 //                fos.write(data);
-////                avatar = new ParseFile(bos.toByteArray());
+//                avatar = new ParseFile(bos.toByteArray());
 //            } catch (FileNotFoundException fne) {
 //
 //            } catch (IOException ioe) {
