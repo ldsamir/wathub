@@ -94,6 +94,7 @@ public class GroupStudyCard extends PostCard {
 
             // update the text from "Joined" to "Join"
             mPostActionJoinView.setImageResource(R.drawable.ic_person_add_black_24dp);
+            Toast.makeText(mActivity.getApplicationContext(), R.string.action_unjoined_group, Toast.LENGTH_SHORT).show();
         }
 
         // if the student has not beed added to the list AND there is an available seat,then add
@@ -111,6 +112,7 @@ public class GroupStudyCard extends PostCard {
 
             // update the text from "Join" to "Joined"
             mPostActionJoinView.setImageResource(R.drawable.ic_person_black_24dp);
+            Toast.makeText(mActivity.getApplicationContext(), R.string.action_joined_group, Toast.LENGTH_SHORT).show();
         }
         else {
             Toast.makeText(mActivity.getApplicationContext(), mActivity.getString(R.string.warning_group_full), Toast.LENGTH_SHORT).show();

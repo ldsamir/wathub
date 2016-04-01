@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.parse.FindCallback;
 import com.parse.ParseException;
@@ -215,6 +216,7 @@ public class PostCard {
                     vote.setPost(mPost);
                     vote.saveInBackground();
                     updateVoteCount(1);
+                    Toast.makeText(mActivity.getApplicationContext(), R.string.action_voted, Toast.LENGTH_SHORT).show();
                 }
             }
         });

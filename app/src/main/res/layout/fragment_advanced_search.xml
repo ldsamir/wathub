@@ -51,7 +51,7 @@
                     android:layout_width="@dimen/ic_width"
                     android:layout_height="@dimen/ic_height"
                     android:layout_gravity="center_vertical"
-                    android:src="@drawable/ic_search_black_24dp" />
+                    android:src="@drawable/ic_schedule_black_24dp" />
 
                 <Spinner
                     android:id="@+id/select_search_type"

@@ -7,7 +7,7 @@
     <string name="title_book_exchange_posts">Book Exchange</string>
     <string name="title_carpool_posts">Carpool</string>
     <string name="title_group_study_posts">Group Study</string>
-    <string name="title_favorites">Favorites</string>
+    <string name="title_favorites">Bookmarks</string>
     <string name="title_log_out">Log out</string>
     <string name="title_done">Done</string>
     <string name="title_general_post">General</string>
@@ -112,15 +112,18 @@
     <string name="card_carpool_from_default_value">From:    </string>
     <string name="card_carpool_to_default_value">To:    </string>
 
-    <string name="info_moved_to_done">Moved to Done</string>
-    <string name="info_moved_to_favorite">Moved to Favorites</string>
+    <string name="info_moved_to_done">Done</string>
+    <string name="info_moved_to_favorite">Bookmarked</string>
 
     <string name="action_join">Join</string>
-    <string name="action_joined">Joined</string>
+    <string name="action_joined_group">You joined this group</string>
+    <string name="action_joined_carpool">You joined this ride</string>
     <string name="action_vote">Like</string>
     <string name="action_voted">Liked</string>
     <string name="action_comment">Comment</string>
     <string name="action_commented">Commented</string>
+    <string name="action_unjoined_group">You left this group</string>
+    <string name="action_unjoined_carpool">You left this ride</string>
 
     <string name="title_users_joined">People who joined</string>
     <string name="title_users_liked">People who liked</string>

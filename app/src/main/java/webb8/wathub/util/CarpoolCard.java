@@ -100,13 +100,14 @@ public class CarpoolCard extends PostCard {
 
                     mCarpool.setPassengers(joinedUsers);
                     mCarpool.saveInBackground();
+                    Toast.makeText(mActivity.getApplicationContext(), R.string.action_unjoined_carpool, Toast.LENGTH_SHORT).show();
 
                 } else {
                     if (mJoinCount + 1 <= mCarpool.getMaxPassengers()) {
                         updateJoinCount(1);
                         mCarpool.addPassenger(ParseUser.getCurrentUser());
                         mCarpool.saveInBackground();
-                        Toast.makeText(mActivity, R.string.action_joined, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(mActivity, R.string.action_joined_carpool, Toast.LENGTH_SHORT).show();
                     } else {
                         Toast.makeText(mActivity, R.string.info_car_is_full, Toast.LENGTH_SHORT).show();
                     }

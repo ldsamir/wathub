@@ -60,7 +60,7 @@ public class DrawerAdapter extends BaseAdapter {
         if (mNavItems[position] == NavItem.BOOK_EXCHANGE_POSTS) imageView.setImageResource(R.drawable.ic_book_black_24dp);
         if (mNavItems[position] == NavItem.CARPOOL_POSTS) imageView.setImageResource(R.drawable.ic_directions_car_black_24dp);
         if (mNavItems[position] == NavItem.GROUP_STUDY_POSTS) imageView.setImageResource(R.drawable.ic_group_black_24dp);
-        if (mNavItems[position] == NavItem.FAVORITES) imageView.setImageResource(R.drawable.ic_favorite_black_24dp);
+        if (mNavItems[position] == NavItem.FAVORITES) imageView.setImageResource(R.drawable.ic_bookmark_black_24dp);
         if (mNavItems[position] == NavItem.DONE) imageView.setImageResource(R.drawable.ic_done_black_24dp);
         if (mNavItems[position] == NavItem.LOG_OUT) imageView.setImageResource(R.drawable.ic_power_settings_new_black_24dp);
 
