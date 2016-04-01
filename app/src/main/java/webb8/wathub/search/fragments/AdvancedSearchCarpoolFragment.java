@@ -188,6 +188,11 @@ public class AdvancedSearchCarpoolFragment extends AdvancedSearchFragment {
                             List<PostCard> postCards = new ArrayList<PostCard>();
                             for (ParseObject object : objects) {
                                 Post post = Carpool.getInstance(object).getPost();
+                                try {
+                                    post.fetch();
+                                } catch (ParseException e1) {
+                                    e1.printStackTrace();
+                                }
                                 postCards.add(new PostCard(getActivity(), post));
                             }
                             PostFeedFragment postFeedFragment = PostFeedFragment.newInstance(postCards);

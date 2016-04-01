@@ -320,6 +320,11 @@ public class AdvancedSearchGroupStudyFragment extends AdvancedSearchFragment {
                                             List<PostCard> postCards = new ArrayList<>();
                                             for (ParseObject object : objects) {
                                                 Post post = GroupStudy.getInstance(object).getPost();
+                                                try {
+                                                    post.fetch();
+                                                } catch (ParseException e1) {
+                                                    e1.printStackTrace();
+                                                }
                                                 postCards.add(new PostCard(getActivity(), post));
                                             }
                                             PostFeedFragment postFeedFragment = PostFeedFragment.newInstance(postCards);
@@ -367,6 +372,11 @@ public class AdvancedSearchGroupStudyFragment extends AdvancedSearchFragment {
                                 List<PostCard> postCards = new ArrayList<>();
                                 for (ParseObject object : objects) {
                                     Post post = GroupStudy.getInstance(object).getPost();
+                                    try {
+                                        post.fetch();
+                                    } catch (ParseException e1) {
+                                        e1.printStackTrace();
+                                    }
                                     postCards.add(new PostCard(getActivity(), post));
                                 }
                                 PostFeedFragment postFeedFragment = PostFeedFragment.newInstance(postCards);
