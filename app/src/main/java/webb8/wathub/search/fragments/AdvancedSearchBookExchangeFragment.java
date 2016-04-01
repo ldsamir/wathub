@@ -220,7 +220,7 @@ public class AdvancedSearchBookExchangeFragment extends AdvancedSearchFragment {
                                             mProgressBar.setVisibility(View.GONE);
                                             FragmentManager fragmentManager = getFragmentManager();
                                             fragmentManager.beginTransaction()
-                                                    .replace(R.id.advanced_search_container, postFeedFragment)
+                                                    .replace(R.id.search_fragment_container, postFeedFragment)
                                                     .commit();
                                         }
                                     }
