@@ -22,6 +22,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import webb8.wathub.R;
+import webb8.wathub.util.DrawerAdapter;
 import webb8.wathub.util.NavItem;
 
 /**
@@ -93,27 +94,31 @@ public class NavigationDrawerFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_navigation_drawer, container, false);
 
+        final DrawerAdapter drawerAdapter = new DrawerAdapter(getActivity(), NavItem.values());
         mDrawerListView = (ListView) view.findViewById(R.id.drawer_list);
         mDrawerListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 selectItem(position);
+                drawerAdapter.setSelectedPosition(position);
             }
         });
 
-        String[] actionNames = new String[NavItem.values().length];
-        int i = 0;
+//        String[] actionNames = new String[NavItem.values().length];
+//        int i = 0;
+//
+//        for (NavItem action : NavItem.values()) {
+//            actionNames[i++] = getString(action.getNameId());
+//        }
 
-        for (NavItem action : NavItem.values()) {
-            actionNames[i++] = getString(action.getNameId());
-        }
-
-        mDrawerListView.setAdapter(new ArrayAdapter<String>(
-                getActionBar().getThemedContext(),
-                android.R.layout.simple_list_item_activated_1,
-                android.R.id.text1,
-                actionNames));
+//        mDrawerListView.setAdapter(new ArrayAdapter<String>(
+//                getActionBar().getThemedContext(),
+//                android.R.layout.simple_list_item_activated_1,
+//                android.R.id.text1,
+//                actionNames));
+        mDrawerListView.setAdapter(drawerAdapter);
         mDrawerListView.setItemChecked(mCurrentSelectedPosition, true);
+        drawerAdapter.setSelectedPosition(mCurrentSelectedPosition);
         return view;
     }
 

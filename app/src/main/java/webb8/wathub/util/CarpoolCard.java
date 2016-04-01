@@ -118,36 +118,39 @@ public class CarpoolCard extends PostCard {
             @Override
             public void onClick(View v) {
                 JSONArray passengers = mCarpool.getPassengers();
-                final String[] userNames = new String[passengers.length()];
 
-                for (int i = 0; i < passengers.length(); i++) {
-                    try {
-                        String userObjectId = passengers.getJSONObject(i).get(Parsable.KEY_OBJECT_ID).toString();
-                        ParseQuery<ParseUser> userQuery = ParseUser.getQuery();
-                        userQuery.whereEqualTo(Parsable.KEY_OBJECT_ID, userObjectId);
-                        List<ParseUser> users = userQuery.find();
-                        ParseUser user = users.get(0);
-                        userNames[i] = user.getUsername();
-                    } catch (JSONException e) {
+                if (passengers != null) {
+                    final String[] userNames = new String[passengers.length()];
 
-                    } catch (ParseException p) {
+                    for (int i = 0; i < passengers.length(); i++) {
+                        try {
+                            String userObjectId = passengers.getJSONObject(i).get(Parsable.KEY_OBJECT_ID).toString();
+                            ParseQuery<ParseUser> userQuery = ParseUser.getQuery();
+                            userQuery.whereEqualTo(Parsable.KEY_OBJECT_ID, userObjectId);
+                            List<ParseUser> users = userQuery.find();
+                            ParseUser user = users.get(0);
+                            userNames[i] = user.getUsername();
+                        } catch (JSONException e) {
 
+                        } catch (ParseException p) {
+
+                        }
                     }
+
+                    AlertDialog.Builder builder = new AlertDialog.Builder(mActivity);
+                    builder.setTitle(R.string.title_users_joined);
+                    builder.setItems(userNames, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            Intent intent = new Intent(mActivity, ProfileActivity.class);
+                            intent.putExtra(ProfileActivity.EXTRA_USER_NAME, userNames[which]);
+                            mActivity.startActivity(intent);
+                        }
+                    });
+                    AlertDialog dialog = builder.create();
+                    dialog.setCanceledOnTouchOutside(true);
+                    dialog.show();
                 }
-
-                AlertDialog.Builder builder = new AlertDialog.Builder(mActivity);
-                builder.setTitle(R.string.title_users_joined);
-                builder.setItems(userNames, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        Intent intent = new Intent(mActivity, ProfileActivity.class);
-                        intent.putExtra(ProfileActivity.EXTRA_USER_NAME, userNames[which]);
-                        mActivity.startActivity(intent);
-                    }
-                });
-                AlertDialog dialog = builder.create();
-                dialog.setCanceledOnTouchOutside(true);
-                dialog.show();
             }
         });
 
@@ -165,6 +168,7 @@ public class CarpoolCard extends PostCard {
         mCurUserJoined = false;
 
         JSONArray passengers = mCarpool.getPassengers();
+
         if (passengers != null) {
             for (int i = 0; i < passengers.length(); i++) {
                 String userObjectId = null;
