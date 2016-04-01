@@ -20,6 +20,7 @@ import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import com.parse.FindCallback;
 import com.parse.ParseException;
@@ -62,7 +63,7 @@ public class AdvancedSearchGroupStudyFragment extends AdvancedSearchFragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View actionSearchView = inflater.inflate(R.layout.fragment_advanced_search, container, false);
+        final View actionSearchView = inflater.inflate(R.layout.fragment_advanced_search, container, false);
         final View actionSearchGroupStudyView = inflater.inflate(R.layout.fragment_advanced_search_groupstudy, container, false);
         mActionSearchContainer = (FrameLayout) actionSearchView.findViewById(R.id.advanced_search_container);
 
@@ -216,65 +217,37 @@ public class AdvancedSearchGroupStudyFragment extends AdvancedSearchFragment {
                 // Need to if at least one of them was given as input:
                 Boolean checkDateBuf = checkWhenBuf || checkStartBuf || checkEndBuf;
                 if (checkDateBuf) {
-                    // If so, ...
                     if (!checkWhenBuf) {
-                        // If date is not specified,
-                        // Today's date is set by default:
                         if (checkStartBuf) {
                             try {
                                 startTime.setTime(format.parse(today.getTime().toString() + " " + startTimeStr));
-                            } catch (java.text.ParseException e) {
-                                // Currently, we do not have anything to do here;
-                                // I hope, we will never catch any exception here...
-                            }
+                            } catch (java.text.ParseException e) {}
                         }
                         if (checkEndBuf) {
                             try {
                                 endTime.setTime(format.parse(today.getTime().toString() + " " + endTimeStr));
-                            } catch (java.text.ParseException e) {
-                                // Currently, we do not have anything to do here;
-                                // I hope, we will never catch any exception here...
-                            }
+                            } catch (java.text.ParseException e) {}
                         }
-                        // After assigning today's date, need to change the situation:
                         checkWhenBuf = true;
                     } else {
-                        // But if the date is given:
                         if (checkStartBuf) {
-
                             try {
                                 startTime.setTime(format.parse(whenStr + " " + startTimeStr));
-                            } catch (java.text.ParseException e) {
-                                // Currently, we do not have anything to do here;
-                                // I hope, we will never catch any exception here...
-                            }
+                            } catch (java.text.ParseException e) {}
                         } else {
-                            // If the start time is not given as input,
-                            // 00:00 is set by default:
                             try {
                                 startTime.setTime(format.parse(whenStr + " 00:00"));
-                            } catch (java.text.ParseException e) {
-                                // Currently, we do not have anything to do here;
-                                // I hope, we will never catch any exception here...
-                            }
+                            } catch (java.text.ParseException e) {}
                             checkStartBuf = true;
                         }
                         if (checkEndBuf) {
                             try {
                                 endTime.setTime(format.parse(whenStr + " " + endTimeStr));
-                            } catch (java.text.ParseException e) {
-                                // Currently, we do not have anything to do here;
-                                // I hope, we will never catch any exception here...
-                            }
+                            } catch (java.text.ParseException e) {}
                         } else {
-                            // if the end time is not given as input,
-                            // 23:59 is set by default:
                             try {
                                 endTime.setTime(format.parse(whenStr + " 23:59"));
-                            } catch (java.text.ParseException e) {
-                                // Currently, we do not have anything to do here;
-                                // I hope, we will never catch any exception here...
-                            }
+                            } catch (java.text.ParseException e) {}
                             checkEndBuf = true;
                         }
                     }
@@ -288,6 +261,7 @@ public class AdvancedSearchGroupStudyFragment extends AdvancedSearchFragment {
                 String courseNumberBuf = emptyStr;
                 Boolean checkCourseNumberBuf = false;
                 if (checkCourseSubject) {
+                    while (mGroupCourseNumberView.getSelectedItem() == null) continue;
                     courseNumberBuf += mGroupCourseNumberView.getSelectedItem().toString();
                     checkCourseNumberBuf = checkCourseNumberBuf || !(courseNumberBuf.toLowerCase().contains(selectStr));
                 }
@@ -323,12 +297,12 @@ public class AdvancedSearchGroupStudyFragment extends AdvancedSearchFragment {
                                 if (checkName)
                                     groupStudyPostQuery.whereContains(GroupStudy.KEY_GROUP_NAME, name);
                                 groupStudyPostQuery.whereContainedIn(GroupStudy.KEY_COURSE, courses);
-                                if (checkWhen && checkStart)
-                                    groupStudyPostQuery.whereEqualTo(GroupStudy.KEY_START_TIME, startTime.getTime());
+                                if (checkWhen || checkStart)
+                                    groupStudyPostQuery.whereGreaterThanOrEqualTo(GroupStudy.KEY_START_TIME, startTime.getTime());
                                 System.out.println(startTime.getTime().toString());
                                 System.out.println(endTime.getTime().toString());
-                                if (checkWhen && checkEnd)
-                                    groupStudyPostQuery.whereEqualTo(GroupStudy.KEY_END_TIME, endTime.getTime());
+                                if (checkWhen || checkEnd)
+                                    groupStudyPostQuery.whereLessThanOrEqualTo(GroupStudy.KEY_END_TIME, endTime.getTime());
                                 if (checkWhere)
                                     groupStudyPostQuery.whereContains(GroupStudy.KEY_WHERE, where);
                                 if (checkMinPeople)
@@ -339,7 +313,11 @@ public class AdvancedSearchGroupStudyFragment extends AdvancedSearchFragment {
                                 groupStudyPostQuery.findInBackground(new FindCallback<ParseObject>() {
                                     @Override
                                     public void done(List<ParseObject> objects, ParseException e) {
-                                        if (e == null) {
+                                        if (objects.size() == 0) {
+                                            mProgressBar.setVisibility(View.GONE);
+                                            Toast.makeText(actionSearchView.getContext(), "No result found", Toast.LENGTH_SHORT).show();
+                                        }
+                                        else if (e == null) {
                                             List<PostCard> postCards = new ArrayList<>();
                                             for (ParseObject object : objects) {
                                                 Post post = GroupStudy.getInstance(object).getPost();
@@ -368,11 +346,11 @@ public class AdvancedSearchGroupStudyFragment extends AdvancedSearchFragment {
                     if (checkName)
                         groupStudyPostQuery.whereContains(GroupStudy.KEY_GROUP_NAME, name);
                     if (checkWhen && checkStart)
-                        groupStudyPostQuery.whereEqualTo(GroupStudy.KEY_START_TIME, startTime.getTime());
+                        groupStudyPostQuery.whereGreaterThanOrEqualTo(GroupStudy.KEY_START_TIME, startTime.getTime());
                     System.out.println(startTime.getTime().toString());
                     System.out.println(endTime.getTime().toString());
                     if (checkWhen && checkEnd)
-                        groupStudyPostQuery.whereEqualTo(GroupStudy.KEY_END_TIME, endTime.getTime());
+                        groupStudyPostQuery.whereLessThanOrEqualTo(GroupStudy.KEY_END_TIME, endTime.getTime());
                     if (checkWhere) groupStudyPostQuery.whereContains(GroupStudy.KEY_WHERE, where);
                     if (checkMinPeople)
                         groupStudyPostQuery.whereGreaterThanOrEqualTo(GroupStudy.KEY_MAX_PEOPLE, Integer.parseInt(minPeople));
@@ -382,7 +360,11 @@ public class AdvancedSearchGroupStudyFragment extends AdvancedSearchFragment {
                     groupStudyPostQuery.findInBackground(new FindCallback<ParseObject>() {
                         @Override
                         public void done(List<ParseObject> objects, ParseException e) {
-                            if (e == null) {
+                            if (objects.size() == 0) {
+                                mProgressBar.setVisibility(View.GONE);
+                                Toast.makeText(actionSearchView.getContext(), "No result found", Toast.LENGTH_SHORT).show();
+                            }
+                            else if (e == null) {
                                 List<PostCard> postCards = new ArrayList<>();
                                 for (ParseObject object : objects) {
                                     Post post = GroupStudy.getInstance(object).getPost();

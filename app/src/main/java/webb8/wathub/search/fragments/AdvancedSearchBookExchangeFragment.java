@@ -14,6 +14,7 @@ import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.parse.FindCallback;
 import com.parse.ParseException;
@@ -52,7 +53,7 @@ public class AdvancedSearchBookExchangeFragment extends AdvancedSearchFragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View actionSearchView = inflater.inflate(R.layout.fragment_advanced_search, container, false);
+        final View actionSearchView = inflater.inflate(R.layout.fragment_advanced_search, container, false);
         final View actionSearchBookExchangeView = inflater.inflate(R.layout.fragment_advanced_search_bookexchange, container, false);
         mActionSearchContainer = (FrameLayout) actionSearchView.findViewById(R.id.advanced_search_container);
 
@@ -152,6 +153,7 @@ public class AdvancedSearchBookExchangeFragment extends AdvancedSearchFragment {
                 String courseNumberBuf = emptyStr;
                 Boolean checkCourseNumberBuf = false;
                 if (checkCourseSubject) {
+                    while (mBookCourseNumberView.getSelectedItem() == null) continue;
                     courseNumberBuf += mBookCourseNumberView.getSelectedItem().toString();
                     checkCourseNumberBuf = checkCourseNumberBuf || !(courseNumberBuf.toLowerCase().contains(selectStr));
                 }
@@ -203,7 +205,11 @@ public class AdvancedSearchBookExchangeFragment extends AdvancedSearchFragment {
                                 bookExchangePostQuery.findInBackground(new FindCallback<ParseObject>() {
                                     @Override
                                     public void done(List<ParseObject> objects, ParseException e) {
-                                        if (e == null) {
+                                        if (objects.size() == 0) {
+                                            mProgressBar.setVisibility(View.GONE);
+                                            Toast.makeText(actionSearchView.getContext(), "No result found", Toast.LENGTH_SHORT).show();
+                                        }
+                                        else if (e == null) {
                                             List<PostCard> postCards = new ArrayList<>();
                                             System.out.println(objects.size());
                                             for (ParseObject object : objects) {
@@ -237,7 +243,11 @@ public class AdvancedSearchBookExchangeFragment extends AdvancedSearchFragment {
                     bookExchangePostQuery.findInBackground(new FindCallback<ParseObject>() {
                         @Override
                         public void done(List<ParseObject> objects, ParseException e) {
-                            if (e == null) {
+                            if (objects.size() == 0) {
+                                mProgressBar.setVisibility(View.GONE);
+                                Toast.makeText(actionSearchView.getContext(), "No result found", Toast.LENGTH_SHORT).show();
+                            }
+                            else if (e == null) {
                                 List<PostCard> postCards = new ArrayList<>();
                                 System.out.println(objects.size());
                                 for (ParseObject object : objects) {
