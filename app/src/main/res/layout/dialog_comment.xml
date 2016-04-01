@@ -1,13 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/tools"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <TextView
-        android:id="@+id/dialog_comment_author"
+    <RelativeLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-    <TextView
-        android:id="@+id/dialog_comment_content"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:layout_width="@dimen/post_avatar_width"
+            android:layout_height="@dimen/post_avatar_height"
+            android:id="@+id/comment_avatar"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginEnd="16dp"
+            android:contentDescription="@string/content_avatar"
+            app:civ_border_width="2dp"
+            app:civ_border_color="@color/teal"
+            android:src="@drawable/no_avatar"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/comment_user"
+            android:layout_toEndOf="@id/comment_avatar"
+            android:layout_alignParentTop="true"
+            android:textStyle="bold"
+            android:textSize="15sp"
+            android:alpha="200"
+            android:text="Mahammad Ismayilzada"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/post_date_container"
+            android:layout_below="@id/comment_user"
+            android:layout_alignStart="@id/comment_user">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/comment_date"
+                android:textSize="10sp"
+                android:textColor="@color/teal"
+                android:layout_gravity="center_vertical"
+                android:text="11m"/>
+            <ImageView
+                android:layout_width="10dp"
+                android:layout_height="10dp"
+                android:layout_marginStart="5dp"
+                android:layout_gravity="center_vertical"
+                android:src="@drawable/ic_public_black_24dp"/>
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/comment_content"
+            android:layout_below="@id/post_date_container"
+            android:layout_toEndOf="@id/comment_avatar"
+            android:alpha="130"
+            android:textSize="15sp"
+            android:text="hey guys how are you"/>
+    </RelativeLayout>
+
+    <View style="@style/dashLine"/>
 </LinearLayout>

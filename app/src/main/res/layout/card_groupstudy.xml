@@ -110,4 +110,6 @@
         </LinearLayout>
     </android.support.v7.widget.CardView>
 
+    <View style="@style/dashLine"/>
+
 </LinearLayout>

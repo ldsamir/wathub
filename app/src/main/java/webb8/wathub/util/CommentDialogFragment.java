@@ -53,7 +53,7 @@ public class CommentDialogFragment extends DialogFragment {
 
         LinearLayoutManager llm = new LinearLayoutManager(getActivity());
         commentListView.setLayoutManager(llm);
-        final CommentAdapter commentAdapter = new CommentAdapter(new ArrayList<Comment>());
+        final CommentAdapter commentAdapter = new CommentAdapter(getActivity(), new ArrayList<Comment>());
         commentListView.setAdapter(commentAdapter);
 
         ParseQuery<ParseObject> commentQuery = Comment.getQuery();

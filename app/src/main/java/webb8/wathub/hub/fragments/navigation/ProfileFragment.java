@@ -5,13 +5,8 @@ import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Parcel;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,22 +23,12 @@ import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
-import com.parse.ProgressCallback;
 import com.parse.SaveCallback;
 
 import org.json.JSONArray;
 import org.json.JSONException;
-import org.json.JSONObject;
 
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -307,7 +292,7 @@ public class ProfileFragment extends HubFragment {
     }
 
     private View getContactLinkView() {
-        final View contactLinkView = mHubActivity.getLayoutInflater().inflate(R.layout.contact_link, null, false);
+        final View contactLinkView = mHubActivity.getLayoutInflater().inflate(R.layout.contact_link_edit, null, false);
         ImageView deleteLinkView = (ImageView) contactLinkView.findViewWithTag(mHubActivity.getString(R.string.profile_delete_contact_link_tag));
         deleteLinkView.setOnClickListener(new View.OnClickListener() {
             @Override

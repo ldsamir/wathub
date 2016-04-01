@@ -39,7 +39,8 @@
                     android:layout_marginEnd="16dp"
                     android:contentDescription="@string/content_avatar"
                     app:civ_border_width="2dp"
-                    app:civ_border_color="@color/teal"/>
+                    app:civ_border_color="@color/teal"
+                    android:src="@drawable/no_avatar"/>
 
                 <TextView
                     android:layout_width="wrap_content"
