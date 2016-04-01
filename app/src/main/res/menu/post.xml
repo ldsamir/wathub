@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools" tools:context=".hub.HubActivity">
     <item android:id="@+id/action_search" android:title="@string/action_search"
         app:showAsAction="collapseActionView|ifRoom"
-        android:icon="@drawable/ic_search_black_18dp"
+        android:icon="@drawable/places_ic_search"
         app:actionViewClass="android.widget.SearchView"/>
     <item android:id="@+id/action_advanced_search"
         android:title="@string/action_advanced_search"

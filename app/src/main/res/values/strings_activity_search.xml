@@ -19,8 +19,8 @@
     <string name="search_max_people">Max people</string>
     <string name="search_from">From</string>
     <string name="search_to">To</string>
-    <string name="search_min_passengers">Min passengers</string>
-    <string name="search_max_passengers">Max passengers</string>
+    <string name="search_min_passengers">Min capacity</string>
+    <string name="search_max_passengers">Max capacity</string>
     <string-array name="search_type_list">
         <item>Select post type</item>
         <item>@string/title_all_posts</item>

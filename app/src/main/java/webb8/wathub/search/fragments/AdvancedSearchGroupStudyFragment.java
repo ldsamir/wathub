@@ -337,7 +337,7 @@ public class AdvancedSearchGroupStudyFragment extends AdvancedSearchFragment {
                                 FragmentManager fragmentManager = getFragmentManager();
 
                                 fragmentManager.beginTransaction()
-                                        .replace(R.id.advanced_search_container, postFeedFragment)
+                                        .replace(R.id.search_fragment_container, postFeedFragment)
                                         .commit();
                             }
                             // We do not need else case...

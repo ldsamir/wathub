@@ -1,64 +1,79 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+<ScrollView
     android:layout_height="match_parent"
-    android:layout_margin="16dp">
+    android:layout_width="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/progress_bar"
-        android:visibility="gone">
-        <include layout="@layout/progress_bar" />
-    </RelativeLayout>
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="vertical" android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin"
+        android:layout_marginBottom="@dimen/margin"
+        android:padding="@dimen/padding">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <ImageView
-            android:contentDescription="@string/icon"
-            android:layout_width="@dimen/ic_width"
-            android:layout_height="@dimen/ic_height"
-            android:layout_gravity="center_vertical"
-            android:src="@drawable/ic_search_black_24dp" />
-        <EditText
-            android:id="@+id/edit_search_content"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/search_hint"/>
+            android:orientation="vertical"
+            android:padding="@dimen/padding">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/progress_bar"
+                android:visibility="gone">
+                <include layout="@layout/progress_bar" />
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:contentDescription="@string/icon"
+                    android:layout_width="@dimen/ic_width"
+                    android:layout_height="@dimen/ic_height"
+                    android:layout_gravity="center_vertical"
+                    android:src="@drawable/ic_search_black_24dp" />
+                <EditText
+                    android:id="@+id/edit_search_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/search_hint"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:contentDescription="@string/icon"
+                    android:layout_width="@dimen/ic_width"
+                    android:layout_height="@dimen/ic_height"
+                    android:layout_gravity="center_vertical"
+                    android:src="@drawable/ic_search_black_24dp" />
+
+                <Spinner
+                    android:id="@+id/select_search_type"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                </Spinner>
+            </LinearLayout>
+
+            <FrameLayout
+                android:id="@+id/advanced_search_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+            </FrameLayout>
+
+            <Button
+                android:theme="@style/ButtonStyle"
+                android:id="@+id/btn_search"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="@string/action_search" />
+
+        </LinearLayout>
     </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <ImageView
-            android:contentDescription="@string/icon"
-            android:layout_width="@dimen/ic_width"
-            android:layout_height="@dimen/ic_height"
-            android:layout_gravity="center_vertical"
-            android:src="@drawable/ic_search_black_24dp" />
-
-        <Spinner
-            android:id="@+id/select_search_type"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-        </Spinner>
-    </LinearLayout>
-
-    <FrameLayout
-        android:id="@+id/advanced_search_container"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-    </FrameLayout>
-
-    <Button
-        android:theme="@style/ButtonStyle"
-        android:id="@+id/btn_search"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:text="@string/action_search" />
-
-</LinearLayout>
+</ScrollView>
