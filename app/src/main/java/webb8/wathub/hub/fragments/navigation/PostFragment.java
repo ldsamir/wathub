@@ -90,6 +90,7 @@ public class PostFragment extends HubFragment {
         LinearLayoutManager llm = new LinearLayoutManager(mHubActivity);
         mPostContainerView.setLayoutManager(llm);
         mPostAdapter = new PostAdapter(mHubActivity, new ArrayList<PostCard>());
+        mPostAdapter.setHasStableIds(true);
         mPostContainerView.setAdapter(mPostAdapter);
         mPostContainerView.addOnItemTouchListener(Util.getSwipeTouchListener(mPostContainerView, mPostAdapter));
         final SwipeRefreshLayout refreshLayout = (SwipeRefreshLayout) rootView;

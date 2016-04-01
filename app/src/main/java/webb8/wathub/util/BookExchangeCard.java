@@ -39,7 +39,7 @@ public class BookExchangeCard extends PostCard {
         if (condition == BookConditions.MODERATE.getId()) bookCondition.setText(mActivity.getString(BookConditions.MODERATE.getNameId()));
         if (condition == BookConditions.GOOD.getId()) bookCondition.setText(mActivity.getString(BookConditions.GOOD.getNameId()));
         if (condition == BookConditions.EXCELLENT.getId()) bookCondition.setText(mActivity.getString(BookConditions.EXCELLENT.getNameId()));
-        bookPrice.setText(String.valueOf(mBookExchange.getPrice()));
+        bookPrice.setText(String.valueOf((int) mBookExchange.getPrice()));
 
         return view;
     }

@@ -17,6 +17,7 @@ import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
+import com.parse.SaveCallback;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -77,13 +78,18 @@ public class CommentDialogFragment extends DialogFragment {
             @Override
             public void onClick(View v) {
                 String content = commentContentView.getText().toString();
-                Comment comment = new Comment();
+                final Comment comment = new Comment();
                 comment.setUser(ParseUser.getCurrentUser());
                 comment.setPost(mPostCard.getPost());
                 comment.setComment(content);
-                comment.saveInBackground();
-                commentAdapter.addComment(comment);
+                comment.saveInBackground(new SaveCallback() {
+                    @Override
+                    public void done(ParseException e) {
+                        commentAdapter.addComment(comment);
+                    }
+                });
                 newCommentCount++;
+                commentContentView.setText("");
             }
         });
 

@@ -76,6 +76,10 @@ public class Carpool extends ParseObject implements Parsable {
         addUnique(KEY_PASSENGERS, passenger);
     }
 
+    public void setPassengers(JSONArray passengers) {
+        put(KEY_PASSENGERS, passengers);
+    }
+
     public double getPrice() {
         return getDouble(KEY_PRICE);
     }

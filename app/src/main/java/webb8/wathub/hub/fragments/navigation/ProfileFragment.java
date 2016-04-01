@@ -95,16 +95,18 @@ public class ProfileFragment extends HubFragment {
 
                     JSONArray contactLinks = mProfile.getContactLinks();
 
-                    try {
-                        for (int i = 0; i < contactLinks.length(); i++) {
-                            String contactLink = contactLinks.get(i).toString();
-                            View contactLinkView = getContactLinkView();
-                            EditText editText = (EditText) contactLinkView.findViewWithTag(mHubActivity.getString(R.string.profile_contact_link_tag));
-                            editText.setText(contactLink);
-                            mContactLinksView.addView(contactLinkView);
-                        }
-                    } catch (JSONException je) {
+                    if (contactLinks != null) {
+                        try {
+                            for (int i = 0; i < contactLinks.length(); i++) {
+                                String contactLink = contactLinks.get(i).toString();
+                                View contactLinkView = getContactLinkView();
+                                EditText editText = (EditText) contactLinkView.findViewWithTag(mHubActivity.getString(R.string.profile_contact_link_tag));
+                                editText.setText(contactLink);
+                                mContactLinksView.addView(contactLinkView);
+                            }
+                        } catch (JSONException je) {
 
+                        }
                     }
 
                     try {
@@ -129,6 +131,14 @@ public class ProfileFragment extends HubFragment {
                     DatePickerFragment fragment = new DatePickerFragment();
                     fragment.show(getFragmentManager(), "birthday");
                 }
+            }
+        });
+
+        mBirthdayView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DatePickerFragment fragment = new DatePickerFragment();
+                fragment.show(getFragmentManager(), "birthday");
             }
         });
 

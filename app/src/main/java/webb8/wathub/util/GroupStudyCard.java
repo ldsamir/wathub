@@ -16,8 +16,11 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.widget.Toast;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 
 import webb8.wathub.R;
 import webb8.wathub.hub.ProfileActivity;
@@ -30,7 +33,7 @@ import webb8.wathub.models.Parsable;
  */
 public class GroupStudyCard extends PostCard {
     private GroupStudy mGroupStudy;
-    private TextView mGroupName, mGroupCourse, mGroupWhere, mGroupStartTime, mGroupEndTime, mGroupNumJoined, mGroupMaxPeople;
+    private TextView mGroupName, mGroupCourse, mGroupWhere, mGroupWhen, mGroupStartTime, mGroupEndTime, mGroupNumJoined, mGroupMaxPeople;
     private JSONArray mStudentsJoined;          // to avoid too many requests
 
 
@@ -160,6 +163,7 @@ public class GroupStudyCard extends PostCard {
         mGroupWhere = (TextView) view.findViewById(R.id.group_study_where);
         mGroupStartTime = (TextView) view.findViewById(R.id.group_study_start_time);
         mGroupEndTime = (TextView) view.findViewById(R.id.group_study_end_time);
+        mGroupWhen = (TextView) view.findViewById(R.id.group_study_when);
         mPostActionJoinBarView = (LinearLayout) postCardView.findViewById(R.id.post_action_bar_join);
         mPostActionJoinNumBarView = (LinearLayout) postCardView.findViewById(R.id.post_action_join_num_bar);
         mPostActionJoinView = (ImageView) postCardView.findViewById(R.id.post_action_join);
@@ -192,12 +196,15 @@ public class GroupStudyCard extends PostCard {
         mGroupName.setText(mGroupStudy.getGroupName());
         mGroupCourse.setText(course.getSubject() + " " + course.getNumber());
         mGroupWhere.setText(mGroupStudy.getWhere());
-        String startTime = mGroupStudy.getStartTime().toString();
-        startTime = startTime.substring(4, startTime.length()-12);
-        mGroupStartTime.setText(startTime);
-        String endTime = mGroupStudy.getEndTime().toString();
-        endTime = endTime.substring(4, endTime.length() - 12);
-        mGroupEndTime.setText(endTime);
+        Calendar startTime = Calendar.getInstance();
+        startTime.setTime(mGroupStudy.getStartTime());
+        Calendar endTime = Calendar.getInstance();
+        endTime.setTime(mGroupStudy.getEndTime());
+        SimpleDateFormat dateFormat = new SimpleDateFormat("MMM dd, yyyy", Locale.CANADA);
+        SimpleDateFormat timeFormat = new SimpleDateFormat("H:mm a", Locale.CANADA);
+        mGroupStartTime.setText(timeFormat.format(startTime.getTime()));
+        mGroupEndTime.setText(timeFormat.format(endTime.getTime()));
+        mGroupWhen.setText(dateFormat.format(startTime.getTime()));
         mGroupMaxPeople.setText(String.valueOf(mGroupStudy.getMaxPeople()));
 
         if (haveJoined()){
