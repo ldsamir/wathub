@@ -1,18 +1,25 @@
 package webb8.wathub.search.fragments;
 
+import android.app.DatePickerDialog;
+import android.app.Dialog;
+import android.app.DialogFragment;
 import android.app.FragmentManager;
+import android.app.TimePickerDialog;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
+import android.widget.TimePicker;
 
 import com.parse.FindCallback;
 import com.parse.ParseException;
@@ -92,6 +99,35 @@ public class AdvancedSearchGroupStudyFragment extends AdvancedSearchFragment {
         Util.updateCourseSubjectsAdapter(getActivity(), mGroupCourseSubjectView);
 
         mSearchTypeView.setSelection(3);
+
+
+        mGroupWhenView.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean arg) {
+                if (arg) {
+                    showDatePickerDialog(v);
+                }
+            }
+        });
+
+        mGroupStartTimeView.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean arg) {
+                if (arg) {
+                    showTimePickerDialog(v, 0);
+                }
+            }
+        });
+
+        mGroupEndTimeView.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean arg) {
+                if (arg) {
+                    showTimePickerDialog(v, 1);
+                }
+            }
+        });
+
 
         mSearchTypeView.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -349,4 +385,77 @@ public class AdvancedSearchGroupStudyFragment extends AdvancedSearchFragment {
 
         return actionSearchView;
     }
+
+    public static class DatePickerFragment extends DialogFragment
+            implements DatePickerDialog.OnDateSetListener {
+
+        @Override
+        public Dialog onCreateDialog(Bundle savedInstanceState) {
+            // Use the current date as the default date in the picker
+            final Calendar c = Calendar.getInstance();
+            int year = c.get(Calendar.YEAR);
+            int month = c.get(Calendar.MONTH);
+            int day = c.get(Calendar.DAY_OF_MONTH);
+
+            // Create a new instance of DatePickerDialog and return it
+            return new DatePickerDialog(getActivity(), this, year, month, day);
+        }
+
+        public void onDateSet(DatePicker view, int year, int month, int day) {
+            EditText mDateView = (EditText) getActivity().findViewById(R.id.edit_search_group_when);
+            mDateView.setText(new StringBuilder().append(day).append("/")
+                    .append(month+1).append("/").append(year));
+        }
+    }
+
+    public void showDatePickerDialog(View v) {
+        DialogFragment newFragment = new DatePickerFragment();
+        newFragment.show(getActivity().getFragmentManager(), "datePicker");
+    }
+
+
+    public static class TimePickerFragment extends DialogFragment
+            implements TimePickerDialog.OnTimeSetListener {
+        Bundle bundle = this.getArguments();
+        private int start_or_end = 0;
+
+
+        @Override
+        public Dialog onCreateDialog(Bundle savedInstanceState) {
+            // Use the current time as the default values for the picker
+            final Calendar c = Calendar.getInstance();
+            int hour = c.get(Calendar.HOUR_OF_DAY);
+            int minute = c.get(Calendar.MINUTE);
+            Bundle bundle = this.getArguments();
+            start_or_end = bundle.getInt("st_or_nd");
+            // Create a new instance of TimePickerDialog and return it
+            return new TimePickerDialog(getActivity(), this, hour, minute,
+                    DateFormat.is24HourFormat(getActivity()));
+        }
+
+        public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+            if(start_or_end == 0){
+                EditText mStartTimeView = (EditText) getActivity().findViewById(R.id.edit_search_group_start_time);
+                mStartTimeView.setText(new StringBuilder().append(hourOfDay < 10 ? "0" : "").append(hourOfDay).append(":")
+                        .append(minute < 10 ? "0" : "").append(minute));
+            }
+            else if(start_or_end == 1){
+                EditText mEndTimeView = (EditText) getActivity().findViewById(R.id.edit_search_group_end_time);
+                mEndTimeView.setText(new StringBuilder().append(hourOfDay < 10 ? "0" : "").append(hourOfDay).append(":")
+                        .append(minute < 10 ? "0" : "").append(minute));
+            }
+        }
+    }
+
+    public void showTimePickerDialog(View v, int st_or_nd) {
+        DialogFragment newFragment = new TimePickerFragment();
+        Bundle bundle = new Bundle();
+        System.out.println("This is st_or_nd " + st_or_nd);
+        bundle.putInt("st_or_nd", st_or_nd);
+        System.out.println(bundle.getInt("st_or_nd"));
+        newFragment.setArguments(bundle);
+        newFragment.show(getActivity().getFragmentManager(), "timePicker");
+    }
+
+
 }
