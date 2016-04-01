@@ -192,7 +192,7 @@ public class AdvancedSearchBookExchangeFragment extends AdvancedSearchFragment {
                                 // by taking each input into consideration:
                                 ParseQuery<ParseObject> bookExchangePostQuery = BookExchange.getQuery();
                                 if (checkTitle)
-                                    bookExchangePostQuery.whereContains(BookExchange.KEY_TITLE, title);
+                                    bookExchangePostQuery.whereMatches(BookExchange.KEY_TITLE, title, "i");
                                 bookExchangePostQuery.whereContainedIn(BookExchange.KEY_COURSE, courses);
                                 if (checkMinPrice)
                                     bookExchangePostQuery.whereGreaterThanOrEqualTo(BookExchange.KEY_PRICE, Integer.parseInt(minPrice));
@@ -227,7 +227,7 @@ public class AdvancedSearchBookExchangeFragment extends AdvancedSearchFragment {
                     // by taking each input into consideration:
                     ParseQuery<ParseObject> bookExchangePostQuery = BookExchange.getQuery();
                     if (checkTitle)
-                        bookExchangePostQuery.whereContains(BookExchange.KEY_TITLE, title);
+                        bookExchangePostQuery.whereMatches(BookExchange.KEY_TITLE, title, "i");
                     if (checkMinPrice)
                         bookExchangePostQuery.whereGreaterThanOrEqualTo(BookExchange.KEY_PRICE, Integer.parseInt(minPrice));
                     if (checkMaxPrice)

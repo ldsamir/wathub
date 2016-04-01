@@ -94,7 +94,7 @@ public class ActionPostCarpoolFragment extends ActionPostFragment {
 
                     carpoolPost.setPost(post);
                     carpoolPost.setFrom(mFromView.getText().toString());
-                    carpoolPost.setTo(mFromView.getText().toString());
+                    carpoolPost.setTo(mToView.getText().toString());
                     carpoolPost.setWhen(departTime.getTime());
                     carpoolPost.setPrice(Double.parseDouble(mPriceView.getText().toString()));
                     carpoolPost.setMaxPassengers(Integer.parseInt(mNumPassengerView.getText().toString()));
