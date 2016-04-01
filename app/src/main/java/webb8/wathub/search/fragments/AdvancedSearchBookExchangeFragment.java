@@ -214,6 +214,11 @@ public class AdvancedSearchBookExchangeFragment extends AdvancedSearchFragment {
                                             System.out.println(objects.size());
                                             for (ParseObject object : objects) {
                                                 Post post = BookExchange.getInstance(object).getPost();
+                                                try {
+                                                    post.fetch();
+                                                } catch (ParseException e1) {
+                                                    e1.printStackTrace();
+                                                }
                                                 postCards.add(new PostCard(getActivity(), post));
                                             }
                                             PostFeedFragment postFeedFragment = PostFeedFragment.newInstance(postCards);
@@ -252,6 +257,11 @@ public class AdvancedSearchBookExchangeFragment extends AdvancedSearchFragment {
                                 System.out.println(objects.size());
                                 for (ParseObject object : objects) {
                                     Post post = BookExchange.getInstance(object).getPost();
+                                    try {
+                                        post.fetch();
+                                    } catch (ParseException e1) {
+                                        e1.printStackTrace();
+                                    }
                                     postCards.add(new PostCard(getActivity(), post));
                                 }
                                 PostFeedFragment postFeedFragment = PostFeedFragment.newInstance(postCards);
