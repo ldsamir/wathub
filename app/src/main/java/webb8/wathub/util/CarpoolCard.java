@@ -117,13 +117,16 @@ public class CarpoolCard extends PostCard {
         mPostActionJoinNumBarView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                JSONArray users = mCarpool.getPassengers();
-                final String[] userNames = new String[users.length()];
+                JSONArray passengers = mCarpool.getPassengers();
+                final String[] userNames = new String[passengers.length()];
 
-                for (int i = 0; i < users.length(); i++) {
+                for (int i = 0; i < passengers.length(); i++) {
                     try {
-                        ParseUser user = (ParseUser) users.get(i);
-                        user.fetch();
+                        String userObjectId = passengers.getJSONObject(i).get(Parsable.KEY_OBJECT_ID).toString();
+                        ParseQuery<ParseUser> userQuery = ParseUser.getQuery();
+                        userQuery.whereEqualTo(Parsable.KEY_OBJECT_ID, userObjectId);
+                        List<ParseUser> users = userQuery.find();
+                        ParseUser user = users.get(0);
                         userNames[i] = user.getUsername();
                     } catch (JSONException e) {
 
@@ -164,14 +167,17 @@ public class CarpoolCard extends PostCard {
         JSONArray passengers = mCarpool.getPassengers();
         if (passengers != null) {
             for (int i = 0; i < passengers.length(); i++) {
+                String userObjectId = null;
+
                 try {
-                    String userObjectId = passengers.getJSONObject(i).get(Parsable.KEY_OBJECT_ID).toString();
-                    if (userObjectId.equalsIgnoreCase(ParseUser.getCurrentUser().getObjectId())) {
-                        mCurUserJoined = true;
-                        break;
-                    }
+                    userObjectId = passengers.getJSONObject(i).get(Parsable.KEY_OBJECT_ID).toString();
                 } catch (JSONException e) {
 
+                }
+
+                if (userObjectId != null && userObjectId.equalsIgnoreCase(ParseUser.getCurrentUser().getObjectId())) {
+                    mCurUserJoined = true;
+                    break;
                 }
 
             }

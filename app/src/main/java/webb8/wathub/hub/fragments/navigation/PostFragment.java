@@ -113,39 +113,45 @@ public class PostFragment extends HubFragment {
         mProgressBar.setVisibility(View.VISIBLE);
         mPostQuery.findInBackground(new FindCallback<ParseObject>() {
             @Override
-            public void done(List<ParseObject> objects, ParseException e) {
+            public void done(final List<ParseObject> objects, ParseException e) {
                 if (e == null) {
                     if (objects.size() == 0) mProgressBar.setVisibility(View.GONE);
                     mPostAdapter.setPostCards(new ArrayList<PostCard>());
-                    for (final ParseObject object : objects) {
-                        final Post post = Post.getInstance(object);
-                        ParseQuery<ParseObject> doneQuery = Done.getQuery();
-                        doneQuery.whereEqualTo(Done.KEY_POST, post);
-                        doneQuery.whereEqualTo(Done.KEY_USER, ParseUser.getCurrentUser());
-                        doneQuery.countInBackground(new CountCallback() {
-                            @Override
-                            public void done(int count, ParseException e) {
-                                if (e == null) {
-                                    if (count == 0) {
-                                        ParseQuery<ParseObject> favoriteQuery = Favorite.getQuery();
-                                        favoriteQuery.whereEqualTo(Favorite.KEY_POST, post);
-                                        favoriteQuery.whereEqualTo(Favorite.KEY_USER, ParseUser.getCurrentUser());
-                                        favoriteQuery.countInBackground(new CountCallback() {
-                                            @Override
-                                            public void done(int count, ParseException e) {
-                                                if (e == null) {
-                                                    if (count == 0) {
-                                                        mPostAdapter.addPostCard(new PostCard(mHubActivity, post));
-                                                        mProgressBar.setVisibility(View.GONE);
+                    Thread thread = new Thread() {
+                        @Override
+                        public void run() {
+                            for (final ParseObject object : objects) {
+                                final Post post = Post.getInstance(object);
+                                ParseQuery<ParseObject> doneQuery = Done.getQuery();
+                                doneQuery.whereEqualTo(Done.KEY_POST, post);
+                                doneQuery.whereEqualTo(Done.KEY_USER, ParseUser.getCurrentUser());
+                                doneQuery.countInBackground(new CountCallback() {
+                                    @Override
+                                    public void done(int count, ParseException e) {
+                                        if (e == null) {
+                                            if (count == 0) {
+                                                ParseQuery<ParseObject> favoriteQuery = Favorite.getQuery();
+                                                favoriteQuery.whereEqualTo(Favorite.KEY_POST, post);
+                                                favoriteQuery.whereEqualTo(Favorite.KEY_USER, ParseUser.getCurrentUser());
+                                                favoriteQuery.countInBackground(new CountCallback() {
+                                                    @Override
+                                                    public void done(int count, ParseException e) {
+                                                        if (e == null) {
+                                                            if (count == 0) {
+                                                                mPostAdapter.addPostCard(new PostCard(mHubActivity, post));
+                                                                mProgressBar.setVisibility(View.GONE);
+                                                            }
+                                                        }
                                                     }
-                                                }
+                                                });
                                             }
-                                        });
+                                        }
                                     }
-                                }
+                                });
                             }
-                        });
-                    }
+                        }
+                    };
+                    thread.start();
                 } else {
                     Toast.makeText(mHubActivity.getApplicationContext(), R.string.error_loading_posts, Toast.LENGTH_SHORT).show();
                     mProgressBar.setVisibility(View.GONE);
