@@ -252,7 +252,6 @@ public class AdvancedSearchGroupStudyFragment extends AdvancedSearchFragment {
                         }
                     }
                 }
-                final Boolean checkDate = checkDateBuf;
                 final Boolean checkWhen = checkWhenBuf;
                 final Boolean checkStart = checkStartBuf;
                 final Boolean checkEnd = checkEndBuf;
@@ -295,16 +294,16 @@ public class AdvancedSearchGroupStudyFragment extends AdvancedSearchFragment {
                                 // by taking each input into consideration:
                                 ParseQuery<ParseObject> groupStudyPostQuery = GroupStudy.getQuery();
                                 if (checkName)
-                                    groupStudyPostQuery.whereContains(GroupStudy.KEY_GROUP_NAME, name);
+                                    groupStudyPostQuery.whereMatches(GroupStudy.KEY_GROUP_NAME, name, "i");
                                 groupStudyPostQuery.whereContainedIn(GroupStudy.KEY_COURSE, courses);
                                 if (checkWhen || checkStart)
                                     groupStudyPostQuery.whereGreaterThanOrEqualTo(GroupStudy.KEY_START_TIME, startTime.getTime());
-                                System.out.println(startTime.getTime().toString());
-                                System.out.println(endTime.getTime().toString());
+                                System.out.println(startTime.getTime());
+                                System.out.println(endTime.getTime());
                                 if (checkWhen || checkEnd)
                                     groupStudyPostQuery.whereLessThanOrEqualTo(GroupStudy.KEY_END_TIME, endTime.getTime());
                                 if (checkWhere)
-                                    groupStudyPostQuery.whereContains(GroupStudy.KEY_WHERE, where);
+                                    groupStudyPostQuery.whereMatches(GroupStudy.KEY_WHERE, where, "i");
                                 if (checkMinPeople)
                                     groupStudyPostQuery.whereGreaterThanOrEqualTo(GroupStudy.KEY_MAX_PEOPLE, Integer.parseInt(minPeople));
                                 if (checkMaxPeople)
@@ -345,11 +344,11 @@ public class AdvancedSearchGroupStudyFragment extends AdvancedSearchFragment {
                     ParseQuery<ParseObject> groupStudyPostQuery = GroupStudy.getQuery();
                     if (checkName)
                         groupStudyPostQuery.whereContains(GroupStudy.KEY_GROUP_NAME, name);
-                    if (checkWhen && checkStart)
+                    if (checkWhen || checkStart)
                         groupStudyPostQuery.whereGreaterThanOrEqualTo(GroupStudy.KEY_START_TIME, startTime.getTime());
-                    System.out.println(startTime.getTime().toString());
-                    System.out.println(endTime.getTime().toString());
-                    if (checkWhen && checkEnd)
+                    System.out.println(startTime.getTime());
+                    System.out.println(endTime.getTime());
+                    if (checkWhen || checkEnd)
                         groupStudyPostQuery.whereLessThanOrEqualTo(GroupStudy.KEY_END_TIME, endTime.getTime());
                     if (checkWhere) groupStudyPostQuery.whereContains(GroupStudy.KEY_WHERE, where);
                     if (checkMinPeople)
