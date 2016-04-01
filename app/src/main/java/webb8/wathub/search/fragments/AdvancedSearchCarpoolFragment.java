@@ -93,6 +93,12 @@ public class AdvancedSearchCarpoolFragment extends AdvancedSearchFragment {
             }
         });
 
+        mCarpoolWhenView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showDatePickerDialog(v);
+            }
+        });
 
         mSearchTypeView.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override

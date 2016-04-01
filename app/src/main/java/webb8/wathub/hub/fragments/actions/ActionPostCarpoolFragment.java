@@ -74,6 +74,14 @@ public class ActionPostCarpoolFragment extends ActionPostFragment {
             }
         });
 
+        mWhenView.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                showDatePickerDialog(v);
+            }
+        });
+
+
         mPostBtnView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

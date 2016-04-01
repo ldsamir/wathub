@@ -110,12 +110,27 @@ public class AdvancedSearchGroupStudyFragment extends AdvancedSearchFragment {
             }
         });
 
+
+        mGroupWhenView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showDatePickerDialog(v);
+            }
+        });
+
         mGroupStartTimeView.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean arg) {
                 if (arg) {
                     showTimePickerDialog(v, 0);
                 }
+            }
+        });
+
+        mGroupStartTimeView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showTimePickerDialog(v, 0);
             }
         });
 
@@ -128,6 +143,12 @@ public class AdvancedSearchGroupStudyFragment extends AdvancedSearchFragment {
             }
         });
 
+        mGroupEndTimeView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showTimePickerDialog(v, 1);
+            }
+        });
 
         mSearchTypeView.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
