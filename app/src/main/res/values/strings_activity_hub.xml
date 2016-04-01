@@ -138,6 +138,7 @@
     <string name="error_no_user_found">No user found</string>
     <string name="error_no_user_profile_found">No user profile found</string>
     <string name="info_car_is_full">This car is full</string>
+    <string name="info_no_results_found">No results found</string>
 
     <string name="slash">/</string>
     <string name="icon">icon</string>

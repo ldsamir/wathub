@@ -32,7 +32,7 @@ public class BookExchangeCard extends PostCard {
         TextView bookTitle = (TextView) view.findViewById(R.id.book_exchange_bookTitle);
         TextView bookCondition = (TextView) view.findViewById(R.id.book_exchange_bookCondition);
         TextView bookPrice = (TextView) view.findViewById(R.id.book_exchange_bookPrice);
-        bookCourse.setText(mCourse.getSubject() + mCourse.getNumber());
+        bookCourse.setText(mCourse.getSubject() + " " + mCourse.getNumber());
         bookTitle.setText(mBookExchange.getTitle());
         int condition = mBookExchange.getCondition();
         if (condition == BookConditions.BAD.getId()) bookCondition.setText(mActivity.getString(BookConditions.BAD.getNameId()));

@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.parse.FindCallback;
 import com.parse.ParseException;
@@ -87,24 +88,29 @@ public class AdvancedSearchFragment extends Fragment {
             public void onClick(View v) {
                 String content = mContentView.getText().toString();
                 ParseQuery<ParseObject> postQuery = Post.getQuery();
-                postQuery.whereContains(Post.KEY_CONTENT, content);
+                postQuery.whereMatches(Post.KEY_CONTENT, content, "i");
                 postQuery.findInBackground(new FindCallback<ParseObject>() {
                     @Override
                     public void done(List<ParseObject> objects, ParseException e) {
-                        List<PostCard> postCards = new ArrayList<>();
+                        if (objects.size() > 0) {
+                            List<PostCard> postCards = new ArrayList<>();
 
-                        for (ParseObject object : objects) {
-                            Post post = Post.getInstance(object);
-                            postCards.add(new PostCard(getActivity(), post));
+                            for (ParseObject object : objects) {
+                                Post post = Post.getInstance(object);
+                                postCards.add(new PostCard(getActivity(), post));
+                            }
+
+                            PostFeedFragment postFeedFragment = PostFeedFragment.newInstance(postCards);
+
+                            FragmentManager fragmentManager = getFragmentManager();
+
+                            fragmentManager.beginTransaction()
+                                    .replace(R.id.search_fragment_container, postFeedFragment)
+                                    .commit();
+                        } else {
+                            Toast.makeText(getContext(), R.string.info_no_results_found, Toast.LENGTH_SHORT).show();
                         }
 
-                        PostFeedFragment postFeedFragment = PostFeedFragment.newInstance(postCards);
-
-                        FragmentManager fragmentManager = getFragmentManager();
-
-                        fragmentManager.beginTransaction()
-                                .replace(R.id.search_fragment_container, postFeedFragment)
-                                .commit();
 
                     }
                 });

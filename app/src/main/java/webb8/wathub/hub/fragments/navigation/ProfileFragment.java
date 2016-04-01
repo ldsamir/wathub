@@ -5,6 +5,8 @@ import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -28,6 +30,12 @@ import com.parse.SaveCallback;
 import org.json.JSONArray;
 import org.json.JSONException;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -201,8 +209,8 @@ public class ProfileFragment extends HubFragment {
 
         if (mAvatar != null) {
 //            Bitmap bitmap = null;
-//            final ParseFile avatar = new ParseFile();
-//
+//            final ParseFile avatar = new ParseFile("avatar");
+
 //            try {
 //                InputStream is = mHubActivity.getContentResolver().openInputStream(mAvatar);
 //                bitmap = BitmapFactory.decodeStream(is);
@@ -219,30 +227,33 @@ public class ProfileFragment extends HubFragment {
 //            } catch (IOException ioe) {
 //
 //            }
+
+//            File file = new File(mAvatar.getEncodedPath());
+//            final ParseFile avatar = new ParseFile(file);
 //
 //            Toast.makeText(mHubActivity.getApplicationContext(), R.string.info_profile_saving, Toast.LENGTH_LONG).show();
-////            avatar.saveInBackground(new SaveCallback() {
-////                @Override
-////                public void done(ParseException e) {
-////                    if (e == null) {
-////                        mProfile.setAvatar(avatar);
-////                        mProfile.saveInBackground(new SaveCallback() {
-////                            @Override
-////                            public void done(ParseException e) {
-////                                if (e == null) {
-////                                    Toast.makeText(mHubActivity.getApplicationContext(), R.string.info_profile_updated, Toast.LENGTH_SHORT).show();
-////                                } else {
-////                                    Toast.makeText(mHubActivity.getApplicationContext(), R.string.error_updating_profile, Toast.LENGTH_SHORT).show();
-////                                    System.out.println(e.getMessage());
-////                                }
-////                            }
-////                        });
-////                    } else {
-////                        System.out.println(e.getMessage());
-////                    }
-////                }
-////            });
-        } else {
+//            avatar.saveInBackground(new SaveCallback() {
+//                @Override
+//                public void done(ParseException e) {
+//                    if (e == null) {
+//                        mProfile.setAvatar(avatar);
+//                        mProfile.saveInBackground(new SaveCallback() {
+//                            @Override
+//                            public void done(ParseException e) {
+//                                if (e == null) {
+//                                    Toast.makeText(mHubActivity.getApplicationContext(), R.string.info_profile_updated, Toast.LENGTH_SHORT).show();
+//                                } else {
+//                                    Toast.makeText(mHubActivity.getApplicationContext(), R.string.error_updating_profile, Toast.LENGTH_SHORT).show();
+//                                    System.out.println(e.getMessage());
+//                                }
+//                            }
+//                        });
+//                    } else {
+//                        System.out.println(e.getMessage());
+//                    }
+//                }
+//            });
+//        } else {
 //            mProfile.saveInBackground(new SaveCallback() {
 //                @Override
 //                public void done(ParseException e) {

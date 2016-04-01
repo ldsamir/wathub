@@ -39,7 +39,7 @@ public class SearchActivity extends AppCompatActivity {
         if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
             String query = intent.getStringExtra(SearchManager.QUERY);
             ParseQuery<ParseObject> postQuery = Post.getQuery();
-            postQuery.whereContains(Post.KEY_CONTENT, query);
+            postQuery.whereMatches(Post.KEY_CONTENT, query, "i");
             mProgressBar.setVisibility(View.VISIBLE);
 
             postQuery.findInBackground(new FindCallback<ParseObject>() {

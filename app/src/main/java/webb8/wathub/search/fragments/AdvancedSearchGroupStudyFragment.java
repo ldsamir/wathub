@@ -348,14 +348,14 @@ public class AdvancedSearchGroupStudyFragment extends AdvancedSearchFragment {
                     // by taking each input into consideration:
                     ParseQuery<ParseObject> groupStudyPostQuery = GroupStudy.getQuery();
                     if (checkName)
-                        groupStudyPostQuery.whereContains(GroupStudy.KEY_GROUP_NAME, name);
+                        groupStudyPostQuery.whereMatches(GroupStudy.KEY_GROUP_NAME, name, "i");
                     if (checkWhen || checkStart)
                         groupStudyPostQuery.whereGreaterThanOrEqualTo(GroupStudy.KEY_START_TIME, startTime.getTime());
                     System.out.println(startTime.getTime());
                     System.out.println(endTime.getTime());
                     if (checkWhen || checkEnd)
                         groupStudyPostQuery.whereLessThanOrEqualTo(GroupStudy.KEY_END_TIME, endTime.getTime());
-                    if (checkWhere) groupStudyPostQuery.whereContains(GroupStudy.KEY_WHERE, where);
+                    if (checkWhere) groupStudyPostQuery.whereMatches(GroupStudy.KEY_WHERE, where, "i");
                     if (checkMinPeople)
                         groupStudyPostQuery.whereGreaterThanOrEqualTo(GroupStudy.KEY_MAX_PEOPLE, Integer.parseInt(minPeople));
                     if (checkMaxPeople)
