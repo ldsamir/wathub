@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import com.parse.ParseException;
 import com.parse.ParseObject;
+import com.parse.ParsePush;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
@@ -108,6 +109,10 @@ public class CarpoolCard extends PostCard {
                         mCarpool.addPassenger(ParseUser.getCurrentUser());
                         mCarpool.saveInBackground();
                         Toast.makeText(mActivity, R.string.action_joined_carpool, Toast.LENGTH_SHORT).show();
+                        ParsePush parsePush = new ParsePush();
+                        parsePush.setChannel("CARPOOL");
+                        parsePush.setMessage(ParseUser.getCurrentUser().getUsername() + " joined your ride");
+                        parsePush.sendInBackground();
                     } else {
                         Toast.makeText(mActivity, R.string.info_car_is_full, Toast.LENGTH_SHORT).show();
                     }

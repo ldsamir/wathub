@@ -7,9 +7,13 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.parse.GetCallback;
 import com.parse.ParseException;
+import com.parse.ParseObject;
+import com.parse.ParsePush;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
+import com.parse.SendCallback;
 
 import org.json.JSONArray;
 import android.app.AlertDialog;
@@ -27,6 +31,7 @@ import webb8.wathub.hub.ProfileActivity;
 import webb8.wathub.models.Course;
 import webb8.wathub.models.GroupStudy;
 import webb8.wathub.models.Parsable;
+import webb8.wathub.models.Post;
 
 /**
  * Created by mismayil on 24/02/16.
@@ -113,6 +118,20 @@ public class GroupStudyCard extends PostCard {
             // update the text from "Join" to "Joined"
             mPostActionJoinView.setImageResource(R.drawable.ic_person_black_24dp);
             Toast.makeText(mActivity.getApplicationContext(), R.string.action_joined_group, Toast.LENGTH_SHORT).show();
+            ParsePush parsePush = new ParsePush();
+            parsePush.setChannel("JOIN");
+            parsePush.setMessage(ParseUser.getCurrentUser().getUsername() + " joined your group study");
+            parsePush.sendInBackground(new SendCallback() {
+                @Override
+                public void done(ParseException e) {
+                    if (e == null) {
+                        System.out.println("notification sent successfully");
+                    } else {
+                        System.out.println("notification failure");
+                        System.out.println(e.getMessage());
+                    }
+                }
+            });
         }
         else {
             Toast.makeText(mActivity.getApplicationContext(), mActivity.getString(R.string.warning_group_full), Toast.LENGTH_SHORT).show();

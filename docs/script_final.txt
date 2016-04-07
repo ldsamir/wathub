@@ -1,0 +1,20 @@
+1. Introduction (about wathub)
+2. general structure
+3. profile
+4. my posts
+5. all posts
+6. book exchange
+7. carpool
+8. group study
+9. bookmarks
+10. done
+11. log out
+12. refresh
+13. swipe
+14. search
+15. like, comment
+16. join
+17. post
+18. profile linking
+19. challenges
+20. future (messaging, notifications, share rich media)

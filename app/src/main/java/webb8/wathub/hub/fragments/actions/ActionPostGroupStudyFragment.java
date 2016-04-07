@@ -28,6 +28,7 @@ import android.widget.Toast;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
+import com.parse.ParsePush;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
@@ -242,6 +243,17 @@ public class ActionPostGroupStudyFragment extends ActionPostFragment {
                         }
                     });
                     groupStudyPost.saveInBackground();
+                    ParsePush.subscribeInBackground("JOIN", new SaveCallback() {
+                        @Override
+                        public void done(ParseException e) {
+                            if (e == null) {
+                                System.out.println("subscribed successfully");
+                            } else {
+                                System.out.println("subscribe failure");
+                                System.out.println(e.getMessage());
+                            }
+                        }
+                    });
                 }
             }
         });

@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 
 import com.parse.Parse;
+import com.parse.ParseInstallation;
 import com.parse.ParseObject;
 
 import java.io.File;
@@ -46,5 +47,6 @@ public class App extends Application {
         ParseObject.registerSubclass(Comment.class);
         Parse.enableLocalDatastore(this);
         Parse.initialize(this);
+        ParseInstallation.getCurrentInstallation().saveInBackground();
     }
 }
