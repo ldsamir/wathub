@@ -1,5 +1,5 @@
 # WatHub: Study, Socialize, Share.
-Social app for UW Students
+Unified Social Platform for [UWaterloo](https://uwaterloo.ca/) Students
 
 ## Developers:
 - [Mahammad Ismayilzada](https://github.com/mismayil)
